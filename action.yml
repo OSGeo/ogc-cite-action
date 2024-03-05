@@ -1,0 +1,54 @@
+name: 'Run TEAM Engine'
+
+description: 'Spins up a TEAM Engine instance inside a docker container'
+
+inputs:
+  server-url:
+    description: 'URL of the server that is going to be tested'
+    required: true
+  test-suites:
+    - 'ogcapifeatures'
+
+outputs:
+  test-results:
+    description: 'Combined results of testing all input suites'
+    value: '${{ steps.result-aggregator.outputs.results }}'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: 'Start TEAM engine'
+      id: 'start-team-engine'
+      run: >
+        docker run 
+        --detach
+        --rm 
+        --name team-engine 
+        --publish 8081:8080 
+        --add-host=host.docker.internal:host-gateway 
+        ogccite/teamengine-production:1.0-SNAPSHOT'
+      shell: 'bash'
+    - name: 'Wait for TEAM engine to become usable'
+      run: >
+        docker exec team-engine 
+        bash -c 'curl --silent --output /dev/null --write-out "%{http_code}" localhost:8080/teamengine/'
+      shell: 'bash'
+    - name: 'Register user in TEAM engine'
+      id: 'register-team-engine-user'
+      run: >
+        docker exec bash -c 'curl
+        --silent
+        --output /dev/null
+        --write-out "%{http_code}"
+        --data "firstName=teamengine&lastName=user&username=teamengine&password=tester&repeat_password=tester&email=noone@noplace.com&organization=none&acceptPrivacy=on&disclaimer=on"
+        http://localhost:8080/teamengine/registrationHandler'
+    - name: 'Run test suites'
+      run:
+      shell: bash
+      env:
+        INPUT_TEST_SUITES: ${{ inputs.test-suites }}
+    - name: 'Collect results'
+
+branding:
+  icon: 'award'
+  color: 'blue'
