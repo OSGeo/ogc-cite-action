@@ -20,20 +20,20 @@ runs:
     - name: 'Start TEAM engine'
       id: 'start-team-engine'
       run: >
-        docker run 
+        docker run
         --detach
-        --rm 
-        --name team-engine 
-        --publish 8081:8080 
-        --add-host=host.docker.internal:host-gateway 
+        --rm
+        --name team-engine
+        --publish 8081:8080
+        --add-host=host.docker.internal:host-gateway
         ogccite/teamengine-production:1.0-SNAPSHOT'
       shell: 'bash'
     - name: 'Wait for TEAM engine to become usable'
       run: >
-        docker exec team-engine 
+        docker exec team-engine
         bash -c 'curl --silent --output /dev/null --write-out "%{http_code}" localhost:8080/teamengine/'
       shell: 'bash'
-    - name: 'Register user in TEAM engine'
+    - name: 'Register test user in TEAM engine'
       id: 'register-team-engine-user'
       run: >
         docker exec bash -c 'curl
