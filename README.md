@@ -1,2 +1,2 @@
-# team-engine-action
-Run TEAM Engine as a github action and validate your product against OGC CITE
+# ogc-cite-action
+GitHub Action to run your OGC implementation against OGC CITE
