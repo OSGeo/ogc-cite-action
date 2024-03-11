@@ -2,23 +2,28 @@ name: 'Run TEAM Engine'
 
 description: 'Spins up a TEAM Engine instance inside a docker container'
 
+branding:
+  icon: 'award'
+  color: 'blue'
+
 inputs:
-  server-url:
-    description: 'URL of the server that is going to be tested'
-    required: true
-  test-suites:
-    - 'ogcapifeatures'
+  test-suite-identifier:
+    description: 'Identifier of the Executable Test Suite (etscode) to be run. Example: ogcapi-features-1.0'
+  test-session-arguments:
+    description: >
+      Space-separated string with arguments that are to be sent for running the test session. example:
+      'iut=http://pygeoapi:5000'
 
 outputs:
   test-results:
-    description: 'Combined results of testing all input suites'
-    value: '${{ steps.result-aggregator.outputs.results }}'
+    description: 'Test results'
+    value: '${{ steps.run-test-suite.outputs.test_results }}'
 
 runs:
   using: 'composite'
   steps:
     - name: 'Start TEAM engine'
-      id: 'start-team-engine'
+      shell: 'bash'
       run: >
         docker run
         --detach
@@ -27,28 +32,29 @@ runs:
         --publish 8081:8080
         --add-host=host.docker.internal:host-gateway
         ogccite/teamengine-production:1.0-SNAPSHOT'
-      shell: 'bash'
     - name: 'Wait for TEAM engine to become usable'
+      shell: 'bash'
       run: >
         docker exec team-engine
         bash -c 'curl --silent --output /dev/null --write-out "%{http_code}" localhost:8080/teamengine/'
-      shell: 'bash'
     - name: 'Register test user in TEAM engine'
-      id: 'register-team-engine-user'
+      shell: 'bash'
       run: >
-        docker exec bash -c 'curl
+        docker exec team-engine bash -c 'curl
         --silent
         --output /dev/null
         --write-out "%{http_code}"
         --data "firstName=teamengine&lastName=user&username=teamengine&password=tester&repeat_password=tester&email=noone@noplace.com&organization=none&acceptPrivacy=on&disclaimer=on"
         http://localhost:8080/teamengine/registrationHandler'
-    - name: 'Run test suites'
-      run:
+    - name: 'Run test suite'
+      id: 'run-test-suite'
       shell: bash
       env:
-        INPUT_TEST_SUITES: ${{ inputs.test-suites }}
-    - name: 'Collect results'
-
-branding:
-  icon: 'award'
-  color: 'blue'
+        INPUT_TEST_SUITE_IDENTIFIER: ${{ inputs.test-suite-identifier }}
+        INPUT_TEST_SESSION_ARGUMENTS: ${{ inputs.test-session-arguments }}
+      run: >
+        echo test_result=$(docker exec team-engine
+        bash -c
+        'curl --user teamengine:tester --silent
+        $(for test_arg in ${INPUT_TEST_SESSION_ARGUMENTS}; do echo "--form ${test_arg}"; done)
+        http://localhost:8080/teamengine/${INPUT_TEST_SUITE_IDENTIFIER}/run') >> $GITHUB_OUTPUT
