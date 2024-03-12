@@ -22,6 +22,9 @@ outputs:
 runs:
   using: 'composite'
   steps:
+    - name: 'Add action path to the global path'
+      shell: bash
+      run: echo "${{ github.action_path }}" >> ${GITHUB_PATH}
     - name: 'Start TEAM engine'
       shell: 'bash'
       run: >
@@ -39,22 +42,11 @@ runs:
         bash -c 'curl --silent --output /dev/null --write-out "%{http_code}" localhost:8080/teamengine/'
     - name: 'Register test user in TEAM engine'
       shell: 'bash'
-      run: >
-        docker exec team-engine bash -c 'curl
-        --silent
-        --output /dev/null
-        --write-out "%{http_code}"
-        --data "firstName=teamengine&lastName=user&username=teamengine&password=tester&repeat_password=tester&email=noone@noplace.com&organization=none&acceptPrivacy=on&disclaimer=on"
-        http://localhost:8080/teamengine/registrationHandler'
+      run: register-test-user.sh
     - name: 'Run test suite'
       id: 'run-test-suite'
-      shell: bash
       env:
         INPUT_TEST_SUITE_IDENTIFIER: ${{ inputs.test-suite-identifier }}
         INPUT_TEST_SESSION_ARGUMENTS: ${{ inputs.test-session-arguments }}
-      run: >
-        echo test_result=$(docker exec team-engine
-        bash -c
-        'curl --user teamengine:tester --silent
-        $(for test_arg in ${INPUT_TEST_SESSION_ARGUMENTS}; do echo "--form ${test_arg}"; done)
-        http://localhost:8080/teamengine/${INPUT_TEST_SUITE_IDENTIFIER}/run') >> $GITHUB_OUTPUT
+      shell: bash
+      run: run-test.sh
