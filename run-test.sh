@@ -6,6 +6,7 @@ curl_command=$(
       "--user teamengine:tester " \
       "--silent " \
       "${form_args}" \
+      "--header 'Accept: application/xml' " \
       "http://localhost:8080/teamengine/rest/suites/${INPUT_TEST_SUITE_IDENTIFIER}/run"
 )
 
