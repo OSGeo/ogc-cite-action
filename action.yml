@@ -34,7 +34,7 @@ runs:
         --name team-engine
         --publish 8081:8080
         --add-host=host.docker.internal:host-gateway
-        ogccite/teamengine-production:1.0-SNAPSHOT'
+        ogccite/teamengine-production:1.0-SNAPSHOT
     - name: 'Wait for TEAM engine to become usable'
       shell: 'bash'
       run: >
