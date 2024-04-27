@@ -10,6 +10,6 @@ curl_command=$(
       "http://localhost:8080/teamengine/rest/suites/${INPUT_TEST_SUITE_IDENTIFIER}/run"
 )
 
-test_result=$(docker exec team-engine bash -c "${curl_command}")
+test_result=$(docker exec teamengine bash -c "${curl_command}")
 
 echo "test-result=${test_result}" >> $GITHUB_OUTPUT

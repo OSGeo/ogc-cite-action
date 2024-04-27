@@ -31,14 +31,14 @@ runs:
         docker run
         --detach
         --rm
-        --name team-engine
+        --name teamengine
         --publish 8081:8080
         --add-host=host.docker.internal:host-gateway
         ogccite/teamengine-production:1.0-SNAPSHOT
     - name: 'Wait for TEAM engine to become usable'
       shell: 'bash'
       run: >
-        docker exec team-engine
+        docker exec teamengine
         bash -c 'curl --silent --output /dev/null --write-out "%{http_code}" localhost:8080/teamengine/'
     - name: 'Register test user in TEAM engine'
       shell: 'bash'

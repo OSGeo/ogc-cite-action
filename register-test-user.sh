@@ -13,7 +13,7 @@ curl_command=$(
     "--data organization=none " \
     "--data acceptPrivacy=on " \
     "--data disclaimer=on " \
-    "http://localhost:8080/teamengine/registrationHandler "
+    "http://localhost:8080/teamengine/registrationHandler"
 )
 
-docker exec team-engine bash -c "${curl_command}"
+docker exec teamengine bash -c "${curl_command}"
