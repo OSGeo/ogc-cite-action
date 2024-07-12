@@ -56,9 +56,13 @@ def execute_test_suite(
         teamengine_username="ogctest",
         teamengine_password="ogctest",
     )
-    if persist_response is not None:
-        persist_response.write_text(raw_result)
-        logger.debug(f"Wrote raw response to {persist_response!r}")
-    test_summary = teamengine_runner.parse_test_results(raw_result)
-    print_json(data=test_summary)
+    if raw_result:
+        if persist_response is not None:
+            persist_response.write_text(raw_result)
+            logger.debug(f"Wrote raw response to {persist_response!r}")
+        test_summary = teamengine_runner.parse_test_results(raw_result)
+        print_json(data=test_summary)
+    else:
+        raise SystemExit(1)
+
 

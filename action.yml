@@ -60,5 +60,5 @@ runs:
       shell: bash
       run: |
         cd ${{ github.action_path }}
-        test_result=$(poetry run ogc-cite-action execute-test-suite http://localhost:8080/teamengine ${{ inputs.test-suite-identifier }} ${{ inputs.test-session-arguments }})
+        test_result=$(poetry run ogc-cite-action --debug execute-test-suite http://localhost:8080/teamengine ${{ inputs.test-suite-identifier }} ${{ inputs.test-session-arguments }})
         echo "results=${test_result}" >> GITHUB_OUTPUT

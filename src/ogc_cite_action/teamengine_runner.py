@@ -17,7 +17,7 @@ def execute_test_suite(
     test_suite_arguments: typing.Optional[dict[str, str]] = None,
     teamengine_username: str,
     teamengine_password: str,
-) -> str:
+) -> typing.Optional[str]:
     response = client.get(
         f"{teamengine_base_url}/rest/suites/{test_suite_identifier}/run",
         params=test_suite_arguments,
