@@ -15,9 +15,9 @@ inputs:
       'iut=http://pygeoapi:5000'
 
 outputs:
-  test-results:
-    description: 'Test results'
-    value: '${{ steps.run-test-suite.outputs.test_results }}'
+  raw-results:
+    description: 'Raw test results'
+    value: '${{ steps.run-executable-test-suite.outputs.raw-results }}'
 
 runs:
   using: 'composite'
@@ -43,8 +43,8 @@ runs:
     - name: 'Register test user in TEAM engine'
       shell: 'bash'
       run: register-test-user.sh
-    - name: 'Run test suite'
-      id: 'run-test-suite'
+    - name: 'Run executable test suite'
+      id: 'run-executable-test-suite'
       env:
         INPUT_TEST_SUITE_IDENTIFIER: ${{ inputs.test-suite-identifier }}
         INPUT_TEST_SESSION_ARGUMENTS: ${{ inputs.test-session-arguments }}
