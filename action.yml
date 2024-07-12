@@ -15,9 +15,9 @@ inputs:
       'iut=http://pygeoapi:5000'
 
 outputs:
-  raw-results:
-    description: 'Raw test results'
-    value: '${{ steps.run-executable-test-suite.outputs.raw-results }}'
+  results:
+    description: 'Test results'
+    value: '${{ steps.run-executable-test-suite.outputs.results }}'
 
 runs:
   using: 'composite'
@@ -25,6 +25,24 @@ runs:
     - name: 'Add action path to the global path'
       shell: bash
       run: echo "${{ github.action_path }}" >> ${GITHUB_PATH}
+    - name: 'Set up Python'
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+    - name: 'Set up poetry'
+      uses: Gr1N/setup-poetry@v9
+      with:
+        poetry-version: '1.8.3'
+    - name: 'Set up cache'
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/pypoetry/virtualenvs
+        key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
+    - name: 'install action code'
+      shell: 'bash'
+      run: |
+        cd ${{ github.action_path }}
+        poetry install
     - name: 'Start TEAM engine'
       shell: 'bash'
       run: >
@@ -32,21 +50,14 @@ runs:
         --detach
         --rm
         --name teamengine
-        --publish 8081:8080
-        --add-host=host.docker.internal:host-gateway
+        --network host
         ogccite/teamengine-production:1.0-SNAPSHOT
-    - name: 'Wait for TEAM engine to become usable'
-      shell: 'bash'
-      run: >
-        docker exec teamengine
-        bash -c 'curl --silent --output /dev/null --write-out "%{http_code}" localhost:8080/teamengine/'
-    - name: 'Register test user in TEAM engine'
-      shell: 'bash'
-      run: register-test-user.sh
     - name: 'Run executable test suite'
       id: 'run-executable-test-suite'
       env:
         INPUT_TEST_SUITE_IDENTIFIER: ${{ inputs.test-suite-identifier }}
         INPUT_TEST_SESSION_ARGUMENTS: ${{ inputs.test-session-arguments }}
       shell: bash
-      run: run-test.sh
+      run: |
+        test_result=$(poetry run ogc-cite-action execute-test-suite http://localhost:8080/teamengine ${{ inputs.test-suite-identifier }} ${{ inputs.test-session-arguments }})
+        echo "results=${test_result}" >> GITHUB_OUTPUT
