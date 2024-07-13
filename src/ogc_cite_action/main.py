@@ -44,25 +44,37 @@ def execute_test_suite(
 ):
     logger.debug(f"{locals()=}")
     client = httpx.Client(timeout=ctx.obj["network_timeout"])
-    suite_args = {}
-    for arg_name, arg_value in (test_suite_input or []):
-        values = suite_args.setdefault(arg_name, [])
-        values.append(arg_value)
-    raw_result = teamengine_runner.execute_test_suite(
-        client,
-        teamengine_base_url.strip("/"),
-        test_suite_identifier,
-        test_suite_arguments=suite_args,
-        teamengine_username="ogctest",
-        teamengine_password="ogctest",
-    )
-    if raw_result:
-        if persist_response is not None:
-            persist_response.write_text(raw_result)
-            logger.debug(f"Wrote raw response to {persist_response!r}")
-        test_summary = teamengine_runner.parse_test_results(raw_result)
-        print_json(data=test_summary)
+    base_url = teamengine_base_url.strip("/")
+    teamengine_available = teamengine_runner.wait_for_teamengine_to_be_ready(
+        client, base_url)
+    if teamengine_available:
+        suite_args = {}
+        for arg_name, arg_value in (test_suite_input or []):
+            values = suite_args.setdefault(arg_name, [])
+            values.append(arg_value)
+        logger.debug(
+            f"Asking teamengine to execute test suite {test_suite_identifier!r}...")
+        raw_result = teamengine_runner.execute_test_suite(
+            client,
+            base_url,
+            test_suite_identifier,
+            test_suite_arguments=suite_args,
+            teamengine_username="ogctest",
+            teamengine_password="ogctest",
+        )
+        logger.debug(f"Test suite is done executing")
+        if raw_result:
+            if persist_response is not None:
+                persist_response.write_text(raw_result)
+                logger.debug(f"Wrote raw response to {persist_response!r}")
+            logger.debug(f"Parsing test suite execution results...")
+            test_summary = teamengine_runner.parse_test_results(raw_result)
+            print_json(data=test_summary)
+        else:
+            logger.critical(f"Unable to collect test suite execution results")
+            raise SystemExit(1)
     else:
+        logger.critical(f"teamengine service is not available")
         raise SystemExit(1)
 
 
