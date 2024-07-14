@@ -1,11 +1,16 @@
 """Parse test results."""
-
+import datetime as dt
+import dataclasses
 import logging
 import typing
 import time
 from xml.etree import ElementTree as ET
 
 import httpx
+import jinja2
+
+from . import schemas
+from .schemas import TestSuiteResults
 
 logger = logging.getLogger(__name__)
 
@@ -63,7 +68,29 @@ def execute_test_suite(
         return response.text
 
 
-def parse_test_results(raw_results: str) -> dict:
+def parse_test_results(raw_results: str) -> schemas.TestSuiteResults:
     root = ET.fromstring(raw_results)
-    summary = root.attrib
-    return summary
+    suite_el = root.find("./suite")
+    return TestSuiteResults(
+        suite_name=suite_el.attrib["name"],
+        test_run_duration_ms=int(suite_el.attrib["duration-ms"]),
+        test_run_start=_parse_to_datetime(suite_el.attrib["started-at"]),
+        test_run_end=_parse_to_datetime(suite_el.attrib["finished-at"]),
+        num_tests=int(root.attrib.get("total", 0)),
+        num_failed=int(root.attrib.get("failed", 0)),
+        num_skipped=int(root.attrib.get("skipped", 0)),
+        num_passed=int(root.attrib.get("passed", 0)),
+    )
+
+
+def serialize_results_to_markdown(
+        results: schemas.TestSuiteResults,
+        jinja_environment: jinja2.Environment
+) -> str:
+    template = jinja_environment.get_template("results-overview.md")
+    return template.render(**dataclasses.asdict(results))
+
+
+def _parse_to_datetime(temporal_value: str) -> dt.datetime:
+    return dt.datetime.fromisoformat(
+        temporal_value.strip("Z")).replace(tzinfo=dt.timezone.utc)
