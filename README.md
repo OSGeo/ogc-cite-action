@@ -51,11 +51,10 @@ In order to successfully run this action you need to know:
 
 #### OGC API Features
 
-- `etscode`: ogcapi-features-1.0
-- `iut`: Mandatory - Implementation under test. This is a URI (http://localhost:5001)
-- `noofcollections`: Optional - An integer specifying the number of 
-  collections being tested. A value of `-1` means that all available 
-  collections shall be tested
+- test suite identifier (`etscode`): ogcapi-features-1.0
+- implementation under test (`iut`): Mandatory - Implementation under test. This is a URI (http://localhost:5000)
+- `noofcollections`: Optional - An integer specifying the number of collections being tested. A value of `-1` means 
+  that all available collections shall be tested
 
 
 #### OGC API Processes
@@ -73,3 +72,29 @@ In order to successfully run this action you need to know:
 - `iut`: Mandatory - Implementation under test. This is a URI (http://localhost:5001)
 - `ics`: A comma-separated list of string values. Indicates ???
 
+
+## Running locally
+
+With a bit of extra effort, this action's code can be run locally:
+
+- Start your service to be tested. Let's assume it is running on `http://localhost:5000`
+
+- Run the teamengine docker image:
+
+  ```shell
+  docker run --rm --name teamengine --network=host ogccite/teamengine-production:1.0-SNAPSHOT
+  ```
+
+- Install the action code with poetry and then run its main script. Here we are executing the test suite for 
+  ogcapi-features:
+
+  ```shell
+  poetry install
+  poetry run ogc-cite-action \
+    --debug \
+    execute-test-suite \
+    http://localhost:8080/teamengine \
+    ogcapi-features-1.0 \
+    --test-suite-input iut http://localhost:5000 \
+    --test-suite-input noofcollections -1
+  ```

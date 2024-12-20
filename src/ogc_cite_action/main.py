@@ -8,8 +8,11 @@ from pathlib import Path
 import click
 import httpx
 import typer
-from rich import print
-from rich import print_json
+from rich import (
+    print,
+    print_json,
+)
+from rich.logging import RichHandler
 
 from . import (
     config,
@@ -31,7 +34,10 @@ def base_callback(
     debug: bool = False,
     network_timeout: int = 20
 ) -> None:
-    logging.basicConfig(level=logging.DEBUG if debug else logging.INFO)
+    logging.basicConfig(
+        level=logging.DEBUG if debug else logging.INFO,
+        handlers=[RichHandler()],
+    )
     ctx_obj = ctx.ensure_object(dict)
     ctx_obj.update({
         "debug": debug,
@@ -53,6 +59,7 @@ def execute_test_suite(
     persist_response: typing.Optional[Path] = None,
     output_format: OutputFormat = OutputFormat.MARKDOWN,
 ):
+    """Execute a CITE test suite."""
     logger.debug(f"{locals()=}")
     client = httpx.Client(timeout=ctx.obj["network_timeout"])
     base_url = teamengine_base_url.strip("/")
@@ -76,15 +83,26 @@ def execute_test_suite(
         logger.debug(f"Test suite is done executing")
         if raw_result:
             if persist_response is not None:
-                persist_response.write_text(raw_result)
-                logger.debug(f"Wrote raw response to {persist_response!r}")
+                output_path = persist_response.resolve()
+                try:
+                    output_path.parent.mkdir(parents=True, exist_ok=True)
+                except OSError:
+                    logger.exception(
+                        f"Failed to create output directory {output_path.parent}")
+                else:
+                    try:
+                        output_path.write_text(raw_result)
+                    except PermissionError:
+                        logger.exception(f"Failed to create output path {output_path}")
+                    else:
+                        logger.debug(f"Wrote raw response to {output_path}")
             logger.debug(f"Parsing test suite execution results...")
-            results = teamengine_runner.parse_test_results(raw_result)
+            suite_execution_result = teamengine_runner.parse_test_results(raw_result)
             if output_format == OutputFormat.JSON:
-                print_json(data=results)
+                print_json(data=suite_execution_result)
             elif output_format == OutputFormat.MARKDOWN:
                 serialized = teamengine_runner.serialize_results_to_markdown(
-                    results, ctx.obj["jinja_environment"])
+                    suite_execution_result, ctx.obj["jinja_environment"])
                 print(serialized)
             else:
                 logger.critical(f"Output format {output_format} not implemented")
