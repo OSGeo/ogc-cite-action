@@ -1,9 +1,7 @@
 """Run teamengine and parse results."""
 
-import enum
 import logging
 import typing
-from pathlib import Path
 
 import click
 import httpx
@@ -18,14 +16,10 @@ from . import (
     config,
     teamengine_runner,
 )
+from .schemas import OutputFormat
 
 logger = logging.getLogger(__name__)
 app = typer.Typer()
-
-
-class OutputFormat(str, enum.Enum):
-    JSON = "json"
-    MARKDOWN = "markdown"
 
 
 @app.callback()
@@ -38,6 +32,7 @@ def base_callback(
         level=logging.DEBUG if debug else logging.INFO,
         handlers=[RichHandler()],
     )
+    logging.getLogger("httpx").setLevel(logging.DEBUG if debug else logging.WARNING)
     ctx_obj = ctx.ensure_object(dict)
     ctx_obj.update({
         "debug": debug,
@@ -47,20 +42,56 @@ def base_callback(
     ctx_obj["debug"] = debug
 
 
+@app.command("execute-test-suite")
+def execute_test_suite_from_github_actions(
+        ctx: typer.Context,
+        teamengine_base_url: str,
+        test_suite_identifier: str,
+        test_suite_input: list[str],
+        teamengine_username: str = "ogctest",
+        teamengine_password: str = "ogctest",
+        output_format: OutputFormat = OutputFormat.MARKDOWN,
+):
+    """Execute a CITE test suite via github actions.
+
+    This command presents a simpler interface to run the
+    `execute-test-suite-standalone`, making it easier to run as a github
+    action.
+    """
+    inputs = {}
+    for raw_suite_input in test_suite_input:
+        param_name, param_value = raw_suite_input.partition("=")[::2]
+        inputs[param_name] = param_value
+    logger.debug(f"{inputs=}")
+    ctx.invoke(
+        execute_test_suite_standalone,
+        ctx=ctx,
+        teamengine_base_url=teamengine_base_url,
+        test_suite_identifier=test_suite_identifier,
+        teamengine_username=teamengine_username,
+        teamengine_password=teamengine_password,
+        test_suite_input=[(k, v) for k, v in inputs.items()],
+        output_format=output_format,
+    )
+
+
+
 @app.command()
-def execute_test_suite(
+def execute_test_suite_standalone(
     ctx: typer.Context,
     teamengine_base_url: str,
     test_suite_identifier: str,
+    teamengine_username: str = "ogctest",
+    teamengine_password: str = "ogctest",
     test_suite_input: typing.Annotated[
         typing.Optional[list[click.Tuple]],
         typer.Option(click_type=click.Tuple([str, str]))
     ] = None,
-    persist_response: typing.Optional[Path] = None,
     output_format: OutputFormat = OutputFormat.MARKDOWN,
 ):
     """Execute a CITE test suite."""
     logger.debug(f"{locals()=}")
+    raise typer.Exit()
     client = httpx.Client(timeout=ctx.obj["network_timeout"])
     base_url = teamengine_base_url.strip("/")
     teamengine_available = teamengine_runner.wait_for_teamengine_to_be_ready(
@@ -77,36 +108,27 @@ def execute_test_suite(
             base_url,
             test_suite_identifier,
             test_suite_arguments=suite_args,
-            teamengine_username="ogctest",
-            teamengine_password="ogctest",
+            teamengine_username=teamengine_username,
+            teamengine_password=teamengine_password,
         )
-        logger.debug(f"Test suite is done executing")
         if raw_result:
-            if persist_response is not None:
-                output_path = persist_response.resolve()
-                try:
-                    output_path.parent.mkdir(parents=True, exist_ok=True)
-                except OSError:
-                    logger.exception(
-                        f"Failed to create output directory {output_path.parent}")
-                else:
-                    try:
-                        output_path.write_text(raw_result)
-                    except PermissionError:
-                        logger.exception(f"Failed to create output path {output_path}")
-                    else:
-                        logger.debug(f"Wrote raw response to {output_path}")
-            logger.debug(f"Parsing test suite execution results...")
-            suite_execution_result = teamengine_runner.parse_test_results(raw_result)
-            if output_format == OutputFormat.JSON:
-                print_json(data=suite_execution_result)
-            elif output_format == OutputFormat.MARKDOWN:
-                serialized = teamengine_runner.serialize_results_to_markdown(
-                    suite_execution_result, ctx.obj["jinja_environment"])
-                print(serialized)
+            if output_format == OutputFormat.RAW_XML:
+                logger.debug(
+                    f"Outputting XML response, as returned by teamengine...")
+                print(raw_result)
             else:
-                logger.critical(f"Output format {output_format} not implemented")
-                raise SystemExit(1)
+                logger.debug(f"Parsing test suite execution results...")
+                suite_execution_result = teamengine_runner.parse_test_results(
+                    raw_result)
+                if output_format == OutputFormat.JSON:
+                    print_json(data=suite_execution_result)
+                elif output_format == OutputFormat.MARKDOWN:
+                    serialized = teamengine_runner.serialize_results_to_markdown(
+                        suite_execution_result, ctx.obj["jinja_environment"])
+                    print(serialized)
+                else:
+                    logger.critical(f"Output format {output_format} not implemented")
+                    raise SystemExit(1)
         else:
             logger.critical(f"Unable to collect test suite execution results")
             raise SystemExit(1)

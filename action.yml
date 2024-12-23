@@ -13,6 +13,13 @@ inputs:
     description: >
       Space-separated string with arguments that are to be sent for running the test session. example:
       'iut=http://pygeoapi:5000'
+  teamengine-url:
+    required: false
+    description: >
+      URL for the teamengine instance to use for running the test suite. If not provided, this will spin up a docker
+      container using the [ogccite/teamengine-production:1.0-SNAPSHOT](https://hub.docker.com/r/ogccite/teamengine-production) image.
+      If you specify a custom teamengine URL you may also optonally supply authentication credentials by defining 
+      them as secrets - Expected secret names are: `teamengine_username` and `teamengine_password`.
 
 outputs:
   results:
@@ -44,6 +51,7 @@ runs:
         cd ${{ github.action_path }}
         poetry install
     - name: 'Start TEAM engine'
+      if: ${{ !inputs.teamengine-url }}
       shell: 'bash'
       run: >
         docker run
@@ -54,11 +62,8 @@ runs:
         ogccite/teamengine-production:1.0-SNAPSHOT
     - name: 'Run executable test suite'
       id: 'run-executable-test-suite'
-      env:
-        INPUT_TEST_SUITE_IDENTIFIER: ${{ inputs.test-suite-identifier }}
-        INPUT_TEST_SESSION_ARGUMENTS: ${{ inputs.test-session-arguments }}
       shell: bash
       run: |
         cd ${{ github.action_path }}
-        test_result=$(poetry run ogc-cite-action --debug execute-test-suite http://localhost:8080/teamengine ${{ inputs.test-suite-identifier }} ${{ inputs.test-session-arguments }})
+        test_result=$(poetry run ogc-cite-action execute-test-suite ${{ inputs.teamengine-url || 'http://localhost:8080/teamengine' }} ${{ inputs.test-suite-identifier }} --teamengine-username=${{ env.teamengine_username || 'ogctest' }} --teamengine-password=${{ env.teamengine_password || 'ogctest' }} ${{ inputs.test-session-arguments }})
         echo "${test_result}" >> $GITHUB_STEP_SUMMARY

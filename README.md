@@ -1,76 +1,80 @@
 # ogc-cite-action
-GitHub Action to run your OGC implementation against OGC CITE
 
-This is a composite action. It spawns a docker container 
-running [ogc teamengine](https://hub.docker.com/r/ogccite/teamengine-production).
+A GitHub Action that simplifies testing your OGC server against [CITE](https://github.com/opengeospatial/cite/wiki). 
 
-It then proceeds to run cURL inside the docker image to test your web application.
+This action is able to either:
 
-The [teamengine docs](http://opengeospatial.github.io/teamengine/users.html) 
-seem to hint that running a test suite via their API can be done by submitting 
-either GET or POST requests to teamengine. Regardless, it seems that `GET` is
-the only request type that works OK, at least when testing the OGC API Features
-Executable Test Suite.
+- Spin up a docker container with the [ogc teamengine image](https://hub.docker.com/r/ogccite/teamengine-production),
+  running test suites in an isolated CI environment
+- Use an existing teamengine deployment
+
+
+## Inputs
+
+This action expects the following inputs to be provided:
+
+- `test-suite-identfier` - Identifier of the test suite to be executed - See below for existing identifiers
+- `test-session-arguments` - Test session arguments to be passed to teamengine. These depend on the test suite that is
+  going to be executed. Regardless, this must be given as a space-separated list of `key=value` pairs
+- `teamengine-url` - Optional URL of the teamengine instance to be used for running tests. If this parameter is not 
+  specified then the action will spin up a local teamengine docker container and use it for testing. If you specify a
+  custom teamengine URL this action will also try to find authentication-related env variables and use them. These
+  env variables must be named `teamengine_username` and `teamengine_password`
+
+
+## Usage
+
+Example usage for testing a service running locally at `http://localhost:5001` against the `ogcapi-features-1.0` 
+executable test suite. Because the `teamengine-url` input is not specified, the action spins up a local docker 
+container running teamengine:
+
+```yaml
+- name: test ogcapi-features compliancy
+  uses: OSGEO/ogc-cite-action@main
+  with:
+    test-suite-identifier: 'ogcapi-features-1.0'
+    test-session-arguments: 'iut=http://localhost:5001 noofcollections=-1'
+  env:
+    teamengine_username: ${{ secrets.TEAMENGINE_USERNAME }}
+    teamengine_password: ${{ secrets.TEAMENGINE_PASSWORD }}
+```
+
+
 
 
 ## Executable Test Suites
 
-- `cat30`: OGC Catalogue 3.0 Conformance Test Suite
-- `cdb10`: OGC CDB 1.0 Executable Conformance Test Suite
-- `kml22`: KML 2.2 Conformance Test Suite
-- `geopose10`: GeoPose 1.0 Conformance Test Suite
-- `georss10`: GeoRSS 1.0 Conformance Test Suite
-- `geotiff11`: GeoTIFF 1.1 Conformance Test Suite
-- `gml32`: GML 3.2 (ISO 19136:2007) Conformance Test Suite
-- `gmljpx20`: GML in JPEG 2000 Conformance Test Suite
-- `gpkg10`: GeoPackage 1.0 Conformance Test Suite
-- `gpkg12`: GeoPackage 1.2 Conformance Test Suite
-- `ogcapi-edr10`: OGC API - Environmental Data Retrieval 1.0 Conformance Test Suite
-- `ogcapi-features-1.0`: OGC API-Features 1.0 Conformance Test Suite
-- `ogcapi-processes-1.0`: OGC API-Processes 1.0 Conformance Test Suite
-- `omxml20`: Observations and Measurements - XML Implementation (OMXML)
-- `sensorml20`: Sensor Model Language (SensorML)
-- `sos20`: OGC Sensor Observation Service 2.0.0 - Executable Test Suite
-- `sta10`: SensorThings API (STA)
-- `swecommon20`: Sensor Web Enablement (SWE) Common Data Model Encoding Standard
-- `wcs`: OGC Web Coverage Service 2.0.1 - Executable Test Suite
-- `wcs11`: OGC Web Coverage Service 1.1.1 - Executable Test Suite
-- `wfs`: Web Feature Service 1.1.0
-- `wfs10`: Conformance Test Suite - OGC Web Feature Service 1.0.0
-- `wfs20`: WFS 2.0 (ISO 19142:2010) Conformance Test Suite
-- `wms11`: Conformance Test Suite - OGC Web Map Service 1.1
-- `wms13`: Conformance Test Suite - OGC Web Map Service 1.3.0
-- `wmts`: OGC Web Map Tile Service 1.0.0 - Executable Test Suite
-- `wps20`: WPS 2.0 Conformance Test Suite
-
 In order to successfully run this action you need to know:
 
-- the identifier of the test suite you want to run
-- the parameters that can be passed to the teamengine test runner
+- `test-suite-identifier` - the identifier of the test suite you want to run
+- `test-session-arguments` - the parameters that can be passed to the teamengine test runner
 
+Information on existing test suites can be found at:
 
-#### OGC API Features
+http://cite.opengeospatial.org/teamengine/
 
-- test suite identifier (`etscode`): ogcapi-features-1.0
-- implementation under test (`iut`): Mandatory - Implementation under test. This is a URI (http://localhost:5000)
-- `noofcollections`: Optional - An integer specifying the number of collections being tested. A value of `-1` means 
-  that all available collections shall be tested
+Examples: 
 
+1. [OGC API Features](https://cite.opengeospatial.org/teamengine/about/ogcapi-features-1.0/1.0/site/) one must use the following:
 
-#### OGC API Processes
+   - `test-suite-identifier`: `ogcapi-features-1.0`
+   - `test-session-arguments`:
+     - `iut`
+     - `noofcollections`
 
-- `etscode`: ogcapi-processes-1.0
-- `iut`: Mandatory - Implementation under test. This is a URI (http://localhost:5001)
-- `noofcollections`: Optional - An integer specifying the number of
-  collections being tested. A value of `-1` means that all available
-  collections shall be tested
+2. OGC API - Processes:
 
+  - `test-suite-identifier`: `ogcapi-processes-1.0`
+  - `test-session-arguments`:
+    - `iut`
+    - `noofcollections`
 
-#### OGC API EDR
+3. OGC API - EDR
 
-- `etscode`: ogcapi-edr10
-- `iut`: Mandatory - Implementation under test. This is a URI (http://localhost:5001)
-- `ics`: A comma-separated list of string values. Indicates ???
+   - `test-suite-identifier`: `ogcapi-edr10`
+   - `test-session-arguments`:
+     - `iut`
+     - `ics`
 
 
 ## Running locally
@@ -95,6 +99,6 @@ With a bit of extra effort, this action's code can be run locally:
     execute-test-suite \
     http://localhost:8080/teamengine \
     ogcapi-features-1.0 \
-    --test-suite-input iut http://localhost:5000 \
-    --test-suite-input noofcollections -1
+    iut=http://localhost:5000 \
+    noofcollections=-1
   ```

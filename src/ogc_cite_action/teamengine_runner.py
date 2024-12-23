@@ -69,49 +69,8 @@ def execute_test_suite(
 def parse_test_results(raw_results: str) -> schemas.TestSuiteResult:
     root = ET.fromstring(raw_results)
     suite_el = root.find("./suite")
-    conformance_classes = []
-    for conformance_class_el in suite_el.findall("./test"):
-        categories = []
-        for category_el in conformance_class_el.findall("./class"):
-            test_cases = []
-            for test_case_el in category_el.findall("./test-method"):
-                test_case_name = test_case_el.get("name", "")
-                raw_status = test_case_el.get("status", "")
-                test_case_passed = raw_status.lower() == "pass"
-                error_msg_el = test_case_el.find("./exception/message")
-                if test_case_el.attrib.get("is-config") != "true":
-                    test_case = schemas.TestCaseResult(
-                        name=test_case_name,
-                        description=test_case_el.attrib.get("description", ""),
-                        passed=test_case_passed,
-                        output=test_case_el.find("./reporter-output").text.strip(),
-                        exception=(
-                            error_msg_el.text.strip()
-                            if error_msg_el is not None else None
-                        ),
-                        parameters=[
-                            i.text.strip() for i in test_case_el.findall("./params/param")
-                        ],
-                    )
-                    test_cases.append(test_case)
-                else:
-                    logger.debug(
-                        f"ignoring test case {test_case_name}"
-                        f"(passed={test_case_passed}) as it seems to be only "
-                        f"test configuration"
-                    )
-            category = schemas.TestCaseCategoryResults(
-                name=category_el.attrib.get("name", ""),
-                test_cases=test_cases
-            )
-            categories.append(category)
-        conformance_class = schemas.ConformanceClassResults(
-            name=conformance_class_el.attrib.get("name", ""),
-            categories=categories,
-        )
-        conformance_classes.append(conformance_class)
     now = dt.datetime.now(tz=dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%S")
-    return schemas.TestSuiteResult(
+    suite = schemas.TestSuiteResult(
         suite_name=suite_el.attrib.get("name", ""),
         overview=schemas.SuiteResultOverview(
             test_run_duration_ms=dt.timedelta(
@@ -124,8 +83,53 @@ def parse_test_results(raw_results: str) -> schemas.TestSuiteResult:
         ),
         test_run_start=_parse_to_datetime(suite_el.attrib.get("started-at", now)),
         test_run_end=_parse_to_datetime(suite_el.attrib.get("finished-at", now)),
-        conformance_classes=conformance_classes,
     )
+    for conformance_class_el in suite_el.findall("./test"):
+        conformance_class = schemas.ConformanceClassResults(
+            name=conformance_class_el.attrib.get("name", ""),
+            suite=suite,
+        )
+        for category_el in conformance_class_el.findall("./class"):
+            category = schemas.TestCaseCategoryResults(
+                name=category_el.attrib.get("name", ""),
+                conformance_class=conformance_class,
+            )
+            for test_case_el in category_el.findall("./test-method"):
+                test_case_name = test_case_el.get("name", "")
+                test_case_status = {
+                    "pass": schemas.TestStatus.PASSED,
+                    "skip": schemas.TestStatus.SKIPPED,
+                }.get(
+                    test_case_el.get("status", "").lower(),
+                    schemas.TestStatus.FAILED
+                )
+                error_msg_el = test_case_el.find("./exception/message")
+                if test_case_el.attrib.get("is-config") != "true":
+                    params = [
+                        i.text.strip() for i in test_case_el.findall("./params/param")
+                    ]
+                    test_case = schemas.TestCaseResult(
+                        name=test_case_name,
+                        description=test_case_el.attrib.get("description", ""),
+                        status=test_case_status,
+                        output=test_case_el.find("./reporter-output").text.strip(),
+                        exception=(
+                            error_msg_el.text.strip()
+                            if error_msg_el is not None else None
+                        ),
+                        parameters=[p for p in params if p != ""],
+                        category=category,
+                    )
+                    category.test_cases.append(test_case)
+                else:
+                    logger.debug(
+                        f"ignoring test case {test_case_name}"
+                        f"(status={test_case_status}) as it seems to be only "
+                        f"test configuration"
+                    )
+            conformance_class.categories.append(category)
+        suite.conformance_classes.append(conformance_class)
+    return suite
 
 
 def serialize_results_to_markdown(
