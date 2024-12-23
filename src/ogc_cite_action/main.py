@@ -91,7 +91,6 @@ def execute_test_suite_standalone(
 ):
     """Execute a CITE test suite."""
     logger.debug(f"{locals()=}")
-    raise typer.Exit()
     client = httpx.Client(timeout=ctx.obj["network_timeout"])
     base_url = teamengine_base_url.strip("/")
     teamengine_available = teamengine_runner.wait_for_teamengine_to_be_ready(
