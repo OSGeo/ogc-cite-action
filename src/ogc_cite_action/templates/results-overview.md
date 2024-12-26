@@ -24,7 +24,10 @@
 {% endfor %}
 
 
-{%- if not result.passed %}
+{%- set skipped_test_cases = result.gen_skipped_test_cases() | list %}
+{%- set failed_test_cases = result.gen_failed_test_cases() | list %}
+
+{%- if skipped_test_cases | length > 0 %}
 ## Skips
 {%- for skipped_test_case in result.gen_skipped_test_cases() %}
 
@@ -44,6 +47,8 @@
 {% endfor %}
 {% endif %}
 {% endfor %}
+{% endif %}
+{%- if failed_test_cases | length > 0 %}
 ## Failures
 {%- for failed_test_case in result.gen_failed_test_cases() %}
 ##### {{ failed_test_case.name }}
