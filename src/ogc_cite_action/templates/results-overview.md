@@ -1,4 +1,4 @@
-# Test suite {{ suite_name }} {% if result.passed %}:medal_sports:{% endif %}
+# Test suite {{ result.suite_name }} {% if result.passed %}:medal_sports:{% endif %}
 
 ## Overview
 
