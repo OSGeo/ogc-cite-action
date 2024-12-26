@@ -94,8 +94,10 @@ def parse_test_suite_result(result_element: ET.Element) -> models.TestSuiteResul
             suite=suite,
         )
         for category_el in conformance_class_el.findall("./class"):
+            cat_name = category_el.attrib.get("name", "")
             category = models.TestCaseCategoryResults(
-                name=category_el.attrib.get("name", ""),
+                name=cat_name,
+                short_name=cat_name.partition("conformance")[-1],
                 conformance_class=conformance_class,
             )
             for test_case_el in category_el.findall("./test-method"):

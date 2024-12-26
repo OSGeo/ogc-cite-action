@@ -44,6 +44,7 @@ class TestCaseResult(pydantic.BaseModel):
 
 class TestCaseCategoryResults(pydantic.BaseModel):
     name: str
+    short_name: str
     conformance_class: "ConformanceClassResults"
     test_cases: Annotated[
         list[TestCaseResult],
