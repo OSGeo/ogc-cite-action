@@ -66,6 +66,6 @@ runs:
       run: |
         cd ${{ github.action_path }}
         poetry run ogc-cite-action execute-test-suite ${{ inputs.teamengine-url || 'http://localhost:8080/teamengine' }} ${{ inputs.test-suite-identifier }} --output-format=raw --teamengine-username=${{ env.teamengine_username || 'ogctest' }} --teamengine-password=${{ env.teamengine_password || 'ogctest' }} ${{ inputs.test-session-arguments }} >> raw-result.xml
-        parsed_result=$(poetry run ogc-cite-action parse-test-result raw-result.xml --output-format=markdown)
+        parsed_result=$(poetry run ogc-cite-action parse-result raw-result.xml --output-format=markdown)
         echo "${parsed_result}" >> $GITHUB_STEP_SUMMARY
         cat ${raw-result.xml}
