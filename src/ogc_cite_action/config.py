@@ -1,6 +1,6 @@
 import jinja2
 
-from .schemas import TestStatus
+from .models import TestStatus
 
 
 def get_jinja_environment() -> jinja2.Environment:

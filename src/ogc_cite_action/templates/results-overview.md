@@ -3,9 +3,9 @@
 ## Overview
 
 - Ran {{ result.overview.num_tests_total }} tests in {{ result.overview.test_run_duration_ms | humanize_precisedelta(minimum_unit="milliseconds") }}
-- :x: Failed {{ result.overview.num_failed_tests }} tests
-- :black_square_button: Skipped {{ result.overview.num_skipped_tests }} tests
-- :white_check_mark: Passed {{ result.overview.num_passed_tests }} tests - {% if result.passed %}:medal_sports: All tests passed!{% endif %}
+- :red_circle: Failed {{ result.overview.num_failed_tests }} tests
+- :yellow_circle: Skipped {{ result.overview.num_skipped_tests }} tests
+- :green_circle: Passed {{ result.overview.num_passed_tests }} tests - {% if result.passed %}:medal_sports: All tests passed!{% endif %}
 
 
 ## Details
@@ -18,7 +18,7 @@
 ##### Category: {{ category.name }}
 
 {% for test_case in category.test_cases %}
-- {% if test_case.status == TestStatus.PASSED %}:green_circle:{% elif test_case.status == TestStatus.SKIPPED %}:yellow_circle:{% else %}:red_circle:{% endif %} {{ test_case.category.name }} - {{ test_case.name }}
+- {% if test_case.status == TestStatus.PASSED %}:green_circle:{% elif test_case.status == TestStatus.SKIPPED %}:yellow_circle:{% else %}:red_circle:{% endif %} {{ test_case.name }}
 {% endfor %}
 {% endfor %}
 {% endfor %}

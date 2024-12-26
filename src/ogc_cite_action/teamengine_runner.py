@@ -1,5 +1,7 @@
 """Utilities for running a remote TEAMENGINE instance and getting its result."""
+import dataclasses
 import datetime as dt
+import json
 import logging
 import typing
 import time
@@ -8,7 +10,10 @@ from xml.etree import ElementTree as ET
 import httpx
 import jinja2
 
-from . import schemas
+from . import (
+    exceptions,
+    models,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -59,56 +64,55 @@ def execute_test_suite(
     )
     try:
         response.raise_for_status()
-    except httpx.HTTPError:
-        logger.exception(msg="Could not execute test suite")
-        logger.debug(response.content)
+    except httpx.HTTPError as exc:
+        raise exceptions.OgcCiteActionException(
+            "Could not execute test suite") from exc
     else:
         return response.text
 
 
-def parse_test_results(raw_results: str) -> schemas.TestSuiteResult:
-    root = ET.fromstring(raw_results)
-    suite_el = root.find("./suite")
+def parse_test_suite_result(result_element: ET.Element) -> models.TestSuiteResult:
+    suite_el = result_element.find("./suite")
     now = dt.datetime.now(tz=dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%S")
-    suite = schemas.TestSuiteResult(
+    suite = models.TestSuiteResult(
         suite_name=suite_el.attrib.get("name", ""),
-        overview=schemas.SuiteResultOverview(
+        overview=models.SuiteResultOverview(
             test_run_duration_ms=dt.timedelta(
                 microseconds=int(suite_el.attrib.get("duration-ms", 0))
             ),
-            num_tests_total=int(root.attrib.get("total", 0)),
-            num_failed_tests=int(root.attrib.get("failed", 0)),
-            num_skipped_tests=int(root.attrib.get("skipped", 0)),
-            num_passed_tests=int(root.attrib.get("passed", 0)),
+            num_tests_total=int(result_element.attrib.get("total", 0)),
+            num_failed_tests=int(result_element.attrib.get("failed", 0)),
+            num_skipped_tests=int(result_element.attrib.get("skipped", 0)),
+            num_passed_tests=int(result_element.attrib.get("passed", 0)),
         ),
         test_run_start=_parse_to_datetime(suite_el.attrib.get("started-at", now)),
         test_run_end=_parse_to_datetime(suite_el.attrib.get("finished-at", now)),
     )
     for conformance_class_el in suite_el.findall("./test"):
-        conformance_class = schemas.ConformanceClassResults(
+        conformance_class = models.ConformanceClassResults(
             name=conformance_class_el.attrib.get("name", ""),
             suite=suite,
         )
         for category_el in conformance_class_el.findall("./class"):
-            category = schemas.TestCaseCategoryResults(
+            category = models.TestCaseCategoryResults(
                 name=category_el.attrib.get("name", ""),
                 conformance_class=conformance_class,
             )
             for test_case_el in category_el.findall("./test-method"):
                 test_case_name = test_case_el.get("name", "")
                 test_case_status = {
-                    "pass": schemas.TestStatus.PASSED,
-                    "skip": schemas.TestStatus.SKIPPED,
+                    "pass": models.TestStatus.PASSED,
+                    "skip": models.TestStatus.SKIPPED,
                 }.get(
                     test_case_el.get("status", "").lower(),
-                    schemas.TestStatus.FAILED
+                    models.TestStatus.FAILED
                 )
                 error_msg_el = test_case_el.find("./exception/message")
                 if test_case_el.attrib.get("is-config") != "true":
                     params = [
                         i.text.strip() for i in test_case_el.findall("./params/param")
                     ]
-                    test_case = schemas.TestCaseResult(
+                    test_case = models.TestCaseResult(
                         name=test_case_name,
                         description=test_case_el.attrib.get("description", ""),
                         status=test_case_status,
@@ -132,12 +136,20 @@ def parse_test_results(raw_results: str) -> schemas.TestSuiteResult:
     return suite
 
 
-def serialize_results_to_markdown(
-        suite_result: schemas.TestSuiteResult,
-        jinja_environment: jinja2.Environment
+def serialize_test_suite_result(
+        parsed_result: models.TestSuiteResult,
+        output_format: models.ParseableOutputFormat,
+        jinja_environment: jinja2.Environment | None = None,
 ) -> str:
-    template = jinja_environment.get_template("results-overview.md")
-    return template.render(result=suite_result)
+    if output_format == models.ParseableOutputFormat.JSON:
+        output_result = models.TestSuiteResultOut(**parsed_result.model_dump())
+        rendered = output_result.model_dump_json(indent=2)
+    elif output_format == models.ParseableOutputFormat.MARKDOWN:
+        template = jinja_environment.get_template("results-overview.md")
+        rendered = template.render(result=parsed_result)
+    else:
+        raise ValueError(f"Output format {output_format} not implemented")
+    return rendered
 
 
 def _parse_to_datetime(temporal_value: str) -> dt.datetime:

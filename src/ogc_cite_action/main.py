@@ -2,24 +2,30 @@
 
 import logging
 import typing
+from pathlib import Path
+from xml.etree import ElementTree as ET
 
 import click
 import httpx
+import jinja2
 import typer
-from rich import (
-    print,
-    print_json,
-)
+from rich import print
 from rich.logging import RichHandler
 
 from . import (
     config,
+    exceptions,
+    models,
     teamengine_runner,
 )
-from .schemas import OutputFormat
 
 logger = logging.getLogger(__name__)
 app = typer.Typer()
+
+_teamengine_base_url_help_text = (
+    "Base URL of teamengine service. Ex: http://localhost:8080/teamengine")
+_test_suite_identifier_help_text = (
+    "Identifier of the test suite. Ex: ogcapi-features-1.0")
 
 
 @app.callback()
@@ -42,15 +48,43 @@ def base_callback(
     ctx_obj["debug"] = debug
 
 
+@app.command("parse-result")
+def parse_test_result(
+        ctx: typer.Context,
+        test_suite_result: typing.Annotated[
+            Path,
+            typer.Argument(
+                exists=True,
+                file_okay=True,
+                dir_okay=False,
+            )
+        ],
+        output_format: models.ParseableOutputFormat = models.ParseableOutputFormat.JSON,
+):
+    raw_result = test_suite_result.read_text()
+    _parse_result(raw_result, output_format, ctx.obj["jinja_environment"])
+
+
 @app.command("execute-test-suite")
 def execute_test_suite_from_github_actions(
         ctx: typer.Context,
-        teamengine_base_url: str,
-        test_suite_identifier: str,
-        test_suite_input: list[str],
+        teamengine_base_url: typing.Annotated[
+            str, typer.Argument(help=_teamengine_base_url_help_text)],
+        test_suite_identifier: typing.Annotated[
+            str, typer.Argument(help=_test_suite_identifier_help_text)],
+        test_suite_input: typing.Annotated[
+            list[str],
+            typer.Argument(
+                help=(
+                    "Space-separated list of inputs to be passed to teamengine. Each "
+                    "input must be formatted as key=value. Ex: "
+                    "iut=http://localhost:5000 noofcollections=-1"
+                )
+            )
+        ],
         teamengine_username: str = "ogctest",
         teamengine_password: str = "ogctest",
-        output_format: OutputFormat = OutputFormat.MARKDOWN,
+        output_format: models.OutputFormat = models.OutputFormat.MARKDOWN,
 ):
     """Execute a CITE test suite via github actions.
 
@@ -79,60 +113,80 @@ def execute_test_suite_from_github_actions(
 @app.command()
 def execute_test_suite_standalone(
     ctx: typer.Context,
-    teamengine_base_url: str,
-    test_suite_identifier: str,
+    teamengine_base_url: typing.Annotated[
+        str, typer.Argument(help=_teamengine_base_url_help_text)],
+    test_suite_identifier: typing.Annotated[
+        str, typer.Argument(help=_test_suite_identifier_help_text)],
     teamengine_username: str = "ogctest",
     teamengine_password: str = "ogctest",
     test_suite_input: typing.Annotated[
         typing.Optional[list[click.Tuple]],
         typer.Option(click_type=click.Tuple([str, str]))
     ] = None,
-    output_format: OutputFormat = OutputFormat.MARKDOWN,
+    output_format: models.OutputFormat = models.OutputFormat.MARKDOWN,
 ):
     """Execute a CITE test suite."""
     logger.debug(f"{locals()=}")
     client = httpx.Client(timeout=ctx.obj["network_timeout"])
     base_url = teamengine_base_url.strip("/")
-    teamengine_available = teamengine_runner.wait_for_teamengine_to_be_ready(
-        client, base_url)
-    if teamengine_available:
+    if teamengine_runner.wait_for_teamengine_to_be_ready(client, base_url):
         suite_args = {}
         for arg_name, arg_value in (test_suite_input or []):
             values = suite_args.setdefault(arg_name, [])
             values.append(arg_value)
         logger.debug(
             f"Asking teamengine to execute test suite {test_suite_identifier!r}...")
-        raw_result = teamengine_runner.execute_test_suite(
-            client,
-            base_url,
-            test_suite_identifier,
-            test_suite_arguments=suite_args,
-            teamengine_username=teamengine_username,
-            teamengine_password=teamengine_password,
-        )
-        if raw_result:
-            if output_format == OutputFormat.RAW_XML:
+        try:
+            raw_result = teamengine_runner.execute_test_suite(
+                client,
+                base_url,
+                test_suite_identifier,
+                test_suite_arguments=suite_args,
+                teamengine_username=teamengine_username,
+                teamengine_password=teamengine_password,
+            )
+        except exceptions.OgcCiteActionException as exc:
+            logger.critical(f"Unable to collect test suite execution results")
+            raise SystemExit(1)
+        else:
+            if output_format == models.OutputFormat.RAW:
                 logger.debug(
-                    f"Outputting XML response, as returned by teamengine...")
+                    f"Outputting raw response, as returned by teamengine...")
                 print(raw_result)
             else:
                 logger.debug(f"Parsing test suite execution results...")
-                suite_execution_result = teamengine_runner.parse_test_results(
-                    raw_result)
-                if output_format == OutputFormat.JSON:
-                    print_json(data=suite_execution_result)
-                elif output_format == OutputFormat.MARKDOWN:
-                    serialized = teamengine_runner.serialize_results_to_markdown(
-                        suite_execution_result, ctx.obj["jinja_environment"])
-                    print(serialized)
-                else:
-                    logger.critical(f"Output format {output_format} not implemented")
-                    raise SystemExit(1)
-        else:
-            logger.critical(f"Unable to collect test suite execution results")
-            raise SystemExit(1)
+                _parse_result(
+                    raw_result,
+                    models.ParseableOutputFormat(output_format.value),
+                    ctx.obj["jinja_environment"]
+                )
     else:
         logger.critical(f"teamengine service is not available")
         raise SystemExit(1)
 
 
+
+
+def _parse_result(
+        raw_result: str,
+        output_format: models.ParseableOutputFormat,
+        jinja_env: jinja2.Environment
+):
+    try:
+        root = ET.fromstring(raw_result)
+        parsed = teamengine_runner.parse_test_suite_result(root)
+        parseable_output_format = models.ParseableOutputFormat(
+            output_format.value)
+        rendered = teamengine_runner.serialize_test_suite_result(
+            parsed,
+            parseable_output_format,
+            jinja_environment=jinja_env
+        )
+    except ET.ParseError:
+        logger.critical(f"Unable to parse test suite execution result as XML")
+        raise SystemExit(1)
+    except ValueError as exc:
+        logger.exception(msg="Found an error")
+        raise SystemExit(1) from exc
+    else:
+        print(rendered)
