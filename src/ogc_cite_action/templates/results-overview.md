@@ -28,13 +28,13 @@
 {%- set failed_test_cases = result.gen_failed_test_cases() | list %}
 
 {%- if skipped_test_cases | length > 0 %}
-## Skips
+## :yellow_circle: Skips
 {%- for skipped_test_case in result.gen_skipped_test_cases() %}
 
 ##### {{ skipped_test_case.name }}
 
 **Conformance class:** {{ skipped_test_case.category.conformance_class.name }} 
-**Category:** {{ skipped_test_case.category.name }}
+**Category:** {{ skipped_test_case.category.short_name }}
 **Test case description:** {{ skipped_test_case.description }}
 **Exception:** {{ skipped_test_case.exception }}
 {% if skipped_test_case.output %}
@@ -49,12 +49,12 @@
 {% endfor %}
 {% endif %}
 {%- if failed_test_cases | length > 0 %}
-## Failures
+## :red_circle: Failures
 {%- for failed_test_case in result.gen_failed_test_cases() %}
 ##### {{ failed_test_case.name }}
 
 **Conformance class:** {{ failed_test_case.category.conformance_class.name }}
-**Category:** {{ failed_test_case.category.name }}
+**Category:** {{ failed_test_case.category.short_name }}
 **Test case description:** {{ failed_test_case.description }}
 **Exception:** {{ failed_test_case.exception }}
 {% if failed_test_case.output %}
