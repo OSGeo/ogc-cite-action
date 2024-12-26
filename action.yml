@@ -69,3 +69,4 @@ runs:
         parsed_result=$(poetry run ogc-cite-action parse-result raw-result.xml --output-format=markdown)
         echo "${parsed_result}" >> $GITHUB_STEP_SUMMARY
         cat ${raw-result.xml}
+        exit 0
