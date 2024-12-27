@@ -209,7 +209,7 @@ def _parse_result(
             jinja_environment=jinja_env
         )
     except ET.ParseError:
-        logger.critical(f"Unable to parse test suite execution result as XML")
+        logger.exception(f"Unable to parse test suite execution result as XML")
         raise SystemExit(1)
     except ValueError as exc:
         logger.exception(msg="Found an error")
