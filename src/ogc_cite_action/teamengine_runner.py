@@ -1,14 +1,14 @@
 """Utilities for running a remote TEAMENGINE instance and getting its result."""
-import dataclasses
 import datetime as dt
-import json
 import logging
 import typing
 import time
+from itertools import count
 from xml.etree import ElementTree as ET
 
 import httpx
 import jinja2
+import pydantic
 
 from . import (
     exceptions,
@@ -51,13 +51,17 @@ def execute_test_suite(
     test_suite_identifier: str,
     *,
     test_suite_arguments: typing.Optional[dict[str, str]] = None,
-    teamengine_username: str,
-    teamengine_password: str,
+    teamengine_username: pydantic.SecretStr | None = None,
+    teamengine_password: pydantic.SecretStr | None = None,
 ) -> typing.Optional[str]:
+    request_auth = (
+        teamengine_username.get_secret_value(),
+        teamengine_password.get_secret_value()
+    ) if teamengine_username is not None else None
     response = client.get(
         f"{teamengine_base_url}/rest/suites/{test_suite_identifier}/run",
         params=test_suite_arguments,
-        auth=(teamengine_username, teamengine_password),
+        auth=request_auth,
         headers={
             "Accept": "application/xml",
         }
@@ -65,8 +69,7 @@ def execute_test_suite(
     try:
         response.raise_for_status()
     except httpx.HTTPError as exc:
-        raise exceptions.OgcCiteActionException(
-            "Could not execute test suite") from exc
+        raise exceptions.OgcCiteActionException("Could not execute test suite") from exc
     else:
         return response.text
 
@@ -88,6 +91,7 @@ def parse_test_suite_result(result_element: ET.Element) -> models.TestSuiteResul
         test_run_start=_parse_to_datetime(suite_el.attrib.get("started-at", now)),
         test_run_end=_parse_to_datetime(suite_el.attrib.get("finished-at", now)),
     )
+    test_case_names = set()
     for conformance_class_el in suite_el.findall("./test"):
         conformance_class = models.ConformanceClassResults(
             name=conformance_class_el.attrib.get("name", ""),
@@ -101,7 +105,12 @@ def parse_test_suite_result(result_element: ET.Element) -> models.TestSuiteResul
                 conformance_class=conformance_class,
             )
             for test_case_el in category_el.findall("./test-method"):
-                test_case_name = test_case_el.get("name", "")
+                test_case_name = _get_test_case_name(
+                    test_case_el.get("name", ""),
+                    test_case_names
+                )
+                logger.debug(f"{test_case_name=}")
+                test_case_names.add(test_case_name)
                 test_case_status = {
                     "pass": models.TestStatus.PASSED,
                     "skip": models.TestStatus.SKIPPED,
@@ -157,3 +166,20 @@ def serialize_test_suite_result(
 def _parse_to_datetime(temporal_value: str) -> dt.datetime:
     return dt.datetime.fromisoformat(
         temporal_value.strip("Z")).replace(tzinfo=dt.timezone.utc)
+
+
+def _get_test_case_name(naive_name: str, seen_names: set) -> str:
+    result = naive_name
+    if naive_name in seen_names:
+        for idx in count(start=1):
+            if idx > 10_000:
+                raise RuntimeError(
+                    f"Could not find a unique name for test case after {count} tries, "
+                    f"aborting..."
+                )
+            else:
+                candidate_name = f"{naive_name}-{idx:03d}"
+                if candidate_name not in seen_names:
+                    result = candidate_name
+                    break
+    return result

@@ -1,5 +1,6 @@
 """Run teamengine and parse results."""
 
+from builtins import print as stdlib_print
 import logging
 import typing
 from pathlib import Path
@@ -8,8 +9,10 @@ from xml.etree import ElementTree as ET
 import click
 import httpx
 import jinja2
+import pydantic
 import typer
 from rich import print
+from rich.console import Console
 from rich.logging import RichHandler
 
 from . import (
@@ -22,10 +25,35 @@ from . import (
 logger = logging.getLogger(__name__)
 app = typer.Typer()
 
-_teamengine_base_url_help_text = (
-    "Base URL of teamengine service. Ex: http://localhost:8080/teamengine")
-_test_suite_identifier_help_text = (
-    "Identifier of the test suite. Ex: ogcapi-features-1.0")
+
+def _parse_pydantic_secret_str(value: str) -> pydantic.SecretStr:
+    return pydantic.SecretStr(value)
+
+
+_test_suite_identifier_argument = typing.Annotated[
+    str,
+    typer.Argument(help="Identifier of the test suite. Ex: ogcapi-features-1.0")
+]
+_teamengine_base_url_argument = typing.Annotated[
+    str,
+    typer.Argument(
+        help="Base URL of teamengine service. Ex: http://localhost:8080/teamengine"
+    )
+]
+_teamengine_username_option = typing.Annotated[
+    pydantic.SecretStr,
+    typer.Option(
+        help="Username for authenticating with teamengine",
+        parser=_parse_pydantic_secret_str,
+    )
+]
+_teamengine_password_option = typing.Annotated[
+    pydantic.SecretStr,
+    typer.Option(
+        help="Password for authenticating with teamengine",
+        parser=_parse_pydantic_secret_str,
+    )
+]
 
 
 @app.callback()
@@ -36,7 +64,12 @@ def base_callback(
 ) -> None:
     logging.basicConfig(
         level=logging.DEBUG if debug else logging.INFO,
-        handlers=[RichHandler()],
+        handlers=[
+            RichHandler(
+                console=Console(stderr=True),
+                rich_tracebacks=True
+            )
+        ],
     )
     logging.getLogger("httpx").setLevel(logging.DEBUG if debug else logging.WARNING)
     ctx_obj = ctx.ensure_object(dict)
@@ -67,24 +100,22 @@ def parse_test_result(
 
 @app.command("execute-test-suite")
 def execute_test_suite_from_github_actions(
-        ctx: typer.Context,
-        teamengine_base_url: typing.Annotated[
-            str, typer.Argument(help=_teamengine_base_url_help_text)],
-        test_suite_identifier: typing.Annotated[
-            str, typer.Argument(help=_test_suite_identifier_help_text)],
-        test_suite_input: typing.Annotated[
-            list[str],
-            typer.Argument(
-                help=(
-                    "Space-separated list of inputs to be passed to teamengine. Each "
-                    "input must be formatted as key=value. Ex: "
-                    "iut=http://localhost:5000 noofcollections=-1"
-                )
+    ctx: typer.Context,
+    teamengine_base_url: _teamengine_base_url_argument,
+    test_suite_identifier: _test_suite_identifier_argument,
+    test_suite_input: typing.Annotated[
+        list[str],
+        typer.Argument(
+            help=(
+                "Space-separated list of inputs to be passed to teamengine. Each "
+                "input must be formatted as key=value. Ex: "
+                "iut=http://localhost:5000 noofcollections=-1"
             )
-        ],
-        teamengine_username: str = "ogctest",
-        teamengine_password: str = "ogctest",
-        output_format: models.OutputFormat = models.OutputFormat.MARKDOWN,
+        )
+    ],
+    teamengine_username: _teamengine_username_option = pydantic.SecretStr("ogctest"),
+    teamengine_password: _teamengine_password_option = pydantic.SecretStr("ogctest"),
+    output_format: models.OutputFormat = models.OutputFormat.MARKDOWN,
 ):
     """Execute a CITE test suite via github actions.
 
@@ -102,23 +133,20 @@ def execute_test_suite_from_github_actions(
         ctx=ctx,
         teamengine_base_url=teamengine_base_url,
         test_suite_identifier=test_suite_identifier,
-        teamengine_username=teamengine_username,
-        teamengine_password=teamengine_password,
+        teamengine_username=teamengine_username.get_secret_value(),
+        teamengine_password=teamengine_password.get_secret_value(),
         test_suite_input=[(k, v) for k, v in inputs.items()],
         output_format=output_format,
     )
 
 
-
 @app.command()
 def execute_test_suite_standalone(
     ctx: typer.Context,
-    teamengine_base_url: typing.Annotated[
-        str, typer.Argument(help=_teamengine_base_url_help_text)],
-    test_suite_identifier: typing.Annotated[
-        str, typer.Argument(help=_test_suite_identifier_help_text)],
-    teamengine_username: str = "ogctest",
-    teamengine_password: str = "ogctest",
+    teamengine_base_url: _teamengine_base_url_argument,
+    test_suite_identifier: _test_suite_identifier_argument,
+    teamengine_username: _teamengine_username_option = pydantic.SecretStr("ogctest"),
+    teamengine_password: _teamengine_password_option = pydantic.SecretStr("ogctest"),
     test_suite_input: typing.Annotated[
         typing.Optional[list[click.Tuple]],
         typer.Option(click_type=click.Tuple([str, str]))
@@ -145,14 +173,14 @@ def execute_test_suite_standalone(
                 teamengine_username=teamengine_username,
                 teamengine_password=teamengine_password,
             )
-        except exceptions.OgcCiteActionException as exc:
-            logger.critical(f"Unable to collect test suite execution results")
+        except exceptions.OgcCiteActionException:
+            logger.exception(f"Unable to collect test suite execution results")
             raise SystemExit(1)
         else:
             if output_format == models.OutputFormat.RAW:
                 logger.debug(
                     f"Outputting raw response, as returned by teamengine...")
-                print(raw_result)
+                stdlib_print(raw_result)
             else:
                 logger.debug(f"Parsing test suite execution results...")
                 _parse_result(
@@ -163,8 +191,6 @@ def execute_test_suite_standalone(
     else:
         logger.critical(f"teamengine service is not available")
         raise SystemExit(1)
-
-
 
 
 def _parse_result(
