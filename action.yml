@@ -20,6 +20,14 @@ inputs:
       container using the [ogccite/teamengine-production:1.0-SNAPSHOT](https://hub.docker.com/r/ogccite/teamengine-production) image.
       If you specify a custom teamengine URL you may also optonally supply authentication credentials by defining 
       them as secrets - Expected secret names are: `teamengine_username` and `teamengine_password`.
+  treat-skipped-tests-as-failures:
+    required: false
+    default: false
+    description: Whether to treat skipped tests as an indication of failure or not.
+  exit-with-error-on-suite-failed-result:
+    required: false
+    default: false
+    description: Whether the action errors out if the test execution results show a failure or not
 
 outputs:
   results:
@@ -65,15 +73,25 @@ runs:
       shell: bash
       run: |
         cd ${{ github.action_path }}
-        output_path=raw-result.xml
+        raw_result_output_path=raw-result.xml
+        md_result_output_path=test-result.md
         poetry run ogc-cite-action execute-test-suite \
             ${{ inputs.teamengine-url || 'http://localhost:8080/teamengine' }} \
             ${{ inputs.test-suite-identifier }} \
             --output-format=raw \
             --teamengine-username=${{ env.teamengine_username || 'ogctest' }} \
             --teamengine-password=${{ env.teamengine_password || 'ogctest' }} \
-            ${{ inputs.test-session-arguments }} 1> ${output_path}
-        parsed_result=$(poetry run ogc-cite-action parse-result --output-format=markdown ${output_path})
-        echo "${parsed_result}" >> $GITHUB_STEP_SUMMARY
-        cat ${output_path}
+            ${{ inputs.test-session-arguments }} 1> ${raw_result_output_path}
+        poetry run ogc-cite-action parse-result \
+            --output-format=markdown \
+            ${raw_result_output_path} 1> ${md_result_output_path}
+        cat ${md_result_output_path} >> $GITHUB_STEP_SUMMARY
+        cat ${raw_result_output_path}
         exit 0
+    - name: 'Store execution results as artifacts'
+      uses: actions/upload-artifact@v4
+      with:
+        name: 'execution-results'
+        path: \
+          ${{ github.action_path }}/raw-result.xml
+          ${{ github.action_path }}/test-result.xml

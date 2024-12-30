@@ -115,6 +115,8 @@ def execute_test_suite_from_github_actions(
     ],
     teamengine_username: _teamengine_username_option = pydantic.SecretStr("ogctest"),
     teamengine_password: _teamengine_password_option = pydantic.SecretStr("ogctest"),
+    treat_skipped_tests_as_failures: bool = False,
+    exit_with_error_on_suite_failed_result: bool = False,
     output_format: models.OutputFormat = models.OutputFormat.MARKDOWN,
 ):
     """Execute a CITE test suite via github actions.
