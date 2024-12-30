@@ -82,7 +82,12 @@ runs:
             --teamengine-password=${{ env.teamengine_password || 'ogctest' }} \
             ${{ inputs.test-session-arguments }} 1> ${raw_result_output_path}
         echo "RAW_RESULT_OUTPUT_PATH=${{ github.action_path }}/${raw_result_output_path}" >> "${GITHUB_OUTPUT}"
-        cat ${raw_result_output_path}
+    - name: 'Store execution results as artifacts'
+      uses: actions/upload-artifact@v4
+      with:
+        name: 'execution-results'
+        path: |
+          ${{ steps.run_executable_test_suite.outputs.RAW_RESULT_OUTPUT_PATH }}
     - name: 'parse execution results'
       id: 'parse_execution_results'
       shell: bash
@@ -93,13 +98,6 @@ runs:
             --output-format=markdown \
             ${{ steps.run_executable_test_suite.outputs.RAW_RESULT_OUTPUT_PATH }} 1> ${md_result_output_path}
         echo "MARKDOWN_RESULT_OUTPUT_PATH=${{ github.action_path }}/${md_result_output_path}" >> "${GITHUB_OUTPUT}"
-    - name: 'Store execution results as artifacts'
-      uses: actions/upload-artifact@v4
-      with:
-        name: 'execution-results'
-        path: |
-          ${{ steps.run_executable_test_suite.outputs.RAW_RESULT_OUTPUT_PATH }}
-          ${{ steps.parse_execution_results.outputs.MARKDOWN_RESULT_OUTPUT_PATH }}
     - name: 'Display markdown execution results'
       shell: bash
       run: |
