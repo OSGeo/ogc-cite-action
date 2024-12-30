@@ -69,7 +69,7 @@ runs:
         --network host
         ogccite/teamengine-production:1.0-SNAPSHOT
     - name: 'Run executable test suite'
-      id: 'run-executable-test-suite'
+      id: 'run_executable_test_suite'
       shell: bash
       run: |
         cd ${{ github.action_path }}
@@ -82,16 +82,26 @@ runs:
             --teamengine-username=${{ env.teamengine_username || 'ogctest' }} \
             --teamengine-password=${{ env.teamengine_password || 'ogctest' }} \
             ${{ inputs.test-session-arguments }} 1> ${raw_result_output_path}
+        echo "RAW_RESULT_OUTPUT_PATH=${{ github.action_path }}/${raw-result.xml}" >> "${GITHUB_OUTPUT}"
+        cat ${raw_result_output_path}
+    - name: 'parse execution results'
+      id: 'parse_execution_results'
+      shell: bash
+      run: |
+        cd ${{ github.action_path }}
+        md_result_output_path=test-result.md
         poetry run ogc-cite-action parse-result \
             --output-format=markdown \
-            ${raw_result_output_path} 1> ${md_result_output_path}
-        cat ${md_result_output_path} >> $GITHUB_STEP_SUMMARY
-        cat ${raw_result_output_path}
-        exit 0
+            ${steps.run_executable_test_suite.outputs.RAW_RESULT_OUTPUT_PATH} 1> ${md_result_output_path}
+        echo "MARKDOWN_RESULT_OUTPUT_PATH=${{ github.action_path }}/${md_result_output_path}" >> "${GITHUB_OUTPUT}"
     - name: 'Store execution results as artifacts'
       uses: actions/upload-artifact@v4
       with:
         name: 'execution-results'
-        path: \
-          ${{ github.action_path }}/raw-result.xml
-          ${{ github.action_path }}/test-result.xml
+        path: |
+          ${{ steps.run_executable_test_suite.outputs.RAW_RESULT_OUTPUT_PATH }}
+          ${{ steps.parse_execution_results.outputs.MARKDOWN_RESULT_OUTPUT_PATH }}
+    - name: 'Display markdown execution results'
+      shell: bash
+      run: |
+        cat ${{ steps.parse_execution_results.outputs.MARKDOWN_RESULT_OUTPUT_PATH }} >> ${GITHUB_STEP_SUMMARY}
