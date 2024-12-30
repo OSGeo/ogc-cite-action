@@ -7,24 +7,24 @@ branding:
   color: 'blue'
 
 inputs:
-  test-suite-identifier:
+  test_suite_identifier:
     description: 'Identifier of the Executable Test Suite (etscode) to be run. Example: ogcapi-features-1.0'
-  test-session-arguments:
+  test_session_arguments:
     description: >
       Space-separated string with arguments that are to be sent for running the test session. example:
       'iut=http://pygeoapi:5000'
-  teamengine-url:
+  teamengine_url:
     required: false
     description: >
       URL for the teamengine instance to use for running the test suite. If not provided, this will spin up a docker
       container using the [ogccite/teamengine-production:1.0-SNAPSHOT](https://hub.docker.com/r/ogccite/teamengine-production) image.
       If you specify a custom teamengine URL you may also optonally supply authentication credentials by defining 
       them as secrets - Expected secret names are: `teamengine_username` and `teamengine_password`.
-  treat-skipped-tests-as-failures:
+  treat_skipped_tests_as_failures:
     required: false
     default: false
     description: Whether to treat skipped tests as an indication of failure or not.
-  exit-with-error-on-suite-failed-result:
+  exit_with_error_on_suite_failed_result:
     required: false
     default: false
     description: Whether the action errors out if the test execution results show a failure or not
@@ -32,7 +32,7 @@ inputs:
 outputs:
   results:
     description: 'Test results'
-    value: '${{ steps.run-executable-test-suite.outputs.results }}'
+    value: '${{ steps.parse_execution_results.outputs.MARKDOWN_RESULT_OUTPUT_PATH }}'
 
 runs:
   using: 'composite'
@@ -59,7 +59,7 @@ runs:
         cd ${{ github.action_path }}
         poetry install
     - name: 'Start TEAM engine'
-      if: ${{ !inputs.teamengine-url }}
+      if: ${{ !inputs.teamengine_url }}
       shell: 'bash'
       run: >
         docker run
@@ -75,12 +75,12 @@ runs:
         cd ${{ github.action_path }}
         raw_result_output_path=raw-result.xml
         poetry run ogc-cite-action execute-test-suite \
-            ${{ inputs.teamengine-url || 'http://localhost:8080/teamengine' }} \
-            ${{ inputs.test-suite-identifier }} \
+            ${{ inputs.teamengine_url || 'http://localhost:8080/teamengine' }} \
+            ${{ inputs.test_suite_identifier }} \
             --output-format=raw \
             --teamengine-username=${{ env.teamengine_username || 'ogctest' }} \
             --teamengine-password=${{ env.teamengine_password || 'ogctest' }} \
-            ${{ inputs.test-session-arguments }} 1> ${raw_result_output_path}
+            ${{ inputs.test_session_arguments }} 1> ${raw_result_output_path}
         echo "RAW_RESULT_OUTPUT_PATH=${{ github.action_path }}/${raw_result_output_path}" >> "${GITHUB_OUTPUT}"
     - name: 'Store execution results as artifacts'
       uses: actions/upload-artifact@v4
