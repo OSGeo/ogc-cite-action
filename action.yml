@@ -91,7 +91,7 @@ runs:
         md_result_output_path=test-result.md
         poetry run ogc-cite-action parse-result \
             --output-format=markdown \
-            ${steps.run_executable_test_suite.outputs.RAW_RESULT_OUTPUT_PATH} 1> ${md_result_output_path}
+            ${{ steps.run_executable_test_suite.outputs.RAW_RESULT_OUTPUT_PATH }} 1> ${md_result_output_path}
         echo "MARKDOWN_RESULT_OUTPUT_PATH=${{ github.action_path }}/${md_result_output_path}" >> "${GITHUB_OUTPUT}"
     - name: 'Store execution results as artifacts'
       uses: actions/upload-artifact@v4
