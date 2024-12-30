@@ -74,7 +74,6 @@ runs:
       run: |
         cd ${{ github.action_path }}
         raw_result_output_path=raw-result.xml
-        md_result_output_path=test-result.md
         poetry run ogc-cite-action execute-test-suite \
             ${{ inputs.teamengine-url || 'http://localhost:8080/teamengine' }} \
             ${{ inputs.test-suite-identifier }} \
@@ -82,7 +81,7 @@ runs:
             --teamengine-username=${{ env.teamengine_username || 'ogctest' }} \
             --teamengine-password=${{ env.teamengine_password || 'ogctest' }} \
             ${{ inputs.test-session-arguments }} 1> ${raw_result_output_path}
-        echo "RAW_RESULT_OUTPUT_PATH=${{ github.action_path }}/${raw-result.xml}" >> "${GITHUB_OUTPUT}"
+        echo "RAW_RESULT_OUTPUT_PATH=${{ github.action_path }}/${raw_result_output_path}" >> "${GITHUB_OUTPUT}"
         cat ${raw_result_output_path}
     - name: 'parse execution results'
       id: 'parse_execution_results'
