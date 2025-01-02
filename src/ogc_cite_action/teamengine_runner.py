@@ -50,7 +50,7 @@ def execute_test_suite(
     teamengine_base_url: str,
     test_suite_identifier: str,
     *,
-    test_suite_arguments: typing.Optional[dict[str, str]] = None,
+    test_suite_arguments: typing.Optional[dict[str, list[str]]] = None,
     teamengine_username: pydantic.SecretStr | None = None,
     teamengine_password: pydantic.SecretStr | None = None,
 ) -> typing.Optional[str]:
@@ -74,77 +74,87 @@ def execute_test_suite(
         return response.text
 
 
-def parse_test_suite_result(result_element: ET.Element) -> models.TestSuiteResult:
-    suite_el = result_element.find("./suite")
-    now = dt.datetime.now(tz=dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%S")
-    suite = models.TestSuiteResult(
-        suite_name=suite_el.attrib.get("name", ""),
-        overview=models.SuiteResultOverview(
-            test_run_duration_ms=dt.timedelta(
-                microseconds=int(suite_el.attrib.get("duration-ms", 0))
+def parse_test_suite_result(
+        raw_result: str,
+        treat_skipped_as_failure: bool,
+) -> models.TestSuiteResult:
+    try:
+        root = ET.fromstring(raw_result)
+    except ET.ParseError as exc:
+        raise exceptions.OgcCiteActionException(
+            "Unable to parse test suite execution result as XML") from exc
+    else:
+        suite_el = root.find("./suite")
+        now = dt.datetime.now(tz=dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%S")
+        suite = models.TestSuiteResult(
+            suite_name=suite_el.attrib.get("name", ""),
+            overview=models.SuiteResultOverview(
+                test_run_duration_ms=dt.timedelta(
+                    microseconds=int(suite_el.attrib.get("duration-ms", 0))
+                ),
+                num_tests_total=int(root.attrib.get("total", 0)),
+                num_failed_tests=int(root.attrib.get("failed", 0)),
+                num_skipped_tests=int(root.attrib.get("skipped", 0)),
+                num_passed_tests=int(root.attrib.get("passed", 0)),
             ),
-            num_tests_total=int(result_element.attrib.get("total", 0)),
-            num_failed_tests=int(result_element.attrib.get("failed", 0)),
-            num_skipped_tests=int(result_element.attrib.get("skipped", 0)),
-            num_passed_tests=int(result_element.attrib.get("passed", 0)),
-        ),
-        test_run_start=_parse_to_datetime(suite_el.attrib.get("started-at", now)),
-        test_run_end=_parse_to_datetime(suite_el.attrib.get("finished-at", now)),
-    )
-    test_case_names = set()
-    for conformance_class_el in suite_el.findall("./test"):
-        conformance_class = models.ConformanceClassResults(
-            name=conformance_class_el.attrib.get("name", ""),
-            suite=suite,
+            test_run_start=_parse_to_datetime(suite_el.attrib.get("started-at", now)),
+            test_run_end=_parse_to_datetime(suite_el.attrib.get("finished-at", now)),
         )
-        for category_el in conformance_class_el.findall("./class"):
-            cat_name = category_el.attrib.get("name", "")
-            category = models.TestCaseCategoryResults(
-                name=cat_name,
-                short_name=cat_name.partition("conformance.")[-1],
-                conformance_class=conformance_class,
+        test_case_names = set()
+        for conformance_class_el in suite_el.findall("./test"):
+            conformance_class = models.ConformanceClassResults(
+                name=conformance_class_el.attrib.get("name", ""),
+                suite=suite,
             )
-            for test_case_el in category_el.findall("./test-method"):
-                test_case_name = _get_test_case_name(
-                    test_case_el.get("name", ""),
-                    test_case_names
+            for category_el in conformance_class_el.findall("./class"):
+                cat_name = category_el.attrib.get("name", "")
+                category = models.TestCaseCategoryResults(
+                    name=cat_name,
+                    short_name=cat_name.partition("conformance.")[-1],
+                    conformance_class=conformance_class,
+                    treat_skipped_as_failure=treat_skipped_as_failure,
                 )
-                logger.debug(f"{test_case_name=}")
-                test_case_names.add(test_case_name)
-                test_case_status = {
-                    "pass": models.TestStatus.PASSED,
-                    "skip": models.TestStatus.SKIPPED,
-                }.get(
-                    test_case_el.get("status", "").lower(),
-                    models.TestStatus.FAILED
-                )
-                error_msg_el = test_case_el.find("./exception/message")
-                if test_case_el.attrib.get("is-config") != "true":
-                    params = [
-                        i.text.strip() for i in test_case_el.findall("./params/param")
-                    ]
-                    test_case = models.TestCaseResult(
-                        name=test_case_name,
-                        description=test_case_el.attrib.get("description", ""),
-                        status=test_case_status,
-                        output=test_case_el.find("./reporter-output").text.strip(),
-                        exception=(
-                            error_msg_el.text.strip()
-                            if error_msg_el is not None else None
-                        ),
-                        parameters=[p for p in params if p != ""],
-                        category=category,
+                for test_case_el in category_el.findall("./test-method"):
+                    test_case_name = _get_test_case_name(
+                        test_case_el.get("name", ""),
+                        test_case_names
                     )
-                    category.test_cases.append(test_case)
-                else:
-                    logger.debug(
-                        f"ignoring test case {test_case_name}"
-                        f"(status={test_case_status}) as it seems to be only "
-                        f"test configuration"
+                    logger.debug(f"{test_case_name=}")
+                    test_case_names.add(test_case_name)
+                    test_case_status = {
+                        "pass": models.TestStatus.PASSED,
+                        "skip": models.TestStatus.SKIPPED,
+                    }.get(
+                        test_case_el.get("status", "").lower(),
+                        models.TestStatus.FAILED
                     )
-            conformance_class.categories.append(category)
-        suite.conformance_classes.append(conformance_class)
-    return suite
+                    error_msg_el = test_case_el.find("./exception/message")
+                    if test_case_el.attrib.get("is-config") != "true":
+                        params = [
+                            i.text.strip() for i in test_case_el.findall("./params/param")
+                        ]
+                        test_case = models.TestCaseResult(
+                            name=test_case_name,
+                            description=test_case_el.attrib.get("description", ""),
+                            status=test_case_status,
+                            output=test_case_el.find("./reporter-output").text.strip(),
+                            exception=(
+                                error_msg_el.text.strip()
+                                if error_msg_el is not None else None
+                            ),
+                            parameters=[p for p in params if p != ""],
+                            category=category,
+                        )
+                        category.test_cases.append(test_case)
+                    else:
+                        logger.debug(
+                            f"ignoring test case {test_case_name}"
+                            f"(status={test_case_status}) as it seems to be only "
+                            f"test configuration"
+                        )
+                conformance_class.categories.append(category)
+            suite.conformance_classes.append(conformance_class)
+        return suite
 
 
 def serialize_test_suite_result(

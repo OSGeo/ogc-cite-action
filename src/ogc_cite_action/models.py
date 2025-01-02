@@ -5,6 +5,7 @@ from typing import (
     Generator,
 )
 
+import jinja2
 import pydantic
 
 
@@ -23,6 +24,16 @@ class TestStatus(enum.Enum):
     PASSED = "PASSED"
     FAILED = "FAILED"
     SKIPPED = "SKIPPED"
+
+
+class CliContext(pydantic.BaseModel):
+    model_config = pydantic.ConfigDict(
+        arbitrary_types_allowed=True
+    )
+
+    debug: bool = False
+    jinja_environment: jinja2.Environment = jinja2.Environment()
+    network_timeout_seconds: int = 20
 
 
 class TestCaseResult(pydantic.BaseModel):
@@ -50,6 +61,7 @@ class TestCaseCategoryResults(pydantic.BaseModel):
         list[TestCaseResult],
         pydantic.Field(default_factory=list),
     ]
+    treat_skipped_as_failure: bool = False
 
     @pydantic.field_serializer("conformance_class")
     def serialize_conformance_class(
@@ -58,7 +70,10 @@ class TestCaseCategoryResults(pydantic.BaseModel):
 
     @property
     def passed(self) -> bool:
-        return len(self.failed_test_cases) == 0
+        result = len(self.failed_test_cases) == 0
+        if self.treat_skipped_as_failure:
+            result = result and len(self.skipped_test_cases) == 0
+        return result
 
     @property
     def failed_test_cases(self) -> list[TestCaseResult]:
@@ -80,6 +95,7 @@ class ConformanceClassResults(pydantic.BaseModel):
         list[TestCaseCategoryResults],
         pydantic.Field(default_factory=list)
     ]
+    treat_skipped_as_failure: bool = False
 
     @pydantic.field_serializer("suite")
     def serialize_suite(
