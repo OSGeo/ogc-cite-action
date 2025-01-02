@@ -74,7 +74,9 @@ runs:
       run: |
         cd ${{ github.action_path }}
         raw_result_output_path=raw-result.xml
-        poetry run ogc-cite-action execute-test-suite \
+        poetry run ogc-cite-action \
+            --debug \
+            execute-test-suite \
             ${{ inputs.teamengine_url || 'http://localhost:8080/teamengine' }} \
             ${{ inputs.test_suite_identifier }} \
             --output-format=raw \
