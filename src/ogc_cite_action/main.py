@@ -135,8 +135,10 @@ def execute_test_suite_from_github_actions(
         ctx=ctx,
         teamengine_base_url=teamengine_base_url,
         test_suite_identifier=test_suite_identifier,
-        teamengine_username=teamengine_username.get_secret_value(),
-        teamengine_password=teamengine_password.get_secret_value(),
+        teamengine_username=_parse_pydantic_secret_str(
+            teamengine_username.get_secret_value()),
+        teamengine_password=_parse_pydantic_secret_str(
+            teamengine_password.get_secret_value()),
         test_suite_input=[(k, v) for k, v in inputs.items()],
         output_format=output_format,
     )
