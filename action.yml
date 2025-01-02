@@ -80,6 +80,7 @@ runs:
       id: 'run_executable_test_suite'
       shell: bash
       run: |
+        set -x  # enable command echoing for debugging
         cd ${{ github.action_path }}
         raw_result_output_path=raw-result.xml
         poetry run ogc-cite-action \
@@ -92,7 +93,15 @@ runs:
             --teamengine-password=${{ inputs.teamengine_password }} \
             ${{ fromJSON(inputs.treat_skipped_tests_as_failures) && '--treat-skipped-tests-as-failures' || '' }} \
             ${{ fromJSON(inputs.exit_with_error_on_suite_failed_result) && '--exit-with-error-on-suite-failed-result' || '' }} \
-            ${{ inputs.test_session_arguments }} 1> ${raw_result_output_path}
+            ${{ inputs.test_session_arguments }} 1> ${raw_result_output_path} || {
+                exit_code=$?
+                echo "Command failed with exit code: ${exit_code}"
+                echo "last few lines of raw-result.xml (if it exists):"
+                [ -f "${raw_result_output_path}" ] && tail -n 20 "${raw_result_output_path}"
+                exit ${exit_code}
+        }
+        command_exit_code=$?
+        echo "Command completed with exit code: ${command_exit_code}"
         echo "SUITE_EXECUTION_EXIT_CODE=$?" >> "${GITHUB_OUTPUT}"
         echo "RAW_RESULT_OUTPUT_PATH=${{ github.action_path }}/${raw_result_output_path}" >> "${GITHUB_OUTPUT}"
     - name: 'Store execution results as artifacts'
