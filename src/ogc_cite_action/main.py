@@ -59,11 +59,7 @@ def base_callback(
     network_timeout: int = 20
 ) -> None:
     config.configure_logging(debug=debug)
-    ctx.obj = models.CliContext(
-        debug=debug,
-        network_timeout_seconds=network_timeout,
-        jinja_environment=config.get_jinja_environment(),
-    )
+    ctx.obj = config.get_context(debug=debug, network_timeout_seconds=network_timeout)
 
 
 @app.command("parse-result")

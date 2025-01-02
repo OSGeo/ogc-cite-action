@@ -4,10 +4,21 @@ import logging
 from rich.console import Console
 from rich.logging import RichHandler
 
-from .models import TestStatus
+from . import models
 
 
-def get_jinja_environment() -> jinja2.Environment:
+def get_context(
+        debug: bool,
+        network_timeout_seconds: int
+) -> models.CliContext:
+    return models.CliContext(
+        debug=debug,
+        network_timeout_seconds=network_timeout_seconds,
+        jinja_environment=_get_jinja_environment(),
+    )
+
+
+def _get_jinja_environment() -> jinja2.Environment:
     env = jinja2.Environment(
         loader=jinja2.PackageLoader(
             "ogc_cite_action",
@@ -18,7 +29,7 @@ def get_jinja_environment() -> jinja2.Environment:
         ],
     )
     env.globals.update({
-        "TestStatus": TestStatus,
+        "TestStatus": models.TestStatus,
     })
     return env
 
