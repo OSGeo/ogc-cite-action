@@ -99,13 +99,6 @@ runs:
       if: ${{ !cancelled() && !inputs.teamengine_url }}
       shell: 'bash'
       run: docker stop teamengine
-    - name: 'Store execution results as artifacts'
-      if: ${{ fromJSON(steps.run_executable_test_suite.outputs.SUITE_EXECUTION_EXIT_CODE) == 0  }}
-      uses: actions/upload-artifact@v4
-      with:
-        name: 'execution-results'
-        path: |
-          ${{ steps.run_executable_test_suite.outputs.RAW_RESULT_OUTPUT_PATH }}
     - name: 'parse execution results'
       id: 'parse_execution_results'
       if: ${{ fromJSON(steps.run_executable_test_suite.outputs.SUITE_EXECUTION_EXIT_CODE) == 0  }}
@@ -120,6 +113,13 @@ runs:
             ${{ steps.run_executable_test_suite.outputs.RAW_RESULT_OUTPUT_PATH }} 1> ${md_result_output_path}
         echo "RESULT_PARSING_EXIT_CODE=$?" >> "${GITHUB_OUTPUT}"
         echo "MARKDOWN_RESULT_OUTPUT_PATH=${{ github.action_path }}/${md_result_output_path}" >> "${GITHUB_OUTPUT}"
+    - name: 'Store execution results as artifacts'
+      uses: actions/upload-artifact@v4
+      with:
+        name: 'execution-results-${{ inputs.test_suite_identifier }}'
+        path: |
+          ${{ steps.run_executable_test_suite.outputs.RAW_RESULT_OUTPUT_PATH }}
+          ${{ steps.parse_execution_results.outputs.MARKDOWN_RESULT_OUTPUT_PATH }}
     - name: 'Display markdown execution results'
       if: ${{ fromJSON(steps.parse_execution_results.outputs.RESULT_PARSING_EXIT_CODE) == 0  }}
       shell: bash
