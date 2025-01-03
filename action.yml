@@ -95,10 +95,7 @@ runs:
         echo "Command completed with exit code: ${command_exit_code}"
         echo "SUITE_EXECUTION_EXIT_CODE=$?" >> "${GITHUB_OUTPUT}"
         echo "RAW_RESULT_OUTPUT_PATH=${{ github.action_path }}/${raw_result_output_path}" >> "${GITHUB_OUTPUT}"
-    - name: 'Stop TEAM engine container'
-      if: ${{ !cancelled() && !inputs.teamengine_url }}
-      shell: 'bash'
-      run: docker stop teamengine
+        exit 0
     - name: 'parse execution results'
       id: 'parse_execution_results'
       if: ${{ fromJSON(steps.run_executable_test_suite.outputs.SUITE_EXECUTION_EXIT_CODE) == 0  }}
@@ -106,7 +103,9 @@ runs:
       run: |
         cd ${{ github.action_path }}
         md_result_output_path=test-result.md
-        poetry run ogc-cite-action parse-result \
+        poetry run ogc-cite-action \
+            parse-result \
+            --debug \
             --output-format=markdown \
             ${{ fromJSON(inputs.treat_skipped_tests_as_failures) && '--treat-skipped-tests-as-failures' || '' }} \
             ${{ fromJSON(inputs.exit_with_error_on_suite_failed_result) && '--exit-with-error-on-suite-failed-result' || '' }} \
@@ -125,6 +124,10 @@ runs:
       shell: bash
       run: |
         cat ${{ steps.parse_execution_results.outputs.MARKDOWN_RESULT_OUTPUT_PATH }} >> ${GITHUB_STEP_SUMMARY}
-    - name: 'Decide on final exit code'
+    - name: 'Stop TEAM engine container'
+      if: ${{ !cancelled() && !inputs.teamengine_url }}
+      shell: 'bash'
+      run: docker stop teamengine
+    - name: 'Set final exit code'
       shell: bash
       run: exit ${{ steps.parse_execution_results.outputs.RESULT_PARSING_EXIT_CODE }}
