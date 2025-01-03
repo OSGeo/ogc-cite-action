@@ -113,6 +113,7 @@ runs:
             ${{ steps.run_executable_test_suite.outputs.RAW_RESULT_OUTPUT_PATH }} 1> ${md_result_output_path}
         echo "RESULT_PARSING_EXIT_CODE=$?" >> "${GITHUB_OUTPUT}"
         echo "MARKDOWN_RESULT_OUTPUT_PATH=${{ github.action_path }}/${md_result_output_path}" >> "${GITHUB_OUTPUT}"
+        exit 0
     - name: 'Store execution results as artifacts'
       uses: actions/upload-artifact@v4
       with:
@@ -121,7 +122,9 @@ runs:
           ${{ steps.run_executable_test_suite.outputs.RAW_RESULT_OUTPUT_PATH }}
           ${{ steps.parse_execution_results.outputs.MARKDOWN_RESULT_OUTPUT_PATH }}
     - name: 'Display markdown execution results'
-      if: ${{ fromJSON(steps.parse_execution_results.outputs.RESULT_PARSING_EXIT_CODE) == 0  }}
       shell: bash
       run: |
         cat ${{ steps.parse_execution_results.outputs.MARKDOWN_RESULT_OUTPUT_PATH }} >> ${GITHUB_STEP_SUMMARY}
+    - name: 'Decide on final exit code'
+      shell: bash
+      run: exit ${{ steps.parse_execution_results.outputs.RESULT_PARSING_EXIT_CODE }}
