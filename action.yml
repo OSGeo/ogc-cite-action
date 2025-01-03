@@ -84,7 +84,6 @@ runs:
         cd ${{ github.action_path }}
         raw_result_output_path=raw-result.xml
         poetry run ogc-cite-action \
-            --debug \
             execute-test-suite \
             ${{ inputs.teamengine_url || 'http://localhost:8080/teamengine' }} \
             ${{ inputs.test_suite_identifier }} \
@@ -93,19 +92,13 @@ runs:
             --teamengine-password=${{ inputs.teamengine_password }} \
             ${{ fromJSON(inputs.treat_skipped_tests_as_failures) && '--treat-skipped-tests-as-failures' || '' }} \
             ${{ fromJSON(inputs.exit_with_error_on_suite_failed_result) && '--exit-with-error-on-suite-failed-result' || '' }} \
-            $(echo -e ${{ inputs.test_session_arguments }}) 1> ${raw_result_output_path} || {
-                exit_code=$?
-                echo "Command failed with exit code: ${exit_code}"
-                echo "last few lines of raw-result.xml (if it exists):"
-                [ -f "${raw_result_output_path}" ] && tail -n 20 "${raw_result_output_path}"
-                exit ${exit_code}
-        }
+            $(echo -e ${{ inputs.test_session_arguments }}) 1> ${raw_result_output_path}
         command_exit_code=$?
         echo "Command completed with exit code: ${command_exit_code}"
         echo "SUITE_EXECUTION_EXIT_CODE=$?" >> "${GITHUB_OUTPUT}"
         echo "RAW_RESULT_OUTPUT_PATH=${{ github.action_path }}/${raw_result_output_path}" >> "${GITHUB_OUTPUT}"
     - name: 'Stop TEAM engine container'
-      if: ${{ !inputs.teamengine_url }}
+      if: ${{ !cancelled() && !inputs.teamengine_url }}
       shell: 'bash'
       run: docker stop teamengine
     - name: 'Store execution results as artifacts'
