@@ -103,6 +103,7 @@ runs:
       run: |
         set -x  # enable command echoing
         cd ${{ github.action_path }}
+        ls -lah
         md_result_output_path=test-result.md
         poetry run ogc-cite-action \
             parse-result \
@@ -114,6 +115,7 @@ runs:
         echo "MARKDOWN_RESULT_OUTPUT_PATH=${{ github.action_path }}/${md_result_output_path}" >> "${GITHUB_OUTPUT}"
         exit 0
     - name: 'store execution results as artifacts'
+      if: ${{ !cancelled() }}
       uses: actions/upload-artifact@v4
       with:
         name: 'execution-results-${{ inputs.test_suite_identifier }}'
