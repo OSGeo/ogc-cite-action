@@ -75,6 +75,7 @@ def parse_test_result(
         ],
         output_format: models.ParseableOutputFormat = models.ParseableOutputFormat.JSON,
         treat_skipped_tests_as_failures: bool = False,
+        exit_with_error_on_suite_failed_result: bool = False,
 ):
     raw_result = test_suite_result.read_text()
     parsed = teamengine_runner.parse_test_suite_result(
@@ -85,6 +86,7 @@ def parse_test_result(
     serialized = teamengine_runner.serialize_test_suite_result(
         parsed, parseable_output_format, ctx.obj.jinja_environment)
     print(serialized)
+    raise typer.Exit(_get_exit_code(parsed, exit_with_error_on_suite_failed_result))
 
 
 @app.command("execute-test-suite")

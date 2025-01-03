@@ -90,8 +90,6 @@ runs:
             --output-format=raw \
             --teamengine-username=${{ inputs.teamengine_username }} \
             --teamengine-password=${{ inputs.teamengine_password }} \
-            ${{ fromJSON(inputs.treat_skipped_tests_as_failures) && '--treat-skipped-tests-as-failures' || '' }} \
-            ${{ fromJSON(inputs.exit_with_error_on_suite_failed_result) && '--exit-with-error-on-suite-failed-result' || '' }} \
             $(echo -e ${{ inputs.test_session_arguments }}) 1> ${raw_result_output_path}
         command_exit_code=$?
         echo "Command completed with exit code: ${command_exit_code}"
@@ -117,6 +115,8 @@ runs:
         md_result_output_path=test-result.md
         poetry run ogc-cite-action parse-result \
             --output-format=markdown \
+            ${{ fromJSON(inputs.treat_skipped_tests_as_failures) && '--treat-skipped-tests-as-failures' || '' }} \
+            ${{ fromJSON(inputs.exit_with_error_on_suite_failed_result) && '--exit-with-error-on-suite-failed-result' || '' }} \
             ${{ steps.run_executable_test_suite.outputs.RAW_RESULT_OUTPUT_PATH }} 1> ${md_result_output_path}
         echo "RESULT_PARSING_EXIT_CODE=$?" >> "${GITHUB_OUTPUT}"
         echo "MARKDOWN_RESULT_OUTPUT_PATH=${{ github.action_path }}/${md_result_output_path}" >> "${GITHUB_OUTPUT}"
