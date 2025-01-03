@@ -98,6 +98,7 @@ runs:
         exit 0
     - name: 'parse execution results'
       id: 'parse_execution_results'
+      continue-on-error: true
       if: ${{ fromJSON(steps.run_executable_test_suite.outputs.SUITE_EXECUTION_EXIT_CODE) == 0  }}
       shell: bash
       run: |
@@ -110,7 +111,7 @@ runs:
             --output-format=markdown \
             ${{ fromJSON(inputs.treat_skipped_tests_as_failures) && '--treat-skipped-tests-as-failures' || '' }} \
             ${{ fromJSON(inputs.exit_with_error_on_suite_failed_result) && '--exit-with-error-on-suite-failed-result' || '' }} \
-            $(echo -e ${{ steps.run_executable_test_suite.outputs.RAW_RESULT_OUTPUT_PATH }}) 1> ${md_result_output_path}
+            ${{ steps.run_executable_test_suite.outputs.RAW_RESULT_OUTPUT_PATH }} 1> ${md_result_output_path}
         echo "RESULT_PARSING_EXIT_CODE=$?" >> "${GITHUB_OUTPUT}"
         echo "MARKDOWN_RESULT_OUTPUT_PATH=${{ github.action_path }}/${md_result_output_path}" >> "${GITHUB_OUTPUT}"
         exit 0
