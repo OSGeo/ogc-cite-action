@@ -101,10 +101,10 @@ runs:
       if: ${{ fromJSON(steps.run_executable_test_suite.outputs.SUITE_EXECUTION_EXIT_CODE) == 0  }}
       shell: bash
       run: |
+        set -x  # enable command echoing
         cd ${{ github.action_path }}
         md_result_output_path=test-result.md
         poetry run ogc-cite-action \
-            --debug \
             parse-result \
             --output-format=markdown \
             ${{ fromJSON(inputs.treat_skipped_tests_as_failures) && '--treat-skipped-tests-as-failures' || '' }} \
@@ -113,7 +113,7 @@ runs:
         echo "RESULT_PARSING_EXIT_CODE=$?" >> "${GITHUB_OUTPUT}"
         echo "MARKDOWN_RESULT_OUTPUT_PATH=${{ github.action_path }}/${md_result_output_path}" >> "${GITHUB_OUTPUT}"
         exit 0
-    - name: 'Store execution results as artifacts'
+    - name: 'store execution results as artifacts'
       uses: actions/upload-artifact@v4
       with:
         name: 'execution-results-${{ inputs.test_suite_identifier }}'
