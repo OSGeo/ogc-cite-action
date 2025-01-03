@@ -66,7 +66,7 @@ runs:
       run: |
         cd ${{ github.action_path }}
         poetry install
-    - name: 'Start TEAM engine'
+    - name: 'Start TEAM engine container'
       if: ${{ !inputs.teamengine_url }}
       shell: 'bash'
       run: >
@@ -93,7 +93,7 @@ runs:
             --teamengine-password=${{ inputs.teamengine_password }} \
             ${{ fromJSON(inputs.treat_skipped_tests_as_failures) && '--treat-skipped-tests-as-failures' || '' }} \
             ${{ fromJSON(inputs.exit_with_error_on_suite_failed_result) && '--exit-with-error-on-suite-failed-result' || '' }} \
-            ${{ inputs.test_session_arguments }} 1> ${raw_result_output_path} || {
+            $(echo -e ${{ inputs.test_session_arguments }}) 1> ${raw_result_output_path} || {
                 exit_code=$?
                 echo "Command failed with exit code: ${exit_code}"
                 echo "last few lines of raw-result.xml (if it exists):"
@@ -104,6 +104,10 @@ runs:
         echo "Command completed with exit code: ${command_exit_code}"
         echo "SUITE_EXECUTION_EXIT_CODE=$?" >> "${GITHUB_OUTPUT}"
         echo "RAW_RESULT_OUTPUT_PATH=${{ github.action_path }}/${raw_result_output_path}" >> "${GITHUB_OUTPUT}"
+    - name: 'Stop TEAM engine container'
+      if: ${{ !inputs.teamengine_url }}
+      shell: 'bash'
+      run: docker stop teamengine
     - name: 'Store execution results as artifacts'
       if: ${{ fromJSON(steps.run_executable_test_suite.outputs.SUITE_EXECUTION_EXIT_CODE) == 0  }}
       uses: actions/upload-artifact@v4
