@@ -8,97 +8,195 @@ This action is able to either:
   running test suites in an isolated CI environment
 - Use an existing teamengine deployment
 
+This code can also be run in standalone fashion, making possible to integrate with other CI tools, or even to be run
+locally.
+
 
 ## Inputs
 
 This action expects the following inputs to be provided:
 
-- `test-suite-identfier` - Identifier of the test suite to be executed - See below for existing identifiers
+- `test-suite-identfier` - Identifier of the test suite to be executed. Test suite identifiers can be gotten from the
+  documentation at <http://cite.opengeospatial.org/teamengine/>. Example:
+  
+  ```yaml
+  test-suite-identifier: 'ogcapi-features-1.0'
+  ```
+  
 - `test-session-arguments` - Test session arguments to be passed to teamengine. These depend on the test suite that is
-  going to be executed. Regardless, this must be given as a space-separated list of `key=value` pairs
-- `teamengine-url` - Optional URL of the teamengine instance to be used for running tests. If this parameter is not 
+  going to be executed. Must be provided as a space-separated list of `key=value` pairs. Examples: 
+  
+  - A simple yaml string
+    ```yaml
+    test-session-arguments: 'iut=http://localhost:5001 noofcollections=-1'
+    ```
+    
+  - If you prefer to use a multiline string, then use YAML *folded blocks*, we recommend you also use the _strip_ 
+    chomping indicator (AKA put a dash after the folded block indicator, AKA this: `>-`)
+    ```yaml
+    test-session-arguments: >-
+      iut=http://localhost:5001 
+      noofcollections=-1
+    ```
+
+- `teamengine-url` - **OPTIONAL** - URL of the teamengine instance to be used for running tests. If this parameter is not 
   specified then the action will spin up a local teamengine docker container and use it for testing. If you specify a
   custom teamengine URL this action will also try to find authentication-related env variables and use them. These
   env variables must be named `teamengine_username` and `teamengine_password`
+  
+  Note that this must be expected landing page of the teamengine service, which usually is located at the `/teamengine` 
+  path. Examples:
+  
+  - When spinning up a local docker instance there is no need to supply this argument
+  
+  - When using the remote teamengine instance located at `https://my-server` with a pre-existing user `myself` and 
+    a password of `something`:
+  
+    ```yaml
+    teamengine-url: 'https://my-server/teamengine'
+    teamengine-username: 'myself'
+    teamengine-password: 'something'
+    ```
+  
+- `treat-skipped-tests-as-failures` - **OPTIONAL** - Whether the presence of skipped tests should be interpreted as 
+  an overall failure of the test suite or not. Defaults to `false`
+- `teamengine-username` - **OPTIONAL** - Username to be used when logging in to a remote teamengine instance. Defaults to `ogctest`, 
+  which is a user that is pre-created on the official teamengine docker image. 
+- `teamengine-password` - **OPTIONAL** - Password to be used when logging in to a remote teamengine instance. Defaults to `ogctest`,
+  which is the password used for the pre-created user on the official teamengine docker image
 
 
 ## Usage
 
-Example usage for testing a service running locally at `http://localhost:5001` against the `ogcapi-features-1.0` 
-executable test suite. Because the `teamengine-url` input is not specified, the action spins up a local docker 
-container running teamengine:
+The below examples use pygeoapi as a service that can be tested using this action.
+
+Simple usage, running the `ogcapi-features-1.0` test suite whenever there is a `push`:
 
 ```yaml
-- name: test ogcapi-features compliancy
-  uses: OSGEO/ogc-cite-action@main
-  with:
-    test-suite-identifier: 'ogcapi-features-1.0'
-    test-session-arguments: 'iut=http://localhost:5001 noofcollections=-1'
-  env:
-    teamengine_username: ${{ secrets.TEAMENGINE_USERNAME }}
-    teamengine_password: ${{ secrets.TEAMENGINE_PASSWORD }}
+on:
+  push:
+
+jobs:
+
+  perform-cite-testing:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: grab code
+        uses: actions/checkout@v4
+
+      - name: start pygeoapi with suitable CITE data and config
+        run: >
+          docker compose -f tests/cite/compose.test-cite.yaml up --detach
+
+      - name: wait for pygeoapi to be usable
+        uses: raschmitt/wait-for-healthy-container@v1.0.1
+        with:
+          container-name: pygeoapi-cite-pygeoapi-1
+          timeout: 120
+
+      - name: test ogcapi-features compliancy
+        uses: OSGEO/ogc-cite-action@main
+        with:
+          test_suite_identifier: 'ogcapi-features-1.0'
+          test_session_arguments: >-
+            iut=http://localhost:5001
+            noofcollections=-1
+          treat_skipped_tests_as_failures: "true"
+```
+
+A slightly more complex example, using a matrix to test both `ogcapi-features-1.0` 
+and `ogcapi-processes-1.0` test suites in parallel:
+
+```yaml
+on:
+  push:
+
+env:
+  COLUMNS: 120
+
+
+jobs:
+
+  perform-cite-testing:
+    strategy:
+      matrix:
+        test-suite:
+          - suite-id: ogcapi-features-1.0
+            arguments: >-
+              iut=http://localhost:5001 
+              noofcollections=-1
+          - suite-id: ogcapi-processes-1.0
+            arguments: >-
+              iut=http://localhost:5001 
+              noofcollections=-1
+
+    runs-on: ubuntu-22.04
+    steps:
+
+      - name: grab code
+        uses: actions/checkout@v4
+
+      - name: start pygeoapi with suitable CITE data and config
+        run: >
+          docker compose -f tests/cite/compose.test-cite.yaml up --detach
+
+      - name: wait for pygeoapi to be usable
+        uses: raschmitt/wait-for-healthy-container@v1.0.1
+        with:
+          container-name: pygeoapi-cite-pygeoapi-1
+          timeout: 120
+
+      - name: collect docker logs on failure
+        if: failure()
+        uses: jwalton/gh-docker-logs@v2.2.2
+        with:
+          images: ghcr.io/geopython/pygeoapi
+          tail: 500
+
+      - name: test ogcapi-features compliancy
+        uses: OSGEO/ogc-cite-action@main
+        with:
+          test_suite_identifier: ${{ matrix.test-suite.suite-id }}
+          test_session_arguments: ${{ matrix.test-suite.arguments }}
+          treat_skipped_tests_as_failures: "true"
+
 ```
 
 
+## Running locally or on other CI platforms
 
+This action's code can also be installed locally:
 
-## Executable Test Suites
-
-In order to successfully run this action you need to know:
-
-- `test-suite-identifier` - the identifier of the test suite you want to run
-- `test-session-arguments` - the parameters that can be passed to the teamengine test runner
-
-Information on existing test suites can be found at:
-
-http://cite.opengeospatial.org/teamengine/
-
-Examples: 
-
-1. [OGC API Features](https://cite.opengeospatial.org/teamengine/about/ogcapi-features-1.0/1.0/site/) one must use the following:
-
-   - `test-suite-identifier`: `ogcapi-features-1.0`
-   - `test-session-arguments`:
-     - `iut`
-     - `noofcollections`
-
-2. OGC API - Processes:
-
-  - `test-suite-identifier`: `ogcapi-processes-1.0`
-  - `test-session-arguments`:
-    - `iut`
-    - `noofcollections`
-
-3. OGC API - EDR
-
-   - `test-suite-identifier`: `ogcapi-edr10`
-   - `test-session-arguments`:
-     - `iut`
-     - `ics`
-
-
-## Running locally
-
-With a bit of extra effort, this action's code can be run locally:
-
-- Start your service to be tested. Let's assume it is running on `http://localhost:5000`
-
-- Run the teamengine docker image:
+- Install [poetry](https://python-poetry.org/docs/)
+- Clone this repository:
 
   ```shell
-  docker run --rm --name teamengine --network=host ogccite/teamengine-production:1.0-SNAPSHOT
+  git clone https://github.com/OSGeo/ogc-cite-action.git
   ```
-
-- Install the action code with poetry and then run its main script. Here we are executing the test suite for 
-  ogcapi-features:
+- Install the code:
 
   ```shell
+  cd ogc-cite-action
   poetry install
-  poetry run ogc-cite-action \
-    --debug \
-    execute-test-suite \
-    http://localhost:8080/teamengine \
-    ogcapi-features-1.0 \
-    iut=http://localhost:5000 \
-    noofcollections=-1
   ```
+
+- Start your service to be tested. Let's assume it is already running on `http://localhost:5000`
+
+- Run the teamengine docker image locally:
+
+  ```shell
+  docker run \
+    --rm \
+    --name teamengine \
+    --network=host \
+    ogccite/teamengine-production:1.0-SNAPSHOT
+  ```
+
+- Run the action code with
+
+  ```shell
+  poetry run ogc-cite-action --help
+  ```
+
+There are additional commands and options which can be used when running locally, which allow controlling the output 
+format and how the inputs are supplied. Read the online
