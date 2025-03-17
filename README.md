@@ -1,15 +1,14 @@
 # ogc-cite-action
 
-A GitHub Action that simplifies testing your OGC server against [CITE](https://github.com/opengeospatial/cite/wiki). 
+Simplify testing your OGC implementation server against [CITE](https://github.com/opengeospatial/cite/wiki). This repo
+contains a CITE runner that can be called as a github action. It can also be used standalone, which allows integration
+with other CI platforms.
 
-This action is able to either:
+This code can either:
 
 - Spin up a docker container with the [ogc teamengine image](https://hub.docker.com/r/ogccite/teamengine-production),
   running test suites in an isolated CI environment
 - Use an existing teamengine deployment
-
-This code can also be run in standalone fashion, making possible to integrate with other CI tools, or even to be run
-locally.
 
 
 ## Inputs
@@ -31,7 +30,7 @@ This action expects the following inputs to be provided:
     test-session-arguments: 'iut=http://localhost:5001 noofcollections=-1'
     ```
     
-  - If you prefer to use a multiline string, then use YAML *folded blocks*, we recommend you also use the _strip_ 
+  - If you prefer to use a multiline string, then  we recommend use of YAML *folded blocks* with the _strip_ 
     chomping indicator (AKA put a dash after the folded block indicator, AKA this: `>-`)
     ```yaml
     test-session-arguments: >-
@@ -39,13 +38,13 @@ This action expects the following inputs to be provided:
       noofcollections=-1
     ```
 
-- `teamengine-url` - **OPTIONAL** - URL of the teamengine instance to be used for running tests. If this parameter is not 
-  specified then the action will spin up a local teamengine docker container and use it for testing. If you specify a
-  custom teamengine URL this action will also try to find authentication-related env variables and use them. These
-  env variables must be named `teamengine_username` and `teamengine_password`
+- `teamengine-url` - **OPTIONAL** - URL of the teamengine instance to be used for running tests. If this parameter 
+  is not specified then the action will spin up a local teamengine docker container and use it for testing. If you 
+  specify a custom teamengine URL this action will also try to find authentication-related env variables and use 
+  them. These env variables must be named `teamengine_username` and `teamengine_password`
   
-  Note that this must be expected landing page of the teamengine service, which usually is located at the `/teamengine` 
-  path. Examples:
+  That the value of this paramenter must be the URL of the landing page of the teamengine service, which usually is 
+  located at the `/teamengine` path. Examples:
   
   - When spinning up a local docker instance there is no need to supply this argument
   
@@ -57,18 +56,20 @@ This action expects the following inputs to be provided:
     teamengine-username: 'myself'
     teamengine-password: 'something'
     ```
+
+- `teamengine-username` - **OPTIONAL** - Username to be used when logging in to a remote teamengine instance. 
+  Defaults to `ogctest`, which is a user that is pre-created on the official teamengine docker image.
+
+- `teamengine-password` - **OPTIONAL** - Password to be used when logging in to a remote teamengine instance. 
+  Defaults to `ogctest`, which is the password used for the pre-created user on the official teamengine docker image
   
 - `treat-skipped-tests-as-failures` - **OPTIONAL** - Whether the presence of skipped tests should be interpreted as 
   an overall failure of the test suite or not. Defaults to `false`
-- `teamengine-username` - **OPTIONAL** - Username to be used when logging in to a remote teamengine instance. Defaults to `ogctest`, 
-  which is a user that is pre-created on the official teamengine docker image. 
-- `teamengine-password` - **OPTIONAL** - Password to be used when logging in to a remote teamengine instance. Defaults to `ogctest`,
-  which is the password used for the pre-created user on the official teamengine docker image
 
 
 ## Usage
 
-The below examples use pygeoapi as a service that can be tested using this action.
+The below examples define a github workflow for testing pygeoapi.
 
 Simple usage, running the `ogcapi-features-1.0` test suite whenever there is a `push`:
 

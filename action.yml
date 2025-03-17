@@ -1,6 +1,6 @@
 name: 'Run TEAM Engine'
 
-description: 'Spins up a TEAM Engine instance inside a docker container'
+description: 'Runner for TEAM Engine'
 
 branding:
   icon: 'award'

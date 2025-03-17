@@ -11,6 +11,7 @@ import pydantic
 import typer
 from rich import print
 
+import src.ogc_cite_action.config
 from . import (
     config,
     exceptions,
@@ -59,7 +60,10 @@ def base_callback(
     network_timeout: int = 20
 ) -> None:
     config.configure_logging(debug=debug)
-    ctx.obj = config.get_context(debug=debug, network_timeout_seconds=network_timeout)
+    ctx.obj = config.get_context(
+        debug=debug,
+        network_timeout_seconds=network_timeout,
+    )
 
 
 @app.command("parse-result")
@@ -78,8 +82,12 @@ def parse_test_result(
         exit_with_error_on_suite_failed_result: bool = False,
 ):
     raw_result = test_suite_result.read_text()
-    parsed = teamengine_runner.parse_test_suite_result(
-        raw_result,
+    root = teamengine_runner.parse_raw_result_as_xml(raw_result)
+    test_suite_identifier = teamengine_runner.get_suite_name(root).rpartition("-")[0]
+    parser = teamengine_runner.get_suite_result_parser(
+        test_suite_identifier, ctx.obj.settings)
+    parsed = parser(
+        root,
         treat_skipped_as_failure=treat_skipped_tests_as_failures,
     )
     parseable_output_format = models.ParseableOutputFormat(output_format.value)
@@ -104,8 +112,8 @@ def execute_test_suite_from_github_actions(
             )
         )
     ],
-    teamengine_username: _teamengine_username_option = pydantic.SecretStr("ogctest"),
-    teamengine_password: _teamengine_password_option = pydantic.SecretStr("ogctest"),
+    teamengine_username: _teamengine_username_option = "ogctest",
+    teamengine_password: _teamengine_password_option = "ogctest",
     treat_skipped_tests_as_failures: bool = False,
     exit_with_error_on_suite_failed_result: bool = False,
     output_format: models.OutputFormat = models.OutputFormat.MARKDOWN,
@@ -113,8 +121,8 @@ def execute_test_suite_from_github_actions(
     """Execute a CITE test suite via github actions.
 
     This command presents a simpler interface to run the
-    `execute-test-suite-standalone`, making it easier to run as a github
-    action.
+    `execute-test-suite-standalone` command, making it easier to run as a
+    github action.
     """
     suite_inputs = {}
     for raw_suite_input in test_suite_input:
@@ -145,11 +153,11 @@ def execute_test_suite_standalone(
     ctx: typer.Context,
     teamengine_base_url: _teamengine_base_url_argument,
     test_suite_identifier: _test_suite_identifier_argument,
-    teamengine_username: _teamengine_username_option = pydantic.SecretStr("ogctest"),
-    teamengine_password: _teamengine_password_option = pydantic.SecretStr("ogctest"),
+    teamengine_username: _teamengine_username_option = "ogctest",
+    teamengine_password: _teamengine_password_option = "ogctest",
     test_suite_input: typing.Annotated[
-        typing.Optional[list[click.Tuple]],
-        typer.Option(click_type=click.Tuple([str, str]))
+    typing.Optional[list[click.Tuple]],
+    typer.Option(click_type=click.Tuple([str, str]))
     ] = None,
     output_format: models.OutputFormat = models.OutputFormat.MARKDOWN,
     treat_skipped_tests_as_failures: bool = False,
@@ -180,7 +188,7 @@ def execute_test_suite_standalone(
 
 
 def _execute_test_suite(
-        context: models.CliContext,
+        context: src.ogc_cite_action.config.CliContext,
         teamengine_base_url: str,
         test_suite_identifier: str,
         teamengine_username: pydantic.SecretStr,
@@ -208,9 +216,13 @@ def _execute_test_suite(
             logger.exception(f"Unable to collect test suite execution results")
             raise SystemExit(1)
         else:
-            parsed = teamengine_runner.parse_test_suite_result(
-                raw_result,
-                treat_skipped_as_failure=treat_skipped_tests_as_failures,
+            parser = teamengine_runner.get_suite_result_parser(
+                test_suite_identifier, context.settings
+            )
+            root = teamengine_runner.parse_raw_result_as_xml(raw_result)
+            parsed = parser(
+                root,
+                treat_skipped_as_failure=treat_skipped_tests_as_failures
             )
             if output_format == models.OutputFormat.RAW:
                 logger.debug(

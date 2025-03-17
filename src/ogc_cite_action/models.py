@@ -5,7 +5,6 @@ from typing import (
     Generator,
 )
 
-import jinja2
 import pydantic
 
 
@@ -24,16 +23,6 @@ class TestStatus(enum.Enum):
     PASSED = "PASSED"
     FAILED = "FAILED"
     SKIPPED = "SKIPPED"
-
-
-class CliContext(pydantic.BaseModel):
-    model_config = pydantic.ConfigDict(
-        arbitrary_types_allowed=True
-    )
-
-    debug: bool = False
-    jinja_environment: jinja2.Environment = jinja2.Environment()
-    network_timeout_seconds: int = 20
 
 
 class TestCaseResult(pydantic.BaseModel):
