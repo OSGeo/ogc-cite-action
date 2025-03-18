@@ -2,7 +2,7 @@
 
 Simplify testing your OGC implementation server against [CITE](https://github.com/opengeospatial/cite/wiki). This repo
 contains a CITE runner that can be called as a github action. It can also be used standalone, which allows integration
-with other CI platforms.
+with other CI platforms or running locally.
 
 This code can either:
 

@@ -75,6 +75,7 @@ def parse_test_result(
                 exists=True,
                 file_okay=True,
                 dir_okay=False,
+                help="Suite execution result"
             )
         ],
         output_format: models.ParseableOutputFormat = models.ParseableOutputFormat.JSON,
@@ -85,14 +86,16 @@ def parse_test_result(
     root = teamengine_runner.parse_raw_result_as_xml(raw_result)
     test_suite_identifier = teamengine_runner.get_suite_name(root).rpartition("-")[0]
     parser = teamengine_runner.get_suite_result_parser(
-        test_suite_identifier, ctx.obj.settings)
+        ctx.obj.settings, test_suite_identifier)
     parsed = parser(
         root,
         treat_skipped_as_failure=treat_skipped_tests_as_failures,
     )
-    parseable_output_format = models.ParseableOutputFormat(output_format.value)
-    serialized = teamengine_runner.serialize_test_suite_result(
-        parsed, parseable_output_format, ctx.obj.jinja_environment)
+    serializer = teamengine_runner.get_suite_result_serializer(
+        output_format, ctx.obj.settings, test_suite_identifier
+    )
+    serialized = serializer(
+        parsed, ctx.obj.settings, ctx.obj.jinja_environment)
     print(serialized)
     raise typer.Exit(_get_exit_code(parsed, exit_with_error_on_suite_failed_result))
 
@@ -156,8 +159,14 @@ def execute_test_suite_standalone(
     teamengine_username: _teamengine_username_option = "ogctest",
     teamengine_password: _teamengine_password_option = "ogctest",
     test_suite_input: typing.Annotated[
-    typing.Optional[list[click.Tuple]],
-    typer.Option(click_type=click.Tuple([str, str]))
+        typing.Optional[list[click.Tuple]],
+        typer.Option(
+            click_type=click.Tuple([str, str]),
+            help=(
+                "Input name and value separated by a space. "
+                "Ex: --test-suite-input iut http://localhost:5000"
+            )
+        )
     ] = None,
     output_format: models.OutputFormat = models.OutputFormat.MARKDOWN,
     treat_skipped_tests_as_failures: bool = False,
@@ -188,7 +197,7 @@ def execute_test_suite_standalone(
 
 
 def _execute_test_suite(
-        context: src.ogc_cite_action.config.CliContext,
+        ctx: src.ogc_cite_action.config.CliContext,
         teamengine_base_url: str,
         test_suite_identifier: str,
         teamengine_username: pydantic.SecretStr,
@@ -198,7 +207,7 @@ def _execute_test_suite(
         treat_skipped_tests_as_failures: bool,
 ) -> tuple[models.TestSuiteResult, str]:
     logger.debug(f"{locals()=}")
-    client = httpx.Client(timeout=context.network_timeout_seconds)
+    client = httpx.Client(timeout=ctx.network_timeout_seconds)
     base_url = teamengine_base_url.strip("/")
     if teamengine_runner.wait_for_teamengine_to_be_ready(client, base_url):
         logger.debug(
@@ -216,10 +225,10 @@ def _execute_test_suite(
             logger.exception(f"Unable to collect test suite execution results")
             raise SystemExit(1)
         else:
-            parser = teamengine_runner.get_suite_result_parser(
-                test_suite_identifier, context.settings
-            )
             root = teamengine_runner.parse_raw_result_as_xml(raw_result)
+            parser = teamengine_runner.get_suite_result_parser(
+                ctx.settings, test_suite_identifier,
+            )
             parsed = parser(
                 root,
                 treat_skipped_as_failure=treat_skipped_tests_as_failures
@@ -230,10 +239,13 @@ def _execute_test_suite(
                 serialized = raw_result
             else:
                 logger.debug(f"Parsing test suite execution results...")
-                serialized = teamengine_runner.serialize_test_suite_result(
-                    parsed,
-                    models.ParseableOutputFormat(output_format.value),
-                    context.jinja_environment
+                format_to_output = models.ParseableOutputFormat(output_format.value)
+                serializer = teamengine_runner.get_suite_result_serializer(
+                    format_to_output,
+                    ctx.settings,
+                    test_suite_identifier,
+                )
+                serialized = serializer(parsed, ctx.settings, ctx.jinja_environment,
                 )
             return parsed, serialized
     else:

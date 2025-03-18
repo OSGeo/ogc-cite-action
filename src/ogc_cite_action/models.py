@@ -25,6 +25,41 @@ class TestStatus(enum.Enum):
     SKIPPED = "SKIPPED"
 
 
+class TestSuiteInput(pydantic.BaseModel):
+    name: str
+    value: str
+
+
+class NewTestCaseResult(pydantic.BaseModel):
+    identifier: str
+    status: TestStatus
+    detail: str | None
+    name: str | None
+    description: str | None
+
+
+class NewConformanceClassResult(pydantic.BaseModel):
+    title: str
+    num_failed_tests: int
+    num_passed_tests: int
+    num_skipped_tests: int
+    tests: list[NewTestCaseResult]
+
+
+class NewTestSuiteResult(pydantic.BaseModel):
+    suite_identifier: str
+    suite_title: str
+    test_run_start: dt.datetime
+    test_run_end: dt.datetime
+    test_run_duration: dt.timedelta
+    num_tests_total: int
+    num_failed_tests: int
+    num_skipped_tests: int
+    num_passed_tests: int
+    inputs: list[TestSuiteInput]
+    conformance_class_results: list[NewConformanceClassResult]
+
+
 class TestCaseResult(pydantic.BaseModel):
     name: str
     description: str
@@ -117,10 +152,6 @@ class TestSuiteResult(pydantic.BaseModel):
     test_run_start: dt.datetime
     test_run_end: dt.datetime
     overview: SuiteResultOverview
-    conformance_classes: Annotated[
-        list[ConformanceClassResults],
-        pydantic.Field(default_factory=list)
-    ]
     conformance_classes: Annotated[
         list[ConformanceClassResults],
         pydantic.Field(default_factory=list)

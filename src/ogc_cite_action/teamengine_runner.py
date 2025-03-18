@@ -1,9 +1,8 @@
 """Utilities for running a remote TEAMENGINE instance and getting its result."""
-import datetime as dt
+import importlib
 import logging
-import typing
 import time
-from itertools import count
+import typing
 from lxml import etree
 
 import httpx
@@ -26,6 +25,17 @@ class SuiteParserProtocol(typing.Protocol):
         suite_result: etree.Element,
         treat_skipped_as_failure: bool
     ) -> models.TestSuiteResult:
+        ...
+
+
+class SuiteSerializerProtocol(typing.Protocol):
+
+    def __call__(
+            self,
+            suite_result: models.TestSuiteResult,
+            settings: config.TeamEngineRunnerSettings,
+            jinja_env: jinja2.Environment,
+    ) -> str:
         ...
 
 
@@ -86,13 +96,69 @@ def execute_test_suite(
         return response.text
 
 
+def _sanitize_test_suite_identifier(raw_identifier: str) -> str:
+    return raw_identifier.translate(
+        str.maketrans(
+            {
+                ".": "_",
+                "-": "_",
+            }
+        )
+    )
+
+
+def _load_python_object(
+        object_path: str
+) -> typing.Union[typing.Type, typing.Callable] | None:
+    module_path, parser_name = object_path.rpartition(".")[::2]
+    module = importlib.import_module(module_path)
+    return getattr(module, parser_name)
+
+
+def get_suite_result_serializer(
+    output_format: models.ParseableOutputFormat,
+    settings: config.TeamEngineRunnerSettings,
+    test_suite_identifier: str | None = None,
+) -> SuiteSerializerProtocol:
+    serializer_python_path = {
+        output_format.JSON: settings.default_json_serializer,
+        output_format.MARKDOWN: settings.default_markdown_serializer,
+    }.get(output_format)
+    if test_suite_identifier is not None:
+        settings_key = "_".join((
+            _sanitize_test_suite_identifier(test_suite_identifier),
+            output_format.value,
+            "serializer"
+        ))
+        if (custom_serializer_path := getattr(settings, settings_key, None)) is not None:
+            serializer_python_path = custom_serializer_path
+        else:
+            logger.info(
+                f"Could not find python path for custom serializer based on "
+                f"test suite identifier {test_suite_identifier!r} - using "
+                f"default serializer of {serializer_python_path!r}")
+    return _load_python_object(serializer_python_path)
+
+
 def get_suite_result_parser(
-        test_suite_identifier: str,
-        settings: config.TeamEngineRunnerConfig
+    settings: config.TeamEngineRunnerSettings,
+    test_suite_identifier: str | None = None,
 ) -> SuiteParserProtocol:
-    parser = {
-    }.get(test_suite_identifier, parse_test_suite_result)
-    return parser
+    parser_python_path = settings.default_parser
+    if test_suite_identifier is not None:
+        settings_key = "_".join((
+            _sanitize_test_suite_identifier(test_suite_identifier),
+            "parser"
+        ))
+        if (custom_parser_path := getattr(settings, settings_key, None)) is not None:
+            parser_python_path = custom_parser_path
+        else:
+            logger.info(
+                f"Could not find python path for custom parser based on test "
+                f"suite with identifier {test_suite_identifier!r} - using "
+                f"default parser of {parser_python_path!r}"
+            )
+    return _load_python_object(parser_python_path)
 
 
 def parse_raw_result_as_xml(
@@ -113,118 +179,3 @@ def get_suite_name(
 ) -> str:
     suite_el = result_root.find("./suite")
     return suite_el.attrib.get("name", "")
-
-
-def parse_test_suite_result(
-        suite_result: etree.Element,
-        treat_skipped_as_failure: bool,
-) -> models.TestSuiteResult:
-    suite_el = suite_result.find("./suite")
-    now = dt.datetime.now(tz=dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%S")
-    suite = models.TestSuiteResult(
-        suite_name=suite_el.attrib.get("name", ""),
-        overview=models.SuiteResultOverview(
-            test_run_duration_ms=dt.timedelta(
-                microseconds=int(suite_el.attrib.get("duration-ms", 0))
-            ),
-            num_tests_total=int(suite_result.attrib.get("total", 0)),
-            num_failed_tests=int(suite_result.attrib.get("failed", 0)),
-            num_skipped_tests=int(suite_result.attrib.get("skipped", 0)),
-            num_passed_tests=int(suite_result.attrib.get("passed", 0)),
-        ),
-        test_run_start=_parse_to_datetime(suite_el.attrib.get("started-at", now)),
-        test_run_end=_parse_to_datetime(suite_el.attrib.get("finished-at", now)),
-    )
-    test_case_names = set()
-    for conformance_class_el in suite_el.findall("./test"):
-        conformance_class = models.ConformanceClassResults(
-            name=conformance_class_el.attrib.get("name", ""),
-            suite=suite,
-        )
-        for category_el in conformance_class_el.findall("./class"):
-            cat_name = category_el.attrib.get("name", "")
-            category = models.TestCaseCategoryResults(
-                name=cat_name,
-                short_name=cat_name.partition("conformance.")[-1],
-                conformance_class=conformance_class,
-                treat_skipped_as_failure=treat_skipped_as_failure,
-            )
-            for test_case_el in category_el.findall("./test-method"):
-                test_case_name = _get_test_case_name(
-                    test_case_el.get("name", ""),
-                    test_case_names
-                )
-                logger.debug(f"{test_case_name=}")
-                test_case_names.add(test_case_name)
-                test_case_status = {
-                    "pass": models.TestStatus.PASSED,
-                    "skip": models.TestStatus.SKIPPED,
-                }.get(
-                    test_case_el.get("status", "").lower(),
-                    models.TestStatus.FAILED
-                )
-                error_msg_el = test_case_el.find("./exception/message")
-                if test_case_el.attrib.get("is-config") != "true":
-                    params = [
-                        i.text.strip() for i in test_case_el.findall("./params/param")
-                    ]
-                    test_case = models.TestCaseResult(
-                        name=test_case_name,
-                        description=test_case_el.attrib.get("description", ""),
-                        status=test_case_status,
-                        output=test_case_el.find("./reporter-output").text.strip(),
-                        exception=(
-                            error_msg_el.text.strip()
-                            if error_msg_el is not None else None
-                        ),
-                        parameters=[p for p in params if p != ""],
-                        category=category,
-                    )
-                    category.test_cases.append(test_case)
-                else:
-                    logger.debug(
-                        f"ignoring test case {test_case_name}"
-                        f"(status={test_case_status}) as it seems to be only "
-                        f"test configuration"
-                    )
-            conformance_class.categories.append(category)
-        suite.conformance_classes.append(conformance_class)
-    return suite
-
-
-def serialize_test_suite_result(
-        parsed_result: models.TestSuiteResult,
-        output_format: models.ParseableOutputFormat,
-        jinja_environment: jinja2.Environment | None = None,
-) -> str:
-    if output_format == models.ParseableOutputFormat.JSON:
-        output_result = models.TestSuiteResultOut(**parsed_result.model_dump())
-        rendered = output_result.model_dump_json(indent=2)
-    elif output_format == models.ParseableOutputFormat.MARKDOWN:
-        template = jinja_environment.get_template("results-overview.md")
-        rendered = template.render(result=parsed_result)
-    else:
-        raise ValueError(f"Output format {output_format} not implemented")
-    return rendered
-
-
-def _parse_to_datetime(temporal_value: str) -> dt.datetime:
-    return dt.datetime.fromisoformat(
-        temporal_value.strip("Z")).replace(tzinfo=dt.timezone.utc)
-
-
-def _get_test_case_name(naive_name: str, seen_names: set) -> str:
-    result = naive_name
-    if naive_name in seen_names:
-        for idx in count(start=1):
-            if idx > 10_000:
-                raise RuntimeError(
-                    f"Could not find a unique name for test case after {count} tries, "
-                    f"aborting..."
-                )
-            else:
-                candidate_name = f"{naive_name}-{idx:03d}"
-                if candidate_name not in seen_names:
-                    result = candidate_name
-                    break
-    return result
