@@ -1,0 +1,1106 @@
+<?xml version="1.0" encoding="UTF-8"?><rdf:RDF xmlns:dct="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:http="http://www.w3.org/2011/http#" xmlns:cnt="http://www.w3.org/2011/content#" xmlns:earl="http://www.w3.org/ns/earl#" xmlns:cite="http://cite.opengeospatial.org/">
+  <earl:Assertion rdf:about="assert-5">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy>
+      <earl:Assertor rdf:about="https://github.com/opengeospatial/teamengine">
+        <dct:title xml:lang="en">OGC TEAM Engine</dct:title>
+        <dct:description xml:lang="en">Official test harness of the OGC conformance testing program (CITE).</dct:description>
+      </earl:Assertor>
+    </earl:assertedBy>
+    <earl:subject>
+      <earl:TestSubject rdf:about="http://localhost:5000"/>
+    </earl:subject>
+    <earl:result>
+      <earl:TestResult rdf:about="result-5">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.556Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test>
+      <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobResultsAsyncRawValueOne">
+        <dct:title>test Job Results Async Raw Value One </dct:title>
+        <dct:description>Implements Requirement /req/core/job-results-async-raw-value-one </dct:description>
+      </earl:TestCase>
+    </earl:test>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-21">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-21">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.556Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test>
+      <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobResultsAsyncDocument">
+        <dct:title>test Job Results Async Document </dct:title>
+        <dct:description>Implements Requirement /req/core/job-results-async-document </dct:description>
+      </earl:TestCase>
+    </earl:test>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-45">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-45">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.555Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test>
+      <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobCreationSuccessAsync">
+        <dct:title>test Job Creation Success Async </dct:title>
+        <dct:description>Implements Requirement /req/core/job-creation-success-async </dct:description>
+      </earl:TestCase>
+    </earl:test>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-33">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-33">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.554Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test>
+      <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/process/Process#testProcessExceptionNoSuchProcess">
+        <dct:title>test Process Exception No Such Process </dct:title>
+        <dct:description>Implements Requirement /req/core/process-exception-no-such-process </dct:description>
+      </earl:TestCase>
+    </earl:test>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-29">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-29">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.554Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test>
+      <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/process/Process#testProcess">
+        <dct:title>test Process </dct:title>
+        <dct:description>Implements Requirement /req/core/process </dct:description>
+      </earl:TestCase>
+    </earl:test>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-17">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-17">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.556Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test>
+      <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobCreationSyncRawRef">
+        <dct:title>test Job Creation Sync Raw Ref </dct:title>
+        <dct:description>Implements Requirement /req/core/job-creation-sync-raw-ref </dct:description>
+      </earl:TestCase>
+    </earl:test>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-6">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-6">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.555Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test>
+      <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobCreationInputInlineBinary">
+        <dct:title>test Job Creation Input Inline Binary </dct:title>
+        <dct:description>Implements Requirement /req/core/job-creation-input-binary </dct:description>
+      </earl:TestCase>
+    </earl:test>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-50">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-50">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.557Z</dct:date>
+        <dct:description>java.lang.Throwable: Method OGCProcessDescription.testOGCProcessDescriptionOutputDef()[pri:0, instance:org.opengis.cite.ogcapiprocesses10.ogcprocessdescription.OGCProcessDescription@79ca8559] depends on not successfully finished methods</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test>
+      <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/ogcprocessdescription/OGCProcessDescription#testOGCProcessDescriptionOutputDef">
+        <dct:title>test O G C Process Description Output Def </dct:title>
+        <dct:description>Implements Requirement /req/ogc-process-description/output-def </dct:description>
+      </earl:TestCase>
+    </earl:test>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-10">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-10">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.555Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test>
+      <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobCreationInputInlineBbox">
+        <dct:title>test Job Creation Input Inline Bbox </dct:title>
+        <dct:description>Implements Requirement /req/core/job-creation-input-inline-bbox </dct:description>
+      </earl:TestCase>
+    </earl:test>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-34">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-34">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.554Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test>
+      <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/processlist/ProcessList#testProcessListSuccess">
+        <dct:title>test Process List Success </dct:title>
+        <dct:description>Implements Requirement /req/core/process-list-success </dct:description>
+      </earl:TestCase>
+    </earl:test>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-22">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-22">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.555Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test>
+      <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobCreationInputs">
+        <dct:title>test Job Creation Inputs </dct:title>
+        <dct:description>Implements Requirement /req/core/job-creation-inputs </dct:description>
+      </earl:TestCase>
+    </earl:test>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-46">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-46">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.557Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test>
+      <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/ogcprocessdescription/OGCProcessDescription#testOGCProcessDescriptionJSON">
+        <dct:title>test O G C Process Description J S O N </dct:title>
+        <dct:description>Implements Requirement /req/ogc-process-description/json-encoding</dct:description>
+      </earl:TestCase>
+    </earl:test>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-18">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-18">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.555Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test>
+      <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobCreationOp">
+        <dct:title>test Job Creation Op </dct:title>
+        <dct:description>Implements Requirement /req/core/job-creation-op </dct:description>
+      </earl:TestCase>
+    </earl:test>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-3">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-3">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.556Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test>
+      <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobResultsExceptionResultsNotReady">
+        <dct:title>test Job Results Exception Results Not Ready </dct:title>
+        <dct:description>Implements Requirement /req/core/job-results-exception-results-not-ready </dct:description>
+      </earl:TestCase>
+    </earl:test>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-51">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-51">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.557Z</dct:date>
+        <dct:description>java.lang.Throwable: Method OGCProcessDescription.testOGCProcessDescriptionOutputDefinitionOfMixedType()[pri:0, instance:org.opengis.cite.ogcapiprocesses10.ogcprocessdescription.OGCProcessDescription@79ca8559] depends on not successfully finished methods</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test>
+      <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/ogcprocessdescription/OGCProcessDescription#testOGCProcessDescriptionOutputDefinitionOfMixedType">
+        <dct:title>test O G C Process Description Output Definition Of Mixed Type </dct:title>
+        <dct:description>Implements Requirement /req/ogc-process-description/output-mixed-type</dct:description>
+      </earl:TestCase>
+    </earl:test>
+  </earl:Assertion>
+  <cite:TestRun>
+    <cite:testsSkipped rdf:datatype="http://www.w3.org/2001/XMLSchema#int">54</cite:testsSkipped>
+    <dct:extent rdf:datatype="http://www.w3.org/2001/XMLSchema#duration">PT0.01S</dct:extent>
+    <cite:areCoreConformanceClassesPassed rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</cite:areCoreConformanceClassesPassed>
+    <cite:testSuiteType>testng</cite:testSuiteType>
+    <cite:requirements>
+      <rdf:Seq>
+        <rdf:li>
+          <earl:TestRequirement rdf:about="Core">
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobResultsSync">
+                <dct:title>test Job Results Sync </dct:title>
+                <dct:description>Implements Requirement /req/core/job-results-sync </dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <dct:hasPart rdf:resource="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobResultsAsyncDocument"/>
+            <cite:testsSkipped rdf:datatype="http://www.w3.org/2001/XMLSchema#int">45</cite:testsSkipped>
+            <dct:hasPart rdf:resource="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobCreationInputInlineBinary"/>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobCreationSyncRawMixedMulti">
+                <dct:title>test Job Creation Sync Raw Mixed Multi </dct:title>
+                <dct:description>Implements Requirement /req/core/job-creation-sync-raw-mixed-multi </dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobResultsNoSuchJob">
+                <dct:title>test Job Results No Such Job </dct:title>
+                <dct:description>Implements Requirement /req/core/job-results-exception-no-such-job </dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <dct:hasPart rdf:resource="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobResultsExceptionResultsNotReady"/>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobCreationInputInline">
+                <dct:title>test Job Creation Input Inline </dct:title>
+                <dct:description>Implements Requirement /req/core/job-creation-input-inline </dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobCreationSyncRawValueOne">
+                <dct:title>test Job Creation Sync Raw Value One </dct:title>
+                <dct:description>Implements Requirement /req/core/job-creation-sync-raw-value-one </dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobExceptionNoSuchJob">
+                <dct:title>test Job Exception No Such Job </dct:title>
+                <dct:description>Implements Requirement /req/core/job-exception-no-such-job </dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <dct:hasPart rdf:resource="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobCreationInputs"/>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobCreationInputRef">
+                <dct:title>test Job Creation Input Ref </dct:title>
+                <dct:description>Implements Requirement /req/core/job-creation-input-ref </dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobCreationRequest">
+                <dct:title>test Job Creation Request </dct:title>
+                <dct:description>Implements Requirement /req/core/job-creation-request </dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/process/Process#testProcessSuccess">
+                <dct:title>test Process Success </dct:title>
+                <dct:description>Implements Requirement /req/core/process-success </dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobOp">
+                <dct:title>test Job Op </dct:title>
+                <dct:description>Implements Requirement /req/core/job </dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <dct:hasPart rdf:resource="org/opengis/cite/ogcapiprocesses10/process/Process#testProcessExceptionNoSuchProcess"/>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobResults">
+                <dct:title>test Job Results </dct:title>
+                <dct:description>Implements Requirement /req/core/job-results </dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobResultsFailed">
+                <dct:title>test Job Results Failed </dct:title>
+                <dct:description>Implements Requirement /req/core/job-results-failed </dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobSuccess">
+                <dct:title>test Job Success </dct:title>
+                <dct:description>Implements Requirement /req/core/job-success </dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <dct:hasPart rdf:resource="org/opengis/cite/ogcapiprocesses10/processlist/ProcessList#testProcessListSuccess"/>
+            <dct:description>A precondition was not met. All tests in this set were skipped.</dct:description>
+            <dct:hasPart rdf:resource="org/opengis/cite/ogcapiprocesses10/process/Process#testProcess"/>
+            <cite:testsFailed rdf:datatype="http://www.w3.org/2001/XMLSchema#int">0</cite:testsFailed>
+            <dct:hasPart rdf:resource="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobCreationSuccessAsync"/>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobCreationInputArray">
+                <dct:title>test Job Creation Input Array </dct:title>
+                <dct:description>Implements Requirement /req/core/job-creation-input-array </dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/processlist/ProcessList#testPlLinks">
+                <dct:title>test Pl Links </dct:title>
+                <dct:description>Implements Requirement /req/core/pl-links </dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobCreationInputInlineMixed">
+                <dct:title>test Job Creation Input Inline Mixed </dct:title>
+                <dct:description>Implements Requirement /req/core/job-creation-input-inline-mixed </dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/conformance/Conformance#testValidateConformanceOperationAndResponse">
+                <dct:title>test Validate Conformance Operation And Response </dct:title>
+                <dct:description>Implements /conf/core/conformance-success (partial)</dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobCreationAutoExecutionMode">
+                <dct:title>test Job Creation Auto Execution Mode </dct:title>
+                <dct:description>Implements Requirement /req/core/job-creation-op </dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobCreationInputValidation">
+                <dct:title>test Job Creation Input Validation </dct:title>
+                <dct:description>Implements Requirement /req/core/job-creation-input-validation </dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobCreationDefaultOutputs">
+                <dct:title>test Job Creation Default Outputs </dct:title>
+                <dct:description>Implements Requirement /req/core/job-creation-op </dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/processlist/ProcessList#testPlLimitResponse">
+                <dct:title>test Pl Limit Response </dct:title>
+                <dct:description>Implements Requirement /req/core/pl-limit-response </dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/landingpage/LandingPage#testLandingPageRetrieval">
+                <dct:title>test Landing Page Retrieval </dct:title>
+                <dct:description>Implements Abstract Test 1: /conf/core/landingpage-op</dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobCreationSyncDocument">
+                <dct:title>test Job Creation Sync Document </dct:title>
+                <dct:description>Implements Requirement /req/core/job-creation-sync-document </dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobResultsAsyncRawRef">
+                <dct:title>test Job Results Async Raw Ref </dct:title>
+                <dct:description>Implements Requirement /req/core/job-results-async-raw-ref </dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <dct:hasPart rdf:resource="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobCreationInputInlineBbox"/>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobCreationInputInlineObject">
+                <dct:title>test Job Creation Input Inline Object </dct:title>
+                <dct:description>Implements Requirement /req/core/job-creation-input-inline-object </dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/processlist/ProcessList#testProcessList">
+                <dct:title>test Process List </dct:title>
+                <dct:description>Implements Requirement /req/core/process-list </dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/general/GeneralHttp#testHttp">
+                <dct:title>test Http </dct:title>
+                <dct:description>Implements A.2.1.1. HTTP, Abstract Test 1 (Requirement /req/core/http)</dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <dct:hasPart rdf:resource="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobResultsAsyncRawValueOne"/>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobResultsAsyncRawMixedMulti">
+                <dct:title>test Job Results Async Raw Mixed Multi </dct:title>
+                <dct:description>Implements Requirement /req/core/job-results-async-raw-mixed-multi </dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobResultsAsyncRawValueMulti">
+                <dct:title>test Job Results Async Raw Value Multi </dct:title>
+                <dct:description>Implements Requirement /req/core/job-results-async-raw-value-multi </dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobCreationSyncRawValueMulti">
+                <dct:title>test Job Creation Sync Raw Value Multi </dct:title>
+                <dct:description>Implements Requirement /req/core/job-creation-sync-raw-value-multi </dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/processlist/ProcessList#testPlLimitDefinition">
+                <dct:title>test Pl Limit Definition </dct:title>
+                <dct:description>Implements Requirement /req/core/pl-limit-definition </dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <dct:hasPart rdf:resource="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobCreationSyncRawRef"/>
+            <cite:testsPassed rdf:datatype="http://www.w3.org/2001/XMLSchema#int">0</cite:testsPassed>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/landingpage/LandingPage#testLandingPageValidation">
+                <dct:title>test Landing Page Validation </dct:title>
+                <dct:description>Implements Abstract Test 2: /conf/core/landingpage-success</dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobCreationDefaultExecutionMode">
+                <dct:title>test Job Creation Default Execution Mode </dct:title>
+                <dct:description>Implements Requirement /req/core/job-creation-op </dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <cite:isBasic>true</cite:isBasic>
+            <dct:title>Core</dct:title>
+            <dct:hasPart rdf:resource="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobCreationOp"/>
+          </earl:TestRequirement>
+        </rdf:li>
+        <rdf:li>
+          <earl:TestRequirement rdf:about="OGC-Process-Description">
+            <dct:hasPart rdf:resource="org/opengis/cite/ogcapiprocesses10/ogcprocessdescription/OGCProcessDescription#testOGCProcessDescriptionOutputDefinitionOfMixedType"/>
+            <dct:hasPart rdf:resource="org/opengis/cite/ogcapiprocesses10/ogcprocessdescription/OGCProcessDescription#testOGCProcessDescriptionJSON"/>
+            <cite:testsSkipped rdf:datatype="http://www.w3.org/2001/XMLSchema#int">7</cite:testsSkipped>
+            <dct:title>OGC Process Description</dct:title>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/ogcprocessdescription/OGCProcessDescription#testOGCProcessDescriptionInputDefinitionOfMixedType">
+                <dct:title>test O G C Process Description Input Definition Of Mixed Type </dct:title>
+                <dct:description>Implements Requirement /req/ogc-process-description/input-mixed-type</dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/ogcprocessdescription/OGCProcessDescription#testOGCProcessDescriptionInputsDef">
+                <dct:title>test O G C Process Description Inputs Def </dct:title>
+                <dct:description>Implements Requirement /req/ogc-process-description/inputs-def</dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <cite:testsFailed rdf:datatype="http://www.w3.org/2001/XMLSchema#int">0</cite:testsFailed>
+            <dct:hasPart rdf:resource="org/opengis/cite/ogcapiprocesses10/ogcprocessdescription/OGCProcessDescription#testOGCProcessDescriptionOutputDef"/>
+            <dct:description>A precondition was not met. All tests in this set were skipped.</dct:description>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/ogcprocessdescription/OGCProcessDescription#testOGCProcessDescriptionOutputsDef">
+                <dct:title>test O G C Process Description Outputs Def </dct:title>
+                <dct:description>Implements Requirement /req/ogc-process-description/outputs-def</dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/ogcprocessdescription/OGCProcessDescription#testOGCProcessDescriptionInputDef">
+                <dct:title>test O G C Process Description Input Def </dct:title>
+                <dct:description>Implements Requirement /req/ogc-process-description/input-def</dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <cite:testsPassed rdf:datatype="http://www.w3.org/2001/XMLSchema#int">0</cite:testsPassed>
+          </earl:TestRequirement>
+        </rdf:li>
+        <rdf:li>
+          <earl:TestRequirement rdf:about="Job-List">
+            <dct:title>Job List</dct:title>
+            <cite:testsPassed rdf:datatype="http://www.w3.org/2001/XMLSchema#int">0</cite:testsPassed>
+            <cite:testsFailed rdf:datatype="http://www.w3.org/2001/XMLSchema#int">0</cite:testsFailed>
+            <cite:testsSkipped rdf:datatype="http://www.w3.org/2001/XMLSchema#int">2</cite:testsSkipped>
+            <dct:description>A precondition was not met. All tests in this set were skipped.</dct:description>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/joblist/JobList#testJobListSuccess">
+                <dct:title>test Job List Success </dct:title>
+                <dct:description>Implements Requirement /req/job-list/job-list-success </dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiprocesses10/joblist/JobList#testJobList">
+                <dct:title>test Job List </dct:title>
+                <dct:description>Implements Requirement /req/job-list/job-list-op </dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+          </earl:TestRequirement>
+        </rdf:li>
+      </rdf:Seq>
+    </cite:requirements>
+    <cite:inputs>
+      <rdf:Bag>
+        <rdf:li rdf:parseType="Resource">
+          <dct:title>acceptMediaType</dct:title>
+          <dct:description>application/rdf+xml</dct:description>
+        </rdf:li>
+        <rdf:li rdf:parseType="Resource">
+          <dct:title>noofcollections</dct:title>
+          <dct:description>-1</dct:description>
+        </rdf:li>
+        <rdf:li rdf:parseType="Resource">
+          <dct:title>sourcesId</dct:title>
+          <dct:description>OGC_OGC API-Processes 1.0 Conformance Test Suite_1.0</dct:description>
+        </rdf:li>
+        <rdf:li rdf:parseType="Resource">
+          <dct:title>iut</dct:title>
+          <dct:description>http://localhost:5000</dct:description>
+        </rdf:li>
+        <rdf:li rdf:parseType="Resource">
+          <dct:title>sessionId</dct:title>
+          <dct:description>s0008</dct:description>
+        </rdf:li>
+        <rdf:li rdf:parseType="Resource">
+          <dct:title>logDir</dct:title>
+          <dct:description>/usr/local/tomcat/te_base/users/ogctest/rest</dct:description>
+        </rdf:li>
+      </rdf:Bag>
+    </cite:inputs>
+    <dct:identifier>s0008</dct:identifier>
+    <cite:testsPassed rdf:datatype="http://www.w3.org/2001/XMLSchema#int">0</cite:testsPassed>
+    <dct:title>ogcapi-processes-1.0-1.0</dct:title>
+    <dct:created>2025-03-18T17:07:24.561Z</dct:created>
+    <cite:testsFailed rdf:datatype="http://www.w3.org/2001/XMLSchema#int">0</cite:testsFailed>
+  </cite:TestRun>
+  <earl:Assertion rdf:about="assert-23">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-23">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.555Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiprocesses10/process/Process#testProcessSuccess"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-11">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-11">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.556Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobCreationSyncRawValueOne"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-47">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-47">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.557Z</dct:date>
+        <dct:description>java.lang.Throwable: Method OGCProcessDescription.testOGCProcessDescriptionInputDef()[pri:0, instance:org.opengis.cite.ogcapiprocesses10.ogcprocessdescription.OGCProcessDescription@79ca8559] depends on not successfully finished methods</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiprocesses10/ogcprocessdescription/OGCProcessDescription#testOGCProcessDescriptionInputDef"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-35">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-35">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.555Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobCreationRequest"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-19">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-19">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.556Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobResultsSync"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-4">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-4">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.557Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiprocesses10/conformance/Conformance#testValidateConformanceOperationAndResponse"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-52">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-52">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.557Z</dct:date>
+        <dct:description>java.lang.Throwable: Method OGCProcessDescription.testOGCProcessDescriptionInputDefinitionOfMixedType()[pri:0, instance:org.opengis.cite.ogcapiprocesses10.ogcprocessdescription.OGCProcessDescription@79ca8559] depends on not successfully finished methods</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiprocesses10/ogcprocessdescription/OGCProcessDescription#testOGCProcessDescriptionInputDefinitionOfMixedType"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-40">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-40">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.555Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobCreationSyncRawMixedMulti"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-12">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-12">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.554Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiprocesses10/processlist/ProcessList#testPlLinks"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-36">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-36">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.556Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobOp"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-24">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-24">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.556Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobCreationSyncRawValueMulti"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-48">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-48">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.557Z</dct:date>
+        <dct:description>java.lang.Throwable: Method OGCProcessDescription.testOGCProcessDescriptionInputsDef()[pri:0, instance:org.opengis.cite.ogcapiprocesses10.ogcprocessdescription.OGCProcessDescription@79ca8559] depends on not successfully finished methods</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiprocesses10/ogcprocessdescription/OGCProcessDescription#testOGCProcessDescriptionInputsDef"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-1">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-1">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.555Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobCreationDefaultOutputs"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-41">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-41">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.556Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobResultsNoSuchJob"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-53">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-53">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.557Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiprocesses10/joblist/JobList#testJobListSuccess"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-25">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-25">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.555Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobCreationInputValidation"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-13">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-13">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.555Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobCreationInputInline"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-9">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-9">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.555Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobCreationInputInlineObject"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-49">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-49">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.557Z</dct:date>
+        <dct:description>java.lang.Throwable: Method OGCProcessDescription.testOGCProcessDescriptionOutputsDef()[pri:0, instance:org.opengis.cite.ogcapiprocesses10.ogcprocessdescription.OGCProcessDescription@79ca8559] depends on not successfully finished methods</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiprocesses10/ogcprocessdescription/OGCProcessDescription#testOGCProcessDescriptionOutputsDef"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-37">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-37">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.554Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiprocesses10/processlist/ProcessList#testProcessList"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-2">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-2">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.555Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobCreationSyncDocument"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-30">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-30">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.556Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobResults"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-54">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-54">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.557Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiprocesses10/joblist/JobList#testJobList"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-42">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-42">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.554Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiprocesses10/landingpage/LandingPage#testLandingPageRetrieval"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-14">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-14">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.555Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobCreationInputInlineMixed"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-38">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-38">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.555Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobCreationDefaultExecutionMode"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-26">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-26">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.556Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobResultsAsyncRawMixedMulti"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-7">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-7">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.555Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobCreationInputRef"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-43">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-43">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.556Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobResultsAsyncRawRef"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-31">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-31">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.554Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiprocesses10/general/GeneralHttp#testHttp"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-27">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-27">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.554Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiprocesses10/processlist/ProcessList#testPlLimitDefinition"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-15">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-15">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.556Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobExceptionNoSuchJob"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-39">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-39">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.555Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobCreationInputArray"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-32">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-32">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.556Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobResultsAsyncRawValueMulti"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-20">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-20">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.554Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiprocesses10/landingpage/LandingPage#testLandingPageValidation"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-44">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-44">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.555Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobCreationAutoExecutionMode"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-8">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-8">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.556Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobSuccess"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-16">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-16">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.556Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiprocesses10/jobs/Jobs#testJobResultsFailed"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-28">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-28">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-18T17:07:24.554Z</dct:date>
+        <dct:description>No details available.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiprocesses10/processlist/ProcessList#testPlLimitResponse"/>
+  </earl:Assertion>
+</rdf:RDF>

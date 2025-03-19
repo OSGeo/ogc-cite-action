@@ -21,5 +21,4 @@ def to_json(
         settings: TeamEngineRunnerSettings,
         jinja_environment: jinja2.Environment,
 ) -> str:
-    output_result = models.TestSuiteResultOut(**parsed_result.model_dump())
-    return output_result.model_dump_json(indent=2)
+    return parsed_result.model_dump_json(indent=2)

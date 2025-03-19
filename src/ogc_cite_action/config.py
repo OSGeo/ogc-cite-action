@@ -19,14 +19,14 @@ class TeamEngineRunnerSettings(BaseSettings):
     )
     default_json_serializer: str = "ogc_cite_action.serializers.simple.to_json"
     default_markdown_serializer: str = "ogc_cite_action.serializers.simple.to_markdown"
-    default_parser: str = "ogc_cite_action.parsers.simple.parse_test_suite_result"
+    default_parser: str = "ogc_cite_action.parsers.earl.parse_test_suite_result"
     extra_templates_path: str | None = None
 
     # ogcapi_features_1_0_parser: str = (
     #     "ogc_cite_action.teamengine_runner.parse_test_suite_result")
     # ogcapi_features_1_0_markdown_serializer: str = (
     #     "ogc_cite_action.teamengine_runner.serialize_test_suite_result")
-    simple_serializer_template: str = "results-overview.md"
+    simple_serializer_template: str = "test-suite-result.md"
 
 
 class CliContext(pydantic.BaseModel):
@@ -79,7 +79,7 @@ def configure_logging(
         debug: bool
 ) -> None:
     logging.basicConfig(
-        level=logging.DEBUG if debug else logging.INFO,
+        level=logging.DEBUG if debug else logging.WARNING,
         handlers=[
             RichHandler(
                 console=Console(stderr=True),

@@ -19,7 +19,7 @@ from ..teamengine_runner import logger
 def parse_test_suite_result(
         suite_result: etree.Element,
         treat_skipped_as_failure: bool,
-) -> models.NewTestSuiteResult:
+) -> models.TestSuiteResult:
     """Parse test suite result from EARL."""
     test_run_el = suite_result.find("./cite:TestRun", namespaces=suite_result.nsmap)
     suite_title = test_run_el.find("dct:title", namespaces=suite_result.nsmap).text
@@ -54,7 +54,13 @@ def parse_test_suite_result(
                 f"test case {test_case_result.identifier} is not part of any "
                 f"conformance class"
             )
-    return models.NewTestSuiteResult(
+    passed = False
+    if num_failed == 0:
+        if num_skipped == 0:
+            passed = True
+        elif not treat_skipped_as_failure:
+            passed = True
+    return models.TestSuiteResult(
         suite_identifier=suite_identifier,
         suite_title=suite_title,
         test_run_start=test_run_start,
@@ -65,7 +71,8 @@ def parse_test_suite_result(
         num_skipped_tests=num_skipped,
         num_passed_tests=num_passed,
         inputs=suite_inputs,
-        conformance_class_results=[c[0] for c in conf_classes]
+        conformance_class_results=[c[0] for c in conf_classes],
+        passed=passed,
     )
 
 
@@ -91,7 +98,7 @@ def _parse_test_inputs(
 def _parse_test_requirements(
         test_run_el: etree.Element,
         nsmap: dict
-) -> list[tuple[models.NewConformanceClassResult, list[str]]]:
+) -> list[tuple[models.ConformanceClassResult, list[str]]]:
     conf_classes = []
     for test_requirement_el in test_run_el.findall(
             "cite:requirements/rdf:Seq/rdf:li/earl:TestRequirement",
@@ -99,6 +106,10 @@ def _parse_test_requirements(
     ):
         title = test_requirement_el.find(
             "dct:title", namespaces=nsmap).text
+        try:
+            description = test_requirement_el.find("dct:description", namespaces=nsmap).text
+        except AttributeError:
+            description = ""
         num_failed = int(
             test_requirement_el.find(
                 "cite:testsFailed", namespaces=nsmap
@@ -123,14 +134,16 @@ def _parse_test_requirements(
                 test_case_el = part_el.find("earl:TestCase", namespaces=nsmap)
                 part_id = test_case_el.attrib[f"{{{nsmap['rdf']}}}about"]
                 parts.append(part_id)
-        conf_class_result = models.NewConformanceClassResult(
+        conf_class_result = models.ConformanceClassResult(
             title=title,
+            description=description,
             num_failed_tests=num_failed,
             num_passed_tests=num_passed,
             num_skipped_tests=num_skipped,
             tests=[]
         )
         conf_classes.append((conf_class_result, parts))
+    conf_classes.sort(key=lambda item: item[0].title)
     return conf_classes
 
 
@@ -138,7 +151,7 @@ def _parse_test_requirements(
 def _parse_assertion(
         assertion_el: etree.Element,
         nsmap: dict
-) -> models.NewTestCaseResult:
+) -> models.TestCaseResult:
     raw_outcome = assertion_el.find(
         "earl:result/earl:TestResult/earl:outcome",
         namespaces=nsmap
@@ -180,7 +193,7 @@ def _parse_assertion(
             "earl:result/earl:TestResult/dct:description",
             namespaces=nsmap
         ).text
-    return models.NewTestCaseResult(
+    return models.TestCaseResult(
         identifier=test_identifier,
         status=test_status,
         detail=test_detail,

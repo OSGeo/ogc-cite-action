@@ -25,6 +25,7 @@ ogc-cite-action = "ogc_cite_action.main:app"
 
 [tool.poetry.group.dev.dependencies]
 ipython = "^8.31.0"
+pytest = "^8.3.5"
 
 [build-system]
 requires = ["poetry-core"]

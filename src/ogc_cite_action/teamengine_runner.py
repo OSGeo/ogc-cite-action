@@ -96,6 +96,31 @@ def execute_test_suite(
         return response.text
 
 
+def parse_test_suite_result(
+        raw_result: str,
+        settings: config.TeamEngineRunnerSettings,
+        treat_skipped_as_failure: bool,
+        test_suite_identifier: str | None = None,
+) -> models.TestSuiteResult:
+    root_element = _parse_raw_result_as_xml(raw_result)
+    parser: SuiteParserProtocol = _get_suite_result_parser(
+        settings, test_suite_identifier)
+    return parser(
+        root_element, treat_skipped_as_failure=treat_skipped_as_failure)
+
+
+def serialize_suite_result(
+        parsed_suite_result: models.TestSuiteResult,
+        output_format: models.ParseableOutputFormat,
+        settings: config.TeamEngineRunnerSettings,
+        jinja_env: jinja2.Environment,
+) -> str:
+    serializer: SuiteSerializerProtocol = _get_suite_result_serializer(
+        output_format, settings, parsed_suite_result.suite_title
+    )
+    return serializer(parsed_suite_result, settings, jinja_env)
+
+
 def _sanitize_test_suite_identifier(raw_identifier: str) -> str:
     return raw_identifier.translate(
         str.maketrans(
@@ -115,7 +140,7 @@ def _load_python_object(
     return getattr(module, parser_name)
 
 
-def get_suite_result_serializer(
+def _get_suite_result_serializer(
     output_format: models.ParseableOutputFormat,
     settings: config.TeamEngineRunnerSettings,
     test_suite_identifier: str | None = None,
@@ -140,7 +165,7 @@ def get_suite_result_serializer(
     return _load_python_object(serializer_python_path)
 
 
-def get_suite_result_parser(
+def _get_suite_result_parser(
     settings: config.TeamEngineRunnerSettings,
     test_suite_identifier: str | None = None,
 ) -> SuiteParserProtocol:
@@ -161,7 +186,7 @@ def get_suite_result_parser(
     return _load_python_object(parser_python_path)
 
 
-def parse_raw_result_as_xml(
+def _parse_raw_result_as_xml(
         raw_result: str
 ) -> etree.Element:
     parser = etree.XMLParser(

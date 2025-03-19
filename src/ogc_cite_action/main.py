@@ -79,25 +79,20 @@ def parse_test_result(
             )
         ],
         output_format: models.ParseableOutputFormat = models.ParseableOutputFormat.JSON,
-        treat_skipped_tests_as_failures: bool = False,
+        treat_skipped_tests_as_failures: bool = True,
         exit_with_error_on_suite_failed_result: bool = False,
 ):
-    raw_result = test_suite_result.read_text()
-    root = teamengine_runner.parse_raw_result_as_xml(raw_result)
-    test_suite_identifier = teamengine_runner.get_suite_name(root).rpartition("-")[0]
-    parser = teamengine_runner.get_suite_result_parser(
-        ctx.obj.settings, test_suite_identifier)
-    parsed = parser(
-        root,
-        treat_skipped_as_failure=treat_skipped_tests_as_failures,
+    parsed = teamengine_runner.parse_test_suite_result(
+        test_suite_result.read_text(),
+        ctx.obj.settings,
+        treat_skipped_tests_as_failures
     )
-    serializer = teamengine_runner.get_suite_result_serializer(
-        output_format, ctx.obj.settings, test_suite_identifier
+    serialized = teamengine_runner.serialize_suite_result(
+        parsed, output_format, ctx.obj.settings, ctx.obj.jinja_environment
     )
-    serialized = serializer(
-        parsed, ctx.obj.settings, ctx.obj.jinja_environment)
     print(serialized)
-    raise typer.Exit(_get_exit_code(parsed, exit_with_error_on_suite_failed_result))
+    raise typer.Exit(
+        _get_exit_code(parsed, exit_with_error_on_suite_failed_result))
 
 
 @app.command("execute-test-suite")
@@ -117,7 +112,7 @@ def execute_test_suite_from_github_actions(
     ],
     teamengine_username: _teamengine_username_option = "ogctest",
     teamengine_password: _teamengine_password_option = "ogctest",
-    treat_skipped_tests_as_failures: bool = False,
+    treat_skipped_tests_as_failures: bool = True,
     exit_with_error_on_suite_failed_result: bool = False,
     output_format: models.OutputFormat = models.OutputFormat.MARKDOWN,
 ):
@@ -169,7 +164,7 @@ def execute_test_suite_standalone(
         )
     ] = None,
     output_format: models.OutputFormat = models.OutputFormat.MARKDOWN,
-    treat_skipped_tests_as_failures: bool = False,
+    treat_skipped_tests_as_failures: bool = True,
     exit_with_error_on_suite_failed_result: bool = False,
 ):
     """Execute a CITE test suite."""
@@ -225,14 +220,8 @@ def _execute_test_suite(
             logger.exception(f"Unable to collect test suite execution results")
             raise SystemExit(1)
         else:
-            root = teamengine_runner.parse_raw_result_as_xml(raw_result)
-            parser = teamengine_runner.get_suite_result_parser(
-                ctx.settings, test_suite_identifier,
-            )
-            parsed = parser(
-                root,
-                treat_skipped_as_failure=treat_skipped_tests_as_failures
-            )
+            parsed = teamengine_runner.parse_test_suite_result(
+                raw_result, ctx.settings, treat_skipped_tests_as_failures)
             if output_format == models.OutputFormat.RAW:
                 logger.debug(
                     f"Outputting raw response, as returned by teamengine...")
@@ -240,12 +229,8 @@ def _execute_test_suite(
             else:
                 logger.debug(f"Parsing test suite execution results...")
                 format_to_output = models.ParseableOutputFormat(output_format.value)
-                serializer = teamengine_runner.get_suite_result_serializer(
-                    format_to_output,
-                    ctx.settings,
-                    test_suite_identifier,
-                )
-                serialized = serializer(parsed, ctx.settings, ctx.jinja_environment,
+                serialized = teamengine_runner.serialize_suite_result(
+                    parsed, format_to_output, ctx.settings, ctx.jinja_environment
                 )
             return parsed, serialized
     else:
