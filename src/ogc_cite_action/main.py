@@ -138,7 +138,6 @@ def execute_test_suite_from_github_actions(
         treat_skipped_tests_as_failures=treat_skipped_tests_as_failures,
     )
     logger.debug(f"{parsed.passed=}")
-    logger.debug(f"{parsed.overview=}")
     if output_format == models.OutputFormat.RAW:
         stdlib_print(serialized)
     else:
