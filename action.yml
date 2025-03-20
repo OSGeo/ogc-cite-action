@@ -83,7 +83,7 @@ runs:
         cd ${{ github.action_path }}
         raw_result_output_path=raw-result.xml
         poetry run ogc-cite-action \
-            --network-timeout=${{ inputs.network_timeout_seconds }}
+            --network-timeout=${{ inputs.network_timeout_seconds }} \
             execute-test-suite \
             ${{ inputs.teamengine_url || 'http://localhost:8080/teamengine' }} \
             ${{ inputs.test_suite_identifier }} \
