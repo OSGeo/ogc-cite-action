@@ -1,0 +1,2473 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+        xmlns:dct="http://purl.org/dc/terms/"
+        xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+        xmlns:http="http://www.w3.org/2011/http#"
+        xmlns:cnt="http://www.w3.org/2011/content#"
+        xmlns:earl="http://www.w3.org/ns/earl#"
+        xmlns:cite="http://cite.opengeospatial.org/"
+>
+  <earl:Assertion rdf:about="assert-1">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy>
+      <earl:Assertor rdf:about="https://github.com/opengeospatial/teamengine">
+        <dct:title xml:lang="en">OGC TEAM Engine</dct:title>
+        <dct:description xml:lang="en">Official test harness of the OGC conformance testing program (CITE).</dct:description>
+      </earl:Assertor>
+    </earl:assertedBy>
+    <earl:subject>
+      <earl:TestSubject rdf:about="http://localhost:5000"/>
+    </earl:subject>
+    <earl:result>
+      <earl:TestResult rdf:about="result-1">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-20T13:15:45.821Z</dct:date>
+        <dct:description>java.lang.AssertionError: Fails Abstract Test 15 because these collections are missing 'data' or 'collection' rel links: mapserver_world_map , gdps-temperature , .  expected [true] but found [false]</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#failed"/>
+        <cite:message>
+          <http:Request>
+            <http:resp>
+              <http:Response>
+                <http:body>
+                  <cnt:ContentAsXML>
+                    <cnt:rest>HTTP/1.1 200 OK
+Server: Werkzeug/3.1.3 Python/3.10.12
+Date: Thu, 20 Mar 2025 13:15:45 GMT
+Content-Type: application/json
+X-Powered-By: pygeoapi 0.18.dev0
+Content-Language: en-US
+Content-Length: 20893
+Connection: close
+
+{
+    "collections": [
+        {
+            "id": "obs",
+            "title": "Observations",
+            "description": "My cool observations",
+            "keywords": [
+                "observations",
+                "monitoring"
+            ],
+            "links": [
+                {
+                    "type": "text/csv",
+                    "rel": "canonical",
+                    "title": "data",
+                    "href": "https://github.com/mapserver/mapserver/blob/branch-7-0/msautotest/wxs/data/obs.csv",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "text/csv",
+                    "rel": "alternate",
+                    "title": "data",
+                    "href": "https://raw.githubusercontent.com/mapserver/mapserver/branch-7-0/msautotest/wxs/data/obs.csv",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "root",
+                    "title": "The landing page of this server as JSON",
+                    "href": "http://localhost:5000?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "root",
+                    "title": "The landing page of this server as HTML",
+                    "href": "http://localhost:5000?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "self",
+                    "title": "This document as JSON",
+                    "href": "http://localhost:5000/collections/obs?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "alternate",
+                    "title": "This document as RDF (JSON-LD)",
+                    "href": "http://localhost:5000/collections/obs?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "alternate",
+                    "title": "This document as HTML",
+                    "href": "http://localhost:5000/collections/obs?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in JSON",
+                    "href": "http://localhost:5000/collections/obs/schema?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in HTML",
+                    "href": "http://localhost:5000/collections/obs/schema?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as JSON",
+                    "href": "http://localhost:5000/collections/obs/queryables?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as HTML",
+                    "href": "http://localhost:5000/collections/obs/queryables?f=html"
+                },
+                {
+                    "type": "application/geo+json",
+                    "rel": "items",
+                    "title": "Items as GeoJSON",
+                    "href": "http://localhost:5000/collections/obs/items?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "items",
+                    "title": "Items as RDF (GeoJSON-LD)",
+                    "href": "http://localhost:5000/collections/obs/items?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "items",
+                    "title": "Items as HTML",
+                    "href": "http://localhost:5000/collections/obs/items?f=html"
+                }
+            ],
+            "extent": {
+                "spatial": {
+                    "bbox": [
+                        [
+                            -180,
+                            -90,
+                            180,
+                            90
+                        ]
+                    ],
+                    "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                },
+                "temporal": {
+                    "interval": [
+                        [
+                            "2000-10-30T18:24:39+00:00",
+                            "2007-10-30T08:57:29+00:00"
+                        ]
+                    ]
+                }
+            },
+            "itemType": "feature",
+            "crs": [
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCRS": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id": "lakes",
+            "title": "Large Lakes",
+            "description": "lakes of the world, public domain",
+            "keywords": [
+                "lakes",
+                "water bodies"
+            ],
+            "links": [
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "information",
+                    "href": "http://www.naturalearthdata.com/",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "root",
+                    "title": "The landing page of this server as JSON",
+                    "href": "http://localhost:5000?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "root",
+                    "title": "The landing page of this server as HTML",
+                    "href": "http://localhost:5000?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "self",
+                    "title": "This document as JSON",
+                    "href": "http://localhost:5000/collections/lakes?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "alternate",
+                    "title": "This document as RDF (JSON-LD)",
+                    "href": "http://localhost:5000/collections/lakes?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "alternate",
+                    "title": "This document as HTML",
+                    "href": "http://localhost:5000/collections/lakes?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in JSON",
+                    "href": "http://localhost:5000/collections/lakes/schema?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in HTML",
+                    "href": "http://localhost:5000/collections/lakes/schema?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as JSON",
+                    "href": "http://localhost:5000/collections/lakes/queryables?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as HTML",
+                    "href": "http://localhost:5000/collections/lakes/queryables?f=html"
+                },
+                {
+                    "type": "application/geo+json",
+                    "rel": "items",
+                    "title": "Items as GeoJSON",
+                    "href": "http://localhost:5000/collections/lakes/items?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "items",
+                    "title": "Items as RDF (GeoJSON-LD)",
+                    "href": "http://localhost:5000/collections/lakes/items?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "items",
+                    "title": "Items as HTML",
+                    "href": "http://localhost:5000/collections/lakes/items?f=html"
+                }
+            ],
+            "extent": {
+                "spatial": {
+                    "bbox": [
+                        [
+                            -180,
+                            -90,
+                            180,
+                            90
+                        ]
+                    ],
+                    "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                },
+                "temporal": {
+                    "interval": [
+                        [
+                            "2011-11-11T11:11:11+00:00",
+                            null
+                        ]
+                    ]
+                }
+            },
+            "itemType": "feature",
+            "crs": [
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCRS": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id": "mapserver_world_map",
+            "title": "MapServer demo WMS world map",
+            "description": "MapServer demo WMS world map",
+            "keywords": [
+                "MapServer",
+                "world map"
+            ],
+            "links": [
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "information",
+                    "href": "https://demo.mapserver.org",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "root",
+                    "title": "The landing page of this server as JSON",
+                    "href": "http://localhost:5000?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "root",
+                    "title": "The landing page of this server as HTML",
+                    "href": "http://localhost:5000?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "self",
+                    "title": "This document as JSON",
+                    "href": "http://localhost:5000/collections/mapserver_world_map?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "alternate",
+                    "title": "This document as RDF (JSON-LD)",
+                    "href": "http://localhost:5000/collections/mapserver_world_map?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "alternate",
+                    "title": "This document as HTML",
+                    "href": "http://localhost:5000/collections/mapserver_world_map?f=html"
+                },
+                {
+                    "type": "image/png",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/map",
+                    "title": "Map as png",
+                    "href": "http://localhost:5000/collections/mapserver_world_map/map?f=png"
+                }
+            ],
+            "extent": {
+                "spatial": {
+                    "bbox": [
+                        [
+                            -180,
+                            -90,
+                            180,
+                            90
+                        ]
+                    ],
+                    "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                }
+            }
+        },
+        {
+            "id": "gdps-temperature",
+            "title": "Global Deterministic Prediction System sample",
+            "description": "Global Deterministic Prediction System sample",
+            "keywords": [
+                "gdps",
+                "global"
+            ],
+            "links": [
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "information",
+                    "href": "https://eccc-msc.github.io/open-data/msc-data/nwp_gdps/readme_gdps_en",
+                    "hreflang": "en-CA"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "root",
+                    "title": "The landing page of this server as JSON",
+                    "href": "http://localhost:5000?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "root",
+                    "title": "The landing page of this server as HTML",
+                    "href": "http://localhost:5000?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "self",
+                    "title": "This document as JSON",
+                    "href": "http://localhost:5000/collections/gdps-temperature?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "alternate",
+                    "title": "This document as RDF (JSON-LD)",
+                    "href": "http://localhost:5000/collections/gdps-temperature?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "alternate",
+                    "title": "This document as HTML",
+                    "href": "http://localhost:5000/collections/gdps-temperature?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in JSON",
+                    "href": "http://localhost:5000/collections/gdps-temperature/schema?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in HTML",
+                    "href": "http://localhost:5000/collections/gdps-temperature/schema?f=html"
+                },
+                {
+                    "type": "application/prs.coverage+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/coverage",
+                    "title": "Coverage data",
+                    "href": "http://localhost:5000/collections/gdps-temperature/coverage?f=json"
+                },
+                {
+                    "type": "application/x-grib2",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/coverage",
+                    "title": "Coverage data as GRIB",
+                    "href": "http://localhost:5000/collections/gdps-temperature/coverage?f=GRIB"
+                }
+            ],
+            "extent": {
+                "spatial": {
+                    "bbox": [
+                        [
+                            -180,
+                            -90,
+                            180,
+                            90
+                        ]
+                    ],
+                    "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                }
+            }
+        },
+        {
+            "id": "canada-metadata",
+            "title": "Open Canada sample data",
+            "description": "Sample metadata records from open.canada.ca",
+            "keywords": [
+                "canada",
+                "open data"
+            ],
+            "links": [
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "information",
+                    "href": "https://open.canada.ca/en/open-data",
+                    "hreflang": "en-CA"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "alternate",
+                    "title": "informations",
+                    "href": "https://ouvert.canada.ca/fr/donnees-ouvertes",
+                    "hreflang": "fr-CA"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "root",
+                    "title": "The landing page of this server as JSON",
+                    "href": "http://localhost:5000?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "root",
+                    "title": "The landing page of this server as HTML",
+                    "href": "http://localhost:5000?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "self",
+                    "title": "This document as JSON",
+                    "href": "http://localhost:5000/collections/canada-metadata?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "alternate",
+                    "title": "This document as RDF (JSON-LD)",
+                    "href": "http://localhost:5000/collections/canada-metadata?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "alternate",
+                    "title": "This document as HTML",
+                    "href": "http://localhost:5000/collections/canada-metadata?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in JSON",
+                    "href": "http://localhost:5000/collections/canada-metadata/schema?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in HTML",
+                    "href": "http://localhost:5000/collections/canada-metadata/schema?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as JSON",
+                    "href": "http://localhost:5000/collections/canada-metadata/queryables?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as HTML",
+                    "href": "http://localhost:5000/collections/canada-metadata/queryables?f=html"
+                },
+                {
+                    "type": "application/geo+json",
+                    "rel": "items",
+                    "title": "Items as GeoJSON",
+                    "href": "http://localhost:5000/collections/canada-metadata/items?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "items",
+                    "title": "Items as RDF (GeoJSON-LD)",
+                    "href": "http://localhost:5000/collections/canada-metadata/items?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "items",
+                    "title": "Items as HTML",
+                    "href": "http://localhost:5000/collections/canada-metadata/items?f=html"
+                }
+            ],
+            "extent": {
+                "spatial": {
+                    "bbox": [
+                        [
+                            -180,
+                            -90,
+                            180,
+                            90
+                        ]
+                    ],
+                    "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                }
+            },
+            "itemType": "record"
+        }
+    ],
+    "links": [
+        {
+            "type": "application/json",
+            "rel": "self",
+            "title": "This document as JSON",
+            "href": "http://localhost:5000/collections?f=json"
+        },
+        {
+            "type": "application/ld+json",
+            "rel": "alternate",
+            "title": "This document as RDF (JSON-LD)",
+            "href": "http://localhost:5000/collections?f=jsonld"
+        },
+        {
+            "type": "text/html",
+            "rel": "alternate",
+            "title": "This document as HTML",
+            "href": "http://localhost:5000/collections?f=html"
+        }
+    ]
+}
+HTTP/1.1 200 OK
+Server: Werkzeug/3.1.3 Python/3.10.12
+Date: Thu, 20 Mar 2025 13:15:45 GMT
+Content-Type: application/json
+X-Powered-By: pygeoapi 0.18.dev0
+Content-Language: en-US
+Content-Length: 1983
+Connection: close
+
+{
+    "id": "mapserver_world_map",
+    "title": "MapServer demo WMS world map",
+    "description": "MapServer demo WMS world map",
+    "keywords": [
+        "MapServer",
+        "world map"
+    ],
+    "links": [
+        {
+            "type": "text/html",
+            "rel": "canonical",
+            "title": "information",
+            "href": "https://demo.mapserver.org",
+            "hreflang": "en-US"
+        },
+        {
+            "type": "application/json",
+            "rel": "root",
+            "title": "The landing page of this server as JSON",
+            "href": "http://localhost:5000?f=json"
+        },
+        {
+            "type": "text/html",
+            "rel": "root",
+            "title": "The landing page of this server as HTML",
+            "href": "http://localhost:5000?f=html"
+        },
+        {
+            "type": "application/json",
+            "rel": "self",
+            "title": "This document as JSON",
+            "href": "http://localhost:5000/collections/mapserver_world_map?f=json"
+        },
+        {
+            "type": "application/ld+json",
+            "rel": "alternate",
+            "title": "This document as RDF (JSON-LD)",
+            "href": "http://localhost:5000/collections/mapserver_world_map?f=jsonld"
+        },
+        {
+            "type": "text/html",
+            "rel": "alternate",
+            "title": "This document as HTML",
+            "href": "http://localhost:5000/collections/mapserver_world_map?f=html"
+        },
+        {
+            "type": "image/png",
+            "rel": "http://www.opengis.net/def/rel/ogc/1.0/map",
+            "title": "Map as png",
+            "href": "http://localhost:5000/collections/mapserver_world_map/map?f=png"
+        }
+    ],
+    "extent": {
+        "spatial": {
+            "bbox": [
+                [
+                    -180,
+                    -90,
+                    180,
+                    90
+                ]
+            ],
+            "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        }
+    }
+}
+HTTP/1.1 200 OK
+Server: Werkzeug/3.1.3 Python/3.10.12
+Date: Thu, 20 Mar 2025 13:15:45 GMT
+Content-Type: application/json
+X-Powered-By: pygeoapi 0.18.dev0
+Content-Language: en-US
+Content-Length: 3137
+Connection: close
+
+{
+    "id": "gdps-temperature",
+    "title": "Global Deterministic Prediction System sample",
+    "description": "Global Deterministic Prediction System sample",
+    "keywords": [
+        "gdps",
+        "global"
+    ],
+    "links": [
+        {
+            "type": "text/html",
+            "rel": "canonical",
+            "title": "information",
+            "href": "https://eccc-msc.github.io/open-data/msc-data/nwp_gdps/readme_gdps_en",
+            "hreflang": "en-CA"
+        },
+        {
+            "type": "application/json",
+            "rel": "root",
+            "title": "The landing page of this server as JSON",
+            "href": "http://localhost:5000?f=json"
+        },
+        {
+            "type": "text/html",
+            "rel": "root",
+            "title": "The landing page of this server as HTML",
+            "href": "http://localhost:5000?f=html"
+        },
+        {
+            "type": "application/json",
+            "rel": "self",
+            "title": "This document as JSON",
+            "href": "http://localhost:5000/collections/gdps-temperature?f=json"
+        },
+        {
+            "type": "application/ld+json",
+            "rel": "alternate",
+            "title": "This document as RDF (JSON-LD)",
+            "href": "http://localhost:5000/collections/gdps-temperature?f=jsonld"
+        },
+        {
+            "type": "text/html",
+            "rel": "alternate",
+            "title": "This document as HTML",
+            "href": "http://localhost:5000/collections/gdps-temperature?f=html"
+        },
+        {
+            "type": "application/json",
+            "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+            "title": "Schema of collection in JSON",
+            "href": "http://localhost:5000/collections/gdps-temperature/schema?f=json"
+        },
+        {
+            "type": "text/html",
+            "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+            "title": "Schema of collection in HTML",
+            "href": "http://localhost:5000/collections/gdps-temperature/schema?f=html"
+        },
+        {
+            "type": "application/prs.coverage+json",
+            "rel": "http://www.opengis.net/def/rel/ogc/1.0/coverage",
+            "title": "Coverage data",
+            "href": "http://localhost:5000/collections/gdps-temperature/coverage?f=json"
+        },
+        {
+            "type": "application/x-grib2",
+            "rel": "http://www.opengis.net/def/rel/ogc/1.0/coverage",
+            "title": "Coverage data as GRIB",
+            "href": "http://localhost:5000/collections/gdps-temperature/coverage?f=GRIB"
+        }
+    ],
+    "extent": {
+        "spatial": {
+            "bbox": [
+                [
+                    -180,
+                    -90,
+                    180,
+                    90
+                ]
+            ],
+            "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84",
+            "grid": [
+                {
+                    "cellsCount": 2400,
+                    "resolution": 0.15000000000000002
+                },
+                {
+                    "cellsCount": 1201,
+                    "resolution": 0.15
+                }
+            ]
+        }
+    }
+}
+</cnt:rest>       </cnt:ContentAsXML>
+                </http:body>
+              </http:Response>
+            </http:resp>
+            <http:requestURI>Request method:	GET
+Request URI:	http://localhost:5000/collections
+Proxy:			&lt;none&gt;
+Request params:	&lt;none&gt;
+Query params:	&lt;none&gt;
+Form params:	&lt;none&gt;
+Path params:	&lt;none&gt;
+Headers:		Accept=application/json, application/javascript, text/javascript, text/json
+Cookies:		&lt;none&gt;
+Multiparts:		&lt;none&gt;
+Body:			&lt;none&gt;
+Request method:	GET
+Request URI:	http://localhost:5000/collections/mapserver_world_map
+Proxy:			&lt;none&gt;
+Request params:	&lt;none&gt;
+Query params:	&lt;none&gt;
+Form params:	&lt;none&gt;
+Path params:	&lt;none&gt;
+Headers:		Accept=application/json, application/javascript, text/javascript, text/json
+Cookies:		&lt;none&gt;
+Multiparts:		&lt;none&gt;
+Body:			&lt;none&gt;
+Request method:	GET
+Request URI:	http://localhost:5000/collections/gdps-temperature
+Proxy:			&lt;none&gt;
+Request params:	&lt;none&gt;
+Query params:	&lt;none&gt;
+Form params:	&lt;none&gt;
+Path params:	&lt;none&gt;
+Headers:		Accept=application/json, application/javascript, text/javascript, text/json
+Cookies:		&lt;none&gt;
+Multiparts:		&lt;none&gt;
+Body:			&lt;none&gt;
+</http:requestURI>
+            <http:methodName>GET</http:methodName>
+          </http:Request>
+        </cite:message>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test>
+      <earl:TestCase rdf:about="org/opengis/cite/ogcapiedr10/corecollections/CollectionsResponse#verifyCollectionsMetadata">
+        <dct:title>verify Collections Metadata </dct:title>
+        <dct:description>Implements Abstract Test 13 (/conf/core/rc-extent), Abstract Test 14 (/conf/edr/rc-collection-info), Abstract Test 15 (/conf/edr/rc-md-query-links), Abstract Test 16 (/conf/core/rc-collection-info-links)</dct:description>
+      </earl:TestCase>
+    </earl:test>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-5">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-5">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-20T13:15:51.006Z</dct:date>
+        <dct:description>java.lang.Throwable: Method Collections.validateCollectionMetadata_Links(org.opengis.cite.ogcapiedr10.openapi3.TestPoint)[pri:0, instance:org.opengis.cite.ogcapiedr10.corecollections.Collections@2399735a] depends on not successfully finished methods</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test>
+      <earl:TestCase rdf:about="org/opengis/cite/ogcapiedr10/corecollections/Collections#validateCollectionMetadata_Links">
+        <dct:title>validate Collection Metadata_ Links </dct:title>
+        <dct:description>Implements Abstract Test 15, meets Requirement /req/edr/rc-md-query-links</dct:description>
+      </earl:TestCase>
+    </earl:test>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-21">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-21">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-20T13:16:18.251Z</dct:date>
+        <dct:description>java.lang.AssertionError: Fails Abstract Test 21. None of the collections were found to offer Locations resources that return valid GeoJSON
+</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#failed"/>
+        <cite:message>
+          <http:Request>
+            <http:resp>
+              <http:Response>
+                <http:body>
+                  <cnt:ContentAsXML>
+                    <cnt:rest>HTTP/1.1 200 OK
+Server: Werkzeug/3.1.3 Python/3.10.12
+Date: Thu, 20 Mar 2025 13:16:18 GMT
+Content-Type: application/json
+X-Powered-By: pygeoapi 0.18.dev0
+Content-Language: en-US
+Content-Length: 20893
+Connection: close
+
+{
+    "collections": [
+        {
+            "id": "obs",
+            "title": "Observations",
+            "description": "My cool observations",
+            "keywords": [
+                "observations",
+                "monitoring"
+            ],
+            "links": [
+                {
+                    "type": "text/csv",
+                    "rel": "canonical",
+                    "title": "data",
+                    "href": "https://github.com/mapserver/mapserver/blob/branch-7-0/msautotest/wxs/data/obs.csv",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "text/csv",
+                    "rel": "alternate",
+                    "title": "data",
+                    "href": "https://raw.githubusercontent.com/mapserver/mapserver/branch-7-0/msautotest/wxs/data/obs.csv",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "root",
+                    "title": "The landing page of this server as JSON",
+                    "href": "http://localhost:5000?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "root",
+                    "title": "The landing page of this server as HTML",
+                    "href": "http://localhost:5000?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "self",
+                    "title": "This document as JSON",
+                    "href": "http://localhost:5000/collections/obs?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "alternate",
+                    "title": "This document as RDF (JSON-LD)",
+                    "href": "http://localhost:5000/collections/obs?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "alternate",
+                    "title": "This document as HTML",
+                    "href": "http://localhost:5000/collections/obs?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in JSON",
+                    "href": "http://localhost:5000/collections/obs/schema?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in HTML",
+                    "href": "http://localhost:5000/collections/obs/schema?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as JSON",
+                    "href": "http://localhost:5000/collections/obs/queryables?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as HTML",
+                    "href": "http://localhost:5000/collections/obs/queryables?f=html"
+                },
+                {
+                    "type": "application/geo+json",
+                    "rel": "items",
+                    "title": "Items as GeoJSON",
+                    "href": "http://localhost:5000/collections/obs/items?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "items",
+                    "title": "Items as RDF (GeoJSON-LD)",
+                    "href": "http://localhost:5000/collections/obs/items?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "items",
+                    "title": "Items as HTML",
+                    "href": "http://localhost:5000/collections/obs/items?f=html"
+                }
+            ],
+            "extent": {
+                "spatial": {
+                    "bbox": [
+                        [
+                            -180,
+                            -90,
+                            180,
+                            90
+                        ]
+                    ],
+                    "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                },
+                "temporal": {
+                    "interval": [
+                        [
+                            "2000-10-30T18:24:39+00:00",
+                            "2007-10-30T08:57:29+00:00"
+                        ]
+                    ]
+                }
+            },
+            "itemType": "feature",
+            "crs": [
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCRS": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id": "lakes",
+            "title": "Large Lakes",
+            "description": "lakes of the world, public domain",
+            "keywords": [
+                "lakes",
+                "water bodies"
+            ],
+            "links": [
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "information",
+                    "href": "http://www.naturalearthdata.com/",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "root",
+                    "title": "The landing page of this server as JSON",
+                    "href": "http://localhost:5000?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "root",
+                    "title": "The landing page of this server as HTML",
+                    "href": "http://localhost:5000?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "self",
+                    "title": "This document as JSON",
+                    "href": "http://localhost:5000/collections/lakes?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "alternate",
+                    "title": "This document as RDF (JSON-LD)",
+                    "href": "http://localhost:5000/collections/lakes?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "alternate",
+                    "title": "This document as HTML",
+                    "href": "http://localhost:5000/collections/lakes?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in JSON",
+                    "href": "http://localhost:5000/collections/lakes/schema?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in HTML",
+                    "href": "http://localhost:5000/collections/lakes/schema?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as JSON",
+                    "href": "http://localhost:5000/collections/lakes/queryables?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as HTML",
+                    "href": "http://localhost:5000/collections/lakes/queryables?f=html"
+                },
+                {
+                    "type": "application/geo+json",
+                    "rel": "items",
+                    "title": "Items as GeoJSON",
+                    "href": "http://localhost:5000/collections/lakes/items?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "items",
+                    "title": "Items as RDF (GeoJSON-LD)",
+                    "href": "http://localhost:5000/collections/lakes/items?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "items",
+                    "title": "Items as HTML",
+                    "href": "http://localhost:5000/collections/lakes/items?f=html"
+                }
+            ],
+            "extent": {
+                "spatial": {
+                    "bbox": [
+                        [
+                            -180,
+                            -90,
+                            180,
+                            90
+                        ]
+                    ],
+                    "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                },
+                "temporal": {
+                    "interval": [
+                        [
+                            "2011-11-11T11:11:11+00:00",
+                            null
+                        ]
+                    ]
+                }
+            },
+            "itemType": "feature",
+            "crs": [
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCRS": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id": "mapserver_world_map",
+            "title": "MapServer demo WMS world map",
+            "description": "MapServer demo WMS world map",
+            "keywords": [
+                "MapServer",
+                "world map"
+            ],
+            "links": [
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "information",
+                    "href": "https://demo.mapserver.org",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "root",
+                    "title": "The landing page of this server as JSON",
+                    "href": "http://localhost:5000?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "root",
+                    "title": "The landing page of this server as HTML",
+                    "href": "http://localhost:5000?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "self",
+                    "title": "This document as JSON",
+                    "href": "http://localhost:5000/collections/mapserver_world_map?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "alternate",
+                    "title": "This document as RDF (JSON-LD)",
+                    "href": "http://localhost:5000/collections/mapserver_world_map?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "alternate",
+                    "title": "This document as HTML",
+                    "href": "http://localhost:5000/collections/mapserver_world_map?f=html"
+                },
+                {
+                    "type": "image/png",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/map",
+                    "title": "Map as png",
+                    "href": "http://localhost:5000/collections/mapserver_world_map/map?f=png"
+                }
+            ],
+            "extent": {
+                "spatial": {
+                    "bbox": [
+                        [
+                            -180,
+                            -90,
+                            180,
+                            90
+                        ]
+                    ],
+                    "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                }
+            }
+        },
+        {
+            "id": "gdps-temperature",
+            "title": "Global Deterministic Prediction System sample",
+            "description": "Global Deterministic Prediction System sample",
+            "keywords": [
+                "gdps",
+                "global"
+            ],
+            "links": [
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "information",
+                    "href": "https://eccc-msc.github.io/open-data/msc-data/nwp_gdps/readme_gdps_en",
+                    "hreflang": "en-CA"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "root",
+                    "title": "The landing page of this server as JSON",
+                    "href": "http://localhost:5000?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "root",
+                    "title": "The landing page of this server as HTML",
+                    "href": "http://localhost:5000?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "self",
+                    "title": "This document as JSON",
+                    "href": "http://localhost:5000/collections/gdps-temperature?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "alternate",
+                    "title": "This document as RDF (JSON-LD)",
+                    "href": "http://localhost:5000/collections/gdps-temperature?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "alternate",
+                    "title": "This document as HTML",
+                    "href": "http://localhost:5000/collections/gdps-temperature?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in JSON",
+                    "href": "http://localhost:5000/collections/gdps-temperature/schema?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in HTML",
+                    "href": "http://localhost:5000/collections/gdps-temperature/schema?f=html"
+                },
+                {
+                    "type": "application/prs.coverage+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/coverage",
+                    "title": "Coverage data",
+                    "href": "http://localhost:5000/collections/gdps-temperature/coverage?f=json"
+                },
+                {
+                    "type": "application/x-grib2",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/coverage",
+                    "title": "Coverage data as GRIB",
+                    "href": "http://localhost:5000/collections/gdps-temperature/coverage?f=GRIB"
+                }
+            ],
+            "extent": {
+                "spatial": {
+                    "bbox": [
+                        [
+                            -180,
+                            -90,
+                            180,
+                            90
+                        ]
+                    ],
+                    "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                }
+            }
+        },
+        {
+            "id": "canada-metadata",
+            "title": "Open Canada sample data",
+            "description": "Sample metadata records from open.canada.ca",
+            "keywords": [
+                "canada",
+                "open data"
+            ],
+            "links": [
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "information",
+                    "href": "https://open.canada.ca/en/open-data",
+                    "hreflang": "en-CA"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "alternate",
+                    "title": "informations",
+                    "href": "https://ouvert.canada.ca/fr/donnees-ouvertes",
+                    "hreflang": "fr-CA"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "root",
+                    "title": "The landing page of this server as JSON",
+                    "href": "http://localhost:5000?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "root",
+                    "title": "The landing page of this server as HTML",
+                    "href": "http://localhost:5000?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "self",
+                    "title": "This document as JSON",
+                    "href": "http://localhost:5000/collections/canada-metadata?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "alternate",
+                    "title": "This document as RDF (JSON-LD)",
+                    "href": "http://localhost:5000/collections/canada-metadata?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "alternate",
+                    "title": "This document as HTML",
+                    "href": "http://localhost:5000/collections/canada-metadata?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in JSON",
+                    "href": "http://localhost:5000/collections/canada-metadata/schema?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in HTML",
+                    "href": "http://localhost:5000/collections/canada-metadata/schema?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as JSON",
+                    "href": "http://localhost:5000/collections/canada-metadata/queryables?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as HTML",
+                    "href": "http://localhost:5000/collections/canada-metadata/queryables?f=html"
+                },
+                {
+                    "type": "application/geo+json",
+                    "rel": "items",
+                    "title": "Items as GeoJSON",
+                    "href": "http://localhost:5000/collections/canada-metadata/items?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "items",
+                    "title": "Items as RDF (GeoJSON-LD)",
+                    "href": "http://localhost:5000/collections/canada-metadata/items?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "items",
+                    "title": "Items as HTML",
+                    "href": "http://localhost:5000/collections/canada-metadata/items?f=html"
+                }
+            ],
+            "extent": {
+                "spatial": {
+                    "bbox": [
+                        [
+                            -180,
+                            -90,
+                            180,
+                            90
+                        ]
+                    ],
+                    "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                }
+            },
+            "itemType": "record"
+        }
+    ],
+    "links": [
+        {
+            "type": "application/json",
+            "rel": "self",
+            "title": "This document as JSON",
+            "href": "http://localhost:5000/collections?f=json"
+        },
+        {
+            "type": "application/ld+json",
+            "rel": "alternate",
+            "title": "This document as RDF (JSON-LD)",
+            "href": "http://localhost:5000/collections?f=jsonld"
+        },
+        {
+            "type": "text/html",
+            "rel": "alternate",
+            "title": "This document as HTML",
+            "href": "http://localhost:5000/collections?f=html"
+        }
+    ]
+}
+</cnt:rest>       </cnt:ContentAsXML>
+                </http:body>
+              </http:Response>
+            </http:resp>
+            <http:requestURI>Request method:	GET
+Request URI:	http://localhost:5000/collections
+Proxy:			&lt;none&gt;
+Request params:	&lt;none&gt;
+Query params:	&lt;none&gt;
+Form params:	&lt;none&gt;
+Path params:	&lt;none&gt;
+Headers:		Accept=application/json, application/javascript, text/javascript, text/json
+Cookies:		&lt;none&gt;
+Multiparts:		&lt;none&gt;
+Body:			&lt;none&gt;
+</http:requestURI>
+            <http:methodName>GET</http:methodName>
+          </http:Request>
+        </cite:message>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test>
+      <earl:TestCase rdf:about="org/opengis/cite/ogcapiedr10/encodings/geojson/GeoJSONEncoding#validateResponseForGeoJSON">
+        <dct:title>validate Response For Geo J S O N </dct:title>
+        <dct:description>Implements Abstract Test 20 (/conf/geojson/definition), Abstract Test 21 (/conf/geojson/content)</dct:description>
+      </earl:TestCase>
+    </earl:test>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-13">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-13">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-20T13:15:45.734Z</dct:date>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#passed"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test>
+      <earl:TestCase rdf:about="org/opengis/cite/ogcapiedr10/corecollections/CollectionsResponse#collectionsCRS84">
+        <dct:title>collections CRS84 </dct:title>
+        <dct:description>Implements Abstract Test 8 (/conf/core/crs84)</dct:description>
+      </earl:TestCase>
+    </earl:test>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-9">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-9">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-20T13:15:54.756Z</dct:date>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#passed"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test>
+      <earl:TestCase rdf:about="org/opengis/cite/ogcapiedr10/conformance/ApiDefinition#apiDefinitionValidation">
+        <dct:title>api Definition Validation </dct:title>
+        <dct:description>Implements Abstract Test 5 (/conf/core/api-definition-success)</dct:description>
+      </earl:TestCase>
+    </earl:test>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-17">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-17">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-20T13:16:09.809Z</dct:date>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#passed"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test>
+      <earl:TestCase rdf:about="org/opengis/cite/ogcapiedr10/queries/QueryCollections#validateCoordsQueryParameters">
+        <dct:title>validate Coords Query Parameters </dct:title>
+        <dct:description>Implements Abstract Test 35 (/conf/position),Abstract Test 36 (/conf/position), Abstract Test 51 (/conf/area), Abstract Test 52 (/conf/area), Abstract Test 83 (/conf/trajectory), Abstract Test 101 (/conf/corridor)</dct:description>
+      </earl:TestCase>
+    </earl:test>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-2">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-2">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-20T13:15:45.834Z</dct:date>
+        <dct:description>java.lang.AssertionError: Requirement class "http://www.opengis.net/spec/ogcapi-edr-1/1.0/conf/core" is not available from path http://localhost:5000/conformance expected [true] but found [false]</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#failed"/>
+        <cite:message>
+          <http:Request>
+            <http:resp>
+              <http:Response>
+                <http:body>
+                  <cnt:ContentAsXML>
+                    <cnt:rest>HTTP/1.1 200 OK
+Server: Werkzeug/3.1.3 Python/3.10.12
+Date: Thu, 20 Mar 2025 13:15:45 GMT
+Content-Type: application/json
+X-Powered-By: pygeoapi 0.18.dev0
+Content-Language: en-US
+Content-Length: 2680
+Connection: close
+
+{
+    "conformsTo": [
+        "http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/core",
+        "http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/html",
+        "http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/json",
+        "http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/landing-page",
+        "http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/oas30",
+        "http://www.opengis.net/spec/ogcapi-common-2/1.0/conf/collections",
+        "http://www.opengis.net/spec/ogcapi-coverages-1/1.0/conf/core",
+        "http://www.opengis.net/spec/ogcapi-coverages-1/1.0/conf/coverage-bbox",
+        "http://www.opengis.net/spec/ogcapi-coverages-1/1.0/conf/coverage-datetime",
+        "http://www.opengis.net/spec/ogcapi-coverages-1/1.0/conf/coverage-rangesubset",
+        "http://www.opengis.net/spec/ogcapi-coverages-1/1.0/conf/coverage-subset",
+        "http://www.opengis.net/spec/ogcapi-coverages-1/1.0/conf/geodata-coverage",
+        "http://www.opengis.net/spec/ogcapi-coverages-1/1.0/conf/html",
+        "http://www.opengis.net/spec/ogcapi-coverages-1/1.0/conf/oas30",
+        "http://www.opengis.net/spec/ogcapi-features-1/1.0/conf/core",
+        "http://www.opengis.net/spec/ogcapi-features-1/1.0/conf/geojson",
+        "http://www.opengis.net/spec/ogcapi-features-1/1.0/conf/html",
+        "http://www.opengis.net/spec/ogcapi-features-1/1.0/req/oas30",
+        "http://www.opengis.net/spec/ogcapi-features-2/1.0/conf/crs",
+        "http://www.opengis.net/spec/ogcapi-features-3/1.0/conf/queryables",
+        "http://www.opengis.net/spec/ogcapi-features-3/1.0/conf/queryables-query-parameters",
+        "http://www.opengis.net/spec/ogcapi-features-4/1.0/conf/create-replace-delete",
+        "http://www.opengis.net/spec/ogcapi-features-5/1.0/conf/schemas",
+        "http://www.opengis.net/spec/ogcapi-features-5/1.0/req/core-roles-features",
+        "http://www.opengis.net/spec/ogcapi-maps-1/1.0/conf/core",
+        "http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/callback",
+        "http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/core",
+        "http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/json",
+        "http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/oas30",
+        "http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/ogc-process-description",
+        "http://www.opengis.net/spec/ogcapi-records-1/1.0/conf/core",
+        "http://www.opengis.net/spec/ogcapi-records-1/1.0/conf/html",
+        "http://www.opengis.net/spec/ogcapi-records-1/1.0/conf/json",
+        "http://www.opengis.net/spec/ogcapi-records-1/1.0/conf/opensearch",
+        "http://www.opengis.net/spec/ogcapi-records-1/1.0/conf/sorting"
+    ]
+}
+</cnt:rest>       </cnt:ContentAsXML>
+                </http:body>
+              </http:Response>
+            </http:resp>
+            <http:requestURI>Request method:	GET
+Request URI:	http://localhost:5000/conformance/?f=json
+Proxy:			&lt;none&gt;
+Request params:	&lt;none&gt;
+Query params:	&lt;none&gt;
+Form params:	&lt;none&gt;
+Path params:	&lt;none&gt;
+Headers:		Accept=application/json, application/javascript, text/javascript, text/json
+Cookies:		&lt;none&gt;
+Multiparts:		&lt;none&gt;
+Body:			&lt;none&gt;
+</http:requestURI>
+            <http:methodName>GET</http:methodName>
+          </http:Request>
+        </cite:message>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test>
+      <earl:TestCase rdf:about="org/opengis/cite/ogcapiedr10/conformance/Conformance#validateConformanceOperationAndResponse">
+        <dct:title>validate Conformance Operation And Response </dct:title>
+        <dct:description>Implements Abstract Test 6 (/conf/core/conformance) and Abstract Test 7 (/conf/core/conformance-success)</dct:description>
+      </earl:TestCase>
+    </earl:test>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-6">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-6">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-20T13:15:45.825Z</dct:date>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#passed"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test>
+      <earl:TestCase rdf:about="org/opengis/cite/ogcapiedr10/conformance/Conformance#http">
+        <dct:title>http </dct:title>
+        <dct:description>Implements Abstract Test 1 and Requirement /req/core/http</dct:description>
+      </earl:TestCase>
+    </earl:test>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-10">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-10">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-20T13:15:45.776Z</dct:date>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#passed"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test>
+      <earl:TestCase rdf:about="org/opengis/cite/ogcapiedr10/corecollections/CollectionsResponse#validateRetrievalOfEnvironmentalDataCollections">
+        <dct:title>validate Retrieval Of Environmental Data Collections </dct:title>
+        <dct:description>Implements Abstract Test 11 (/conf/collections/src-md-op) and Abstract Test 12 (/conf/collections/src-md-success)</dct:description>
+      </earl:TestCase>
+    </earl:test>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-22">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-22">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-20T13:16:18.264Z</dct:date>
+        <dct:description>java.lang.AssertionError: Fails Abstract Test 23. None of the collections were found to offer Position resources that return GeoJSON conforming to EDR GeoJSON.
+</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#failed"/>
+        <cite:message>
+          <http:Request>
+            <http:resp>
+              <http:Response>
+                <http:body>
+                  <cnt:ContentAsXML>
+                    <cnt:rest>HTTP/1.1 200 OK
+Server: Werkzeug/3.1.3 Python/3.10.12
+Date: Thu, 20 Mar 2025 13:16:18 GMT
+Content-Type: application/json
+X-Powered-By: pygeoapi 0.18.dev0
+Content-Language: en-US
+Content-Length: 20893
+Connection: close
+
+{
+    "collections": [
+        {
+            "id": "obs",
+            "title": "Observations",
+            "description": "My cool observations",
+            "keywords": [
+                "observations",
+                "monitoring"
+            ],
+            "links": [
+                {
+                    "type": "text/csv",
+                    "rel": "canonical",
+                    "title": "data",
+                    "href": "https://github.com/mapserver/mapserver/blob/branch-7-0/msautotest/wxs/data/obs.csv",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "text/csv",
+                    "rel": "alternate",
+                    "title": "data",
+                    "href": "https://raw.githubusercontent.com/mapserver/mapserver/branch-7-0/msautotest/wxs/data/obs.csv",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "root",
+                    "title": "The landing page of this server as JSON",
+                    "href": "http://localhost:5000?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "root",
+                    "title": "The landing page of this server as HTML",
+                    "href": "http://localhost:5000?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "self",
+                    "title": "This document as JSON",
+                    "href": "http://localhost:5000/collections/obs?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "alternate",
+                    "title": "This document as RDF (JSON-LD)",
+                    "href": "http://localhost:5000/collections/obs?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "alternate",
+                    "title": "This document as HTML",
+                    "href": "http://localhost:5000/collections/obs?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in JSON",
+                    "href": "http://localhost:5000/collections/obs/schema?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in HTML",
+                    "href": "http://localhost:5000/collections/obs/schema?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as JSON",
+                    "href": "http://localhost:5000/collections/obs/queryables?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as HTML",
+                    "href": "http://localhost:5000/collections/obs/queryables?f=html"
+                },
+                {
+                    "type": "application/geo+json",
+                    "rel": "items",
+                    "title": "Items as GeoJSON",
+                    "href": "http://localhost:5000/collections/obs/items?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "items",
+                    "title": "Items as RDF (GeoJSON-LD)",
+                    "href": "http://localhost:5000/collections/obs/items?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "items",
+                    "title": "Items as HTML",
+                    "href": "http://localhost:5000/collections/obs/items?f=html"
+                }
+            ],
+            "extent": {
+                "spatial": {
+                    "bbox": [
+                        [
+                            -180,
+                            -90,
+                            180,
+                            90
+                        ]
+                    ],
+                    "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                },
+                "temporal": {
+                    "interval": [
+                        [
+                            "2000-10-30T18:24:39+00:00",
+                            "2007-10-30T08:57:29+00:00"
+                        ]
+                    ]
+                }
+            },
+            "itemType": "feature",
+            "crs": [
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCRS": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id": "lakes",
+            "title": "Large Lakes",
+            "description": "lakes of the world, public domain",
+            "keywords": [
+                "lakes",
+                "water bodies"
+            ],
+            "links": [
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "information",
+                    "href": "http://www.naturalearthdata.com/",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "root",
+                    "title": "The landing page of this server as JSON",
+                    "href": "http://localhost:5000?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "root",
+                    "title": "The landing page of this server as HTML",
+                    "href": "http://localhost:5000?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "self",
+                    "title": "This document as JSON",
+                    "href": "http://localhost:5000/collections/lakes?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "alternate",
+                    "title": "This document as RDF (JSON-LD)",
+                    "href": "http://localhost:5000/collections/lakes?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "alternate",
+                    "title": "This document as HTML",
+                    "href": "http://localhost:5000/collections/lakes?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in JSON",
+                    "href": "http://localhost:5000/collections/lakes/schema?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in HTML",
+                    "href": "http://localhost:5000/collections/lakes/schema?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as JSON",
+                    "href": "http://localhost:5000/collections/lakes/queryables?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as HTML",
+                    "href": "http://localhost:5000/collections/lakes/queryables?f=html"
+                },
+                {
+                    "type": "application/geo+json",
+                    "rel": "items",
+                    "title": "Items as GeoJSON",
+                    "href": "http://localhost:5000/collections/lakes/items?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "items",
+                    "title": "Items as RDF (GeoJSON-LD)",
+                    "href": "http://localhost:5000/collections/lakes/items?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "items",
+                    "title": "Items as HTML",
+                    "href": "http://localhost:5000/collections/lakes/items?f=html"
+                }
+            ],
+            "extent": {
+                "spatial": {
+                    "bbox": [
+                        [
+                            -180,
+                            -90,
+                            180,
+                            90
+                        ]
+                    ],
+                    "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                },
+                "temporal": {
+                    "interval": [
+                        [
+                            "2011-11-11T11:11:11+00:00",
+                            null
+                        ]
+                    ]
+                }
+            },
+            "itemType": "feature",
+            "crs": [
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCRS": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id": "mapserver_world_map",
+            "title": "MapServer demo WMS world map",
+            "description": "MapServer demo WMS world map",
+            "keywords": [
+                "MapServer",
+                "world map"
+            ],
+            "links": [
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "information",
+                    "href": "https://demo.mapserver.org",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "root",
+                    "title": "The landing page of this server as JSON",
+                    "href": "http://localhost:5000?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "root",
+                    "title": "The landing page of this server as HTML",
+                    "href": "http://localhost:5000?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "self",
+                    "title": "This document as JSON",
+                    "href": "http://localhost:5000/collections/mapserver_world_map?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "alternate",
+                    "title": "This document as RDF (JSON-LD)",
+                    "href": "http://localhost:5000/collections/mapserver_world_map?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "alternate",
+                    "title": "This document as HTML",
+                    "href": "http://localhost:5000/collections/mapserver_world_map?f=html"
+                },
+                {
+                    "type": "image/png",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/map",
+                    "title": "Map as png",
+                    "href": "http://localhost:5000/collections/mapserver_world_map/map?f=png"
+                }
+            ],
+            "extent": {
+                "spatial": {
+                    "bbox": [
+                        [
+                            -180,
+                            -90,
+                            180,
+                            90
+                        ]
+                    ],
+                    "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                }
+            }
+        },
+        {
+            "id": "gdps-temperature",
+            "title": "Global Deterministic Prediction System sample",
+            "description": "Global Deterministic Prediction System sample",
+            "keywords": [
+                "gdps",
+                "global"
+            ],
+            "links": [
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "information",
+                    "href": "https://eccc-msc.github.io/open-data/msc-data/nwp_gdps/readme_gdps_en",
+                    "hreflang": "en-CA"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "root",
+                    "title": "The landing page of this server as JSON",
+                    "href": "http://localhost:5000?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "root",
+                    "title": "The landing page of this server as HTML",
+                    "href": "http://localhost:5000?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "self",
+                    "title": "This document as JSON",
+                    "href": "http://localhost:5000/collections/gdps-temperature?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "alternate",
+                    "title": "This document as RDF (JSON-LD)",
+                    "href": "http://localhost:5000/collections/gdps-temperature?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "alternate",
+                    "title": "This document as HTML",
+                    "href": "http://localhost:5000/collections/gdps-temperature?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in JSON",
+                    "href": "http://localhost:5000/collections/gdps-temperature/schema?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in HTML",
+                    "href": "http://localhost:5000/collections/gdps-temperature/schema?f=html"
+                },
+                {
+                    "type": "application/prs.coverage+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/coverage",
+                    "title": "Coverage data",
+                    "href": "http://localhost:5000/collections/gdps-temperature/coverage?f=json"
+                },
+                {
+                    "type": "application/x-grib2",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/coverage",
+                    "title": "Coverage data as GRIB",
+                    "href": "http://localhost:5000/collections/gdps-temperature/coverage?f=GRIB"
+                }
+            ],
+            "extent": {
+                "spatial": {
+                    "bbox": [
+                        [
+                            -180,
+                            -90,
+                            180,
+                            90
+                        ]
+                    ],
+                    "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                }
+            }
+        },
+        {
+            "id": "canada-metadata",
+            "title": "Open Canada sample data",
+            "description": "Sample metadata records from open.canada.ca",
+            "keywords": [
+                "canada",
+                "open data"
+            ],
+            "links": [
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "information",
+                    "href": "https://open.canada.ca/en/open-data",
+                    "hreflang": "en-CA"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "alternate",
+                    "title": "informations",
+                    "href": "https://ouvert.canada.ca/fr/donnees-ouvertes",
+                    "hreflang": "fr-CA"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "root",
+                    "title": "The landing page of this server as JSON",
+                    "href": "http://localhost:5000?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "root",
+                    "title": "The landing page of this server as HTML",
+                    "href": "http://localhost:5000?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "self",
+                    "title": "This document as JSON",
+                    "href": "http://localhost:5000/collections/canada-metadata?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "alternate",
+                    "title": "This document as RDF (JSON-LD)",
+                    "href": "http://localhost:5000/collections/canada-metadata?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "alternate",
+                    "title": "This document as HTML",
+                    "href": "http://localhost:5000/collections/canada-metadata?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in JSON",
+                    "href": "http://localhost:5000/collections/canada-metadata/schema?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in HTML",
+                    "href": "http://localhost:5000/collections/canada-metadata/schema?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as JSON",
+                    "href": "http://localhost:5000/collections/canada-metadata/queryables?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as HTML",
+                    "href": "http://localhost:5000/collections/canada-metadata/queryables?f=html"
+                },
+                {
+                    "type": "application/geo+json",
+                    "rel": "items",
+                    "title": "Items as GeoJSON",
+                    "href": "http://localhost:5000/collections/canada-metadata/items?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "items",
+                    "title": "Items as RDF (GeoJSON-LD)",
+                    "href": "http://localhost:5000/collections/canada-metadata/items?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "items",
+                    "title": "Items as HTML",
+                    "href": "http://localhost:5000/collections/canada-metadata/items?f=html"
+                }
+            ],
+            "extent": {
+                "spatial": {
+                    "bbox": [
+                        [
+                            -180,
+                            -90,
+                            180,
+                            90
+                        ]
+                    ],
+                    "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                }
+            },
+            "itemType": "record"
+        }
+    ],
+    "links": [
+        {
+            "type": "application/json",
+            "rel": "self",
+            "title": "This document as JSON",
+            "href": "http://localhost:5000/collections?f=json"
+        },
+        {
+            "type": "application/ld+json",
+            "rel": "alternate",
+            "title": "This document as RDF (JSON-LD)",
+            "href": "http://localhost:5000/collections?f=jsonld"
+        },
+        {
+            "type": "text/html",
+            "rel": "alternate",
+            "title": "This document as HTML",
+            "href": "http://localhost:5000/collections?f=html"
+        }
+    ]
+}
+</cnt:rest>       </cnt:ContentAsXML>
+                </http:body>
+              </http:Response>
+            </http:resp>
+            <http:requestURI>Request method:	GET
+Request URI:	http://localhost:5000/collections
+Proxy:			&lt;none&gt;
+Request params:	&lt;none&gt;
+Query params:	&lt;none&gt;
+Form params:	&lt;none&gt;
+Path params:	&lt;none&gt;
+Headers:		Accept=application/json, application/javascript, text/javascript, text/json
+Cookies:		&lt;none&gt;
+Multiparts:		&lt;none&gt;
+Body:			&lt;none&gt;
+</http:requestURI>
+            <http:methodName>GET</http:methodName>
+          </http:Request>
+        </cite:message>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test>
+      <earl:TestCase rdf:about="org/opengis/cite/ogcapiedr10/encodings/edrgeojson/EDRGeoJSONEncoding#validateResponseForEDRGeoJSON">
+        <dct:title>validate Response For E D R Geo J S O N </dct:title>
+        <dct:description>Implements Abstract Test 22 (/conf/edr-geojson/definition), Abstract Test 23 (/conf/edr-geojson/content)</dct:description>
+      </earl:TestCase>
+    </earl:test>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-14">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-14">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-20T13:16:09.86Z</dct:date>
+        <dct:description>org.testng.SkipException: None of the collections support this query type. Increase the number of collections to parse.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test>
+      <earl:TestCase rdf:about="org/opengis/cite/ogcapiedr10/queries/QueryCollections#validateTrajectoryQueryUsingParameters">
+        <dct:title>validate Trajectory Query Using Parameters </dct:title>
+        <dct:description>Implements Abstract Test 91 (/conf/trajectory), Abstract Test 93 (/conf/edr/rc-coords-response),  Abstract Test 95 (/conf/edr/rc-parameter-name-response), Abstract Test 97 (/conf/edr/REQ_rc-crs-response), Abstract Test 99 (/conf/collections/rc-f-response)</dct:description>
+      </earl:TestCase>
+    </earl:test>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-18">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-18">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-20T13:16:09.848Z</dct:date>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#passed"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test>
+      <earl:TestCase rdf:about="org/opengis/cite/ogcapiedr10/queries/QueryCollections#validatePositionQueryUsingParameters">
+        <dct:title>validate Position Query Using Parameters </dct:title>
+        <dct:description>Implements Abstract Test 37 (/conf/position), Abstract Test 39 (/conf/edr/rc-coords-response), Abstract Test 41 (/conf/edr/rc-z-response),  Abstract Test 43 (/conf/core/datetime-response),  Abstract Test 45 (/conf/edr/rc-parameter-name-response), Abstract Test 47 (/conf/edr/REQ_rc-crs-response), Abstract Test 49 (/conf/collections/rc-f-response)</dct:description>
+      </earl:TestCase>
+    </earl:test>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-3">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-3">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-20T13:15:51.006Z</dct:date>
+        <dct:description>java.lang.Throwable: Method Collections.validateCollectionsMetadata_Links(org.opengis.cite.ogcapiedr10.openapi3.TestPoint)[pri:0, instance:org.opengis.cite.ogcapiedr10.corecollections.Collections@2399735a] depends on not successfully finished methods</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test>
+      <earl:TestCase rdf:about="org/opengis/cite/ogcapiedr10/corecollections/Collections#validateCollectionsMetadata_Links">
+        <dct:title>validate Collections Metadata_ Links </dct:title>
+        <dct:description>Implements Abstract Test 16, meets Requirement /req/core/rc-collection-info-links</dct:description>
+      </earl:TestCase>
+    </earl:test>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-7">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-7">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-20T13:15:51.006Z</dct:date>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#passed"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test>
+      <earl:TestCase rdf:about="org/opengis/cite/ogcapiedr10/conformance/ApiDefinition#openapiDocumentRetrieval">
+        <dct:title>openapi Document Retrieval </dct:title>
+        <dct:description>Implements Abstract Test 4 (/conf/core/api-definition)</dct:description>
+      </earl:TestCase>
+    </earl:test>
+  </earl:Assertion>
+  <cite:TestRun>
+    <cite:testsSkipped rdf:datatype="http://www.w3.org/2001/XMLSchema#int">5</cite:testsSkipped>
+    <cite:testSuiteType>testng</cite:testSuiteType>
+    <cite:requirements>
+      <rdf:Seq>
+        <rdf:li>
+          <earl:TestRequirement rdf:about="Preconditions">
+            <dct:title>Preconditions</dct:title>
+            <cite:testsPassed rdf:datatype="http://www.w3.org/2001/XMLSchema#int">0</cite:testsPassed>
+            <cite:testsFailed rdf:datatype="http://www.w3.org/2001/XMLSchema#int">0</cite:testsFailed>
+            <cite:testsSkipped rdf:datatype="http://www.w3.org/2001/XMLSchema#int">0</cite:testsSkipped>
+            <dct:description>A precondition was not met. All tests in this set were skipped.</dct:description>
+          </earl:TestRequirement>
+        </rdf:li>
+        <rdf:li>
+          <earl:TestRequirement rdf:about="Core">
+            <dct:hasPart rdf:resource="org/opengis/cite/ogcapiedr10/corecollections/CollectionsResponse#collectionsCRS84"/>
+            <cite:isBasic>true</cite:isBasic>
+            <dct:title>Core</dct:title>
+            <dct:hasPart rdf:resource="org/opengis/cite/ogcapiedr10/conformance/ApiDefinition#openapiDocumentRetrieval"/>
+            <dct:hasPart rdf:resource="org/opengis/cite/ogcapiedr10/corecollections/Collections#validateCollectionMetadata_Links"/>
+            <dct:hasPart rdf:resource="org/opengis/cite/ogcapiedr10/conformance/ApiDefinition#apiDefinitionValidation"/>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiedr10/corecollections/CollectionsResponse#validateRetrievalOfCollections">
+                <dct:title>validate Retrieval Of Collections </dct:title>
+                <dct:description>Implements Abstract Test 9 (/conf/collections/rc-md-op) and Abstract Test 10 (/conf/rc-md-success)</dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiedr10/landingpage/LandingPage#edrLandingPageValidation">
+                <dct:title>edr Landing Page Validation </dct:title>
+                <dct:description>Implements Abstract Test 2 (/conf/core/root-op) and Abstract Test 3 (/conf/core/root-success) - Landing Page validation</dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <dct:hasPart rdf:resource="org/opengis/cite/ogcapiedr10/corecollections/CollectionsResponse#verifyCollectionsMetadata"/>
+            <cite:testsFailed rdf:datatype="http://www.w3.org/2001/XMLSchema#int">2</cite:testsFailed>
+            <cite:testsSkipped rdf:datatype="http://www.w3.org/2001/XMLSchema#int">3</cite:testsSkipped>
+            <cite:testsPassed rdf:datatype="http://www.w3.org/2001/XMLSchema#int">8</cite:testsPassed>
+            <dct:hasPart rdf:resource="org/opengis/cite/ogcapiedr10/conformance/Conformance#validateConformanceOperationAndResponse"/>
+            <dct:hasPart rdf:resource="org/opengis/cite/ogcapiedr10/conformance/Conformance#http"/>
+            <dct:hasPart rdf:resource="org/opengis/cite/ogcapiedr10/corecollections/CollectionsResponse#validateRetrievalOfEnvironmentalDataCollections"/>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiedr10/corecollections/CollectionsResponse#collectionsParameters">
+                <dct:title>collections Parameters </dct:title>
+                <dct:description>Implements Abstract Test 17 (/conf/edr/rc-parameters)</dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <dct:hasPart rdf:resource="org/opengis/cite/ogcapiedr10/corecollections/Collections#validateCollectionsMetadata_Links"/>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiedr10/corecollections/Collections#validateCollectionsMetadataOperation">
+                <dct:title>validate Collections Metadata Operation </dct:title>
+                <dct:description>Implements Abstract Test 82, meets Requirement /req/collections/rc-md-op</dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+          </earl:TestRequirement>
+        </rdf:li>
+        <rdf:li>
+          <earl:TestRequirement rdf:about="Collections">
+            <cite:isBasic>true</cite:isBasic>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiedr10/queries/QueryCollections#validateAreaQueryUsingParameters">
+                <dct:title>validate Area Query Using Parameters </dct:title>
+                <dct:description>Implements Abstract Test 53 (/conf/area), Abstract Test 55 (/conf/edr/rc-coords-response), Abstract Test 57 (/conf/edr/rc-z-response),  Abstract Test 59 (/conf/core/datetime-response),  Abstract Test 61 (/conf/edr/rc-parameter-name-response), Abstract Test 63 (/conf/edr/REQ_rc-crs-response), Abstract Test 65 (/conf/collections/rc-f-response)</dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiedr10/queries/QueryCollections#validateCorridorQueryUsingParameters">
+                <dct:title>validate Corridor Query Using Parameters </dct:title>
+                <dct:description>Implements Abstract Test 115 (/conf/corridor), Abstract Test 117 (/conf/edr/rc-coords-response), Abstract Test 119 (/conf/collections/REQ_rc-corridor-width-response), Abstract Test 121 (/conf/collections/REQ_rc-corridor-height-response), Abstract Test 123 (/conf/collections/REQ_rc-width-units-response), Abstract Test 125 (/conf/collections/rc-height-units-response),  Abstract Test 127 (/conf/edr/rc-parameter-name-response), Abstract Test 129 (/conf/edr/REQ_rc-crs-response), Abstract Test 131 (/conf/collections/rc-f-response)</dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <cite:testsPassed rdf:datatype="http://www.w3.org/2001/XMLSchema#int">4</cite:testsPassed>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiedr10/queries/QueryCollections#validateNoQueryParameters">
+                <dct:title>validate No Query Parameters </dct:title>
+                <dct:description>Implements Abstract Test 34 (/conf/position), Abstract Test 50 (/conf/area), Abstract Test 66 (/conf/cube), Abstract Test 82 (/conf/trajectory), Abstract Test 100 (/conf/corridor), Abstract Test 136 (/conf/locations) </dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+            <dct:hasPart rdf:resource="org/opengis/cite/ogcapiedr10/queries/QueryCollections#validateCoordsQueryParameters"/>
+            <dct:title>Collections</dct:title>
+            <dct:hasPart rdf:resource="org/opengis/cite/ogcapiedr10/queries/QueryCollections#validatePositionQueryUsingParameters"/>
+            <dct:hasPart rdf:resource="org/opengis/cite/ogcapiedr10/queries/QueryCollections#validateTrajectoryQueryUsingParameters"/>
+            <cite:testsSkipped rdf:datatype="http://www.w3.org/2001/XMLSchema#int">2</cite:testsSkipped>
+            <cite:testsFailed rdf:datatype="http://www.w3.org/2001/XMLSchema#int">0</cite:testsFailed>
+          </earl:TestRequirement>
+        </rdf:li>
+        <rdf:li>
+          <earl:TestRequirement rdf:about="JSON">
+            <dct:title>JSON</dct:title>
+            <cite:testsPassed rdf:datatype="http://www.w3.org/2001/XMLSchema#int">1</cite:testsPassed>
+            <cite:testsFailed rdf:datatype="http://www.w3.org/2001/XMLSchema#int">0</cite:testsFailed>
+            <cite:testsSkipped rdf:datatype="http://www.w3.org/2001/XMLSchema#int">0</cite:testsSkipped>
+            <dct:hasPart>
+              <earl:TestCase rdf:about="org/opengis/cite/ogcapiedr10/encodings/json/JSONEncoding#validateResponseForJSON">
+                <dct:title>validate Response For J S O N </dct:title>
+                <dct:description>Implements Abstract Test 18 (/conf/json/definition), Abstract Test 19 (/conf/json/content)</dct:description>
+              </earl:TestCase>
+            </dct:hasPart>
+          </earl:TestRequirement>
+        </rdf:li>
+        <rdf:li>
+          <earl:TestRequirement rdf:about="GeoJSON">
+            <dct:title>GeoJSON</dct:title>
+            <cite:testsPassed rdf:datatype="http://www.w3.org/2001/XMLSchema#int">0</cite:testsPassed>
+            <cite:testsFailed rdf:datatype="http://www.w3.org/2001/XMLSchema#int">1</cite:testsFailed>
+            <cite:testsSkipped rdf:datatype="http://www.w3.org/2001/XMLSchema#int">0</cite:testsSkipped>
+            <dct:hasPart rdf:resource="org/opengis/cite/ogcapiedr10/encodings/geojson/GeoJSONEncoding#validateResponseForGeoJSON"/>
+          </earl:TestRequirement>
+        </rdf:li>
+        <rdf:li>
+          <earl:TestRequirement rdf:about="EDRGeoJSON">
+            <dct:title>EDRGeoJSON</dct:title>
+            <cite:testsPassed rdf:datatype="http://www.w3.org/2001/XMLSchema#int">0</cite:testsPassed>
+            <cite:testsFailed rdf:datatype="http://www.w3.org/2001/XMLSchema#int">1</cite:testsFailed>
+            <cite:testsSkipped rdf:datatype="http://www.w3.org/2001/XMLSchema#int">0</cite:testsSkipped>
+            <dct:hasPart rdf:resource="org/opengis/cite/ogcapiedr10/encodings/edrgeojson/EDRGeoJSONEncoding#validateResponseForEDRGeoJSON"/>
+          </earl:TestRequirement>
+        </rdf:li>
+      </rdf:Seq>
+    </cite:requirements>
+    <dct:identifier>s0006</dct:identifier>
+    <dct:created>2025-03-20T13:16:18.269Z</dct:created>
+    <dct:extent rdf:datatype="http://www.w3.org/2001/XMLSchema#duration">PT32.562S</dct:extent>
+    <cite:testsFailed rdf:datatype="http://www.w3.org/2001/XMLSchema#int">4</cite:testsFailed>
+    <cite:areCoreConformanceClassesPassed rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</cite:areCoreConformanceClassesPassed>
+    <cite:testsPassed rdf:datatype="http://www.w3.org/2001/XMLSchema#int">13</cite:testsPassed>
+    <dct:title>ogcapi-edr10-1.0</dct:title>
+    <cite:inputs>
+      <rdf:Bag>
+        <rdf:li rdf:parseType="Resource">
+          <dct:title>acceptMediaType</dct:title>
+          <dct:description>application/rdf+xml</dct:description>
+        </rdf:li>
+        <rdf:li rdf:parseType="Resource">
+          <dct:title>sourcesId</dct:title>
+          <dct:description>OGC_OGC API - Environmental Data Retrieval 1.0 Conformance Test Suite_1.0</dct:description>
+        </rdf:li>
+        <rdf:li rdf:parseType="Resource">
+          <dct:title>iut</dct:title>
+          <dct:description>http://localhost:5000</dct:description>
+        </rdf:li>
+        <rdf:li rdf:parseType="Resource">
+          <dct:title>apiDefinition</dct:title>
+          <dct:description>http://localhost:5000/openapi</dct:description>
+        </rdf:li>
+        <rdf:li rdf:parseType="Resource">
+          <dct:title>sessionId</dct:title>
+          <dct:description>s0006</dct:description>
+        </rdf:li>
+        <rdf:li rdf:parseType="Resource">
+          <dct:title>logDir</dct:title>
+          <dct:description>/usr/local/tomcat/te_base/users/ogctest/rest</dct:description>
+        </rdf:li>
+      </rdf:Bag>
+    </cite:inputs>
+  </cite:TestRun>
+  <earl:Assertion rdf:about="assert-11">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-11">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-20T13:15:45.744Z</dct:date>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#passed"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiedr10/corecollections/CollectionsResponse#collectionsParameters"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-15">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-15">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-20T13:16:09.821Z</dct:date>
+        <dct:description>org.testng.SkipException: None of the collections support this query type. Increase the number of collections to parse.</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiedr10/queries/QueryCollections#validateCorridorQueryUsingParameters"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-19">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-19">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-20T13:16:09.836Z</dct:date>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#passed"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiedr10/queries/QueryCollections#validateNoQueryParameters"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-4">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-4">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-20T13:15:50.986Z</dct:date>
+        <dct:description>java.lang.Throwable: Method Collections.validateCollectionsMetadataOperation(org.opengis.cite.ogcapiedr10.openapi3.TestPoint)[pri:0, instance:org.opengis.cite.ogcapiedr10.corecollections.Collections@2399735a] depends on not successfully finished methods in group "conformance"</dct:description>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#untested"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiedr10/corecollections/Collections#validateCollectionsMetadataOperation"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-20">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-20">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-20T13:16:18.231Z</dct:date>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#passed"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiedr10/encodings/json/JSONEncoding#validateResponseForJSON"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-12">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-12">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-20T13:15:45.721Z</dct:date>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#passed"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiedr10/landingpage/LandingPage#edrLandingPageValidation"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-8">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-8">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-20T13:15:45.755Z</dct:date>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#passed"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiedr10/corecollections/CollectionsResponse#validateRetrievalOfCollections"/>
+  </earl:Assertion>
+  <earl:Assertion rdf:about="assert-16">
+    <earl:mode rdf:resource="http://www.w3.org/ns/earl#automatic"/>
+    <earl:assertedBy rdf:resource="https://github.com/opengeospatial/teamengine"/>
+    <earl:subject rdf:resource="http://localhost:5000"/>
+    <earl:result>
+      <earl:TestResult rdf:about="result-16">
+        <dct:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-03-20T13:16:09.792Z</dct:date>
+        <earl:outcome rdf:resource="http://www.w3.org/ns/earl#passed"/>
+      </earl:TestResult>
+    </earl:result>
+    <earl:test rdf:resource="org/opengis/cite/ogcapiedr10/queries/QueryCollections#validateAreaQueryUsingParameters"/>
+  </earl:Assertion>
+</rdf:RDF>

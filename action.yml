@@ -22,7 +22,7 @@ inputs:
       them as secrets - Expected secret names are: `teamengine_username` and `teamengine_password`.
   treat_skipped_tests_as_failures:
     required: false
-    default: "false"
+    default: "true"
     description: Whether to treat skipped tests as an indication of failure or not.
   teamengine_username:
     required: false
@@ -32,6 +32,10 @@ inputs:
     required: false
     default: "ogctest"
     description: Password for accessing teamengine
+  network_timeout_seconds:
+    required: false
+    default: 120
+    description: Timeout value for network requests
 
 outputs:
   results:
@@ -79,6 +83,7 @@ runs:
         cd ${{ github.action_path }}
         raw_result_output_path=raw-result.xml
         poetry run ogc-cite-action \
+            --network-timeout=${{ inputs.network_timeout_seconds }}
             execute-test-suite \
             ${{ inputs.teamengine_url || 'http://localhost:8080/teamengine' }} \
             ${{ inputs.test_suite_identifier }} \

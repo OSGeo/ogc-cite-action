@@ -11,34 +11,36 @@ This code can either:
 - Use an existing teamengine deployment
 
 
-## Inputs
+## Running as a github action
+
+### Inputs
 
 This action expects the following inputs to be provided:
 
-- `test-suite-identfier` - Identifier of the test suite to be executed. Test suite identifiers can be gotten from the
+- `test_suite_identfier` - Identifier of the test suite to be executed. Test suite identifiers can be gotten from the
   documentation at <http://cite.opengeospatial.org/teamengine/>. Example:
   
   ```yaml
-  test-suite-identifier: 'ogcapi-features-1.0'
+  test_suite_identifier: 'ogcapi-features-1.0'
   ```
   
-- `test-session-arguments` - Test session arguments to be passed to teamengine. These depend on the test suite that is
+- `test_session_arguments` - Test session arguments to be passed to teamengine. These depend on the test suite that is
   going to be executed. Must be provided as a space-separated list of `key=value` pairs. Examples: 
   
   - A simple yaml string
     ```yaml
-    test-session-arguments: 'iut=http://localhost:5001 noofcollections=-1'
+    test_session_arguments: 'iut=http://localhost:5001 noofcollections=-1'
     ```
     
   - If you prefer to use a multiline string, then  we recommend use of YAML *folded blocks* with the _strip_ 
     chomping indicator (AKA put a dash after the folded block indicator, AKA this: `>-`)
     ```yaml
-    test-session-arguments: >-
+    test_session_arguments: >-
       iut=http://localhost:5001 
       noofcollections=-1
     ```
 
-- `teamengine-url` - **OPTIONAL** - URL of the teamengine instance to be used for running tests. If this parameter 
+- `teamengine_url` - **OPTIONAL** - URL of the teamengine instance to be used for running tests. If this parameter 
   is not specified then the action will spin up a local teamengine docker container and use it for testing. If you 
   specify a custom teamengine URL this action will also try to find authentication-related env variables and use 
   them. These env variables must be named `teamengine_username` and `teamengine_password`
@@ -52,22 +54,23 @@ This action expects the following inputs to be provided:
     a password of `something`:
   
     ```yaml
-    teamengine-url: 'https://my-server/teamengine'
-    teamengine-username: 'myself'
-    teamengine-password: 'something'
+    teamengine_url: 'https://my-server/teamengine'
+    teamengine_username: 'myself'
+    teamengine_password: 'something'
     ```
 
-- `teamengine-username` - **OPTIONAL** - Username to be used when logging in to a remote teamengine instance. 
+- `teamengine_username` - **OPTIONAL** - Username to be used when logging in to a remote teamengine instance. 
   Defaults to `ogctest`, which is a user that is pre-created on the official teamengine docker image.
 
-- `teamengine-password` - **OPTIONAL** - Password to be used when logging in to a remote teamengine instance. 
+- `teamengine_password` - **OPTIONAL** - Password to be used when logging in to a remote teamengine instance. 
   Defaults to `ogctest`, which is the password used for the pre-created user on the official teamengine docker image
   
-- `treat-skipped-tests-as-failures` - **OPTIONAL** - Whether the presence of skipped tests should be interpreted as 
+- `treat_skipped_tests_as_failures` - **OPTIONAL** - Whether the presence of skipped tests should be interpreted as 
   an overall failure of the test suite or not. Defaults to `false`
 
+- `network_timeout_seconds` - **OPTIONAL** - Timeout value for network requests. Defaults to `120`
 
-## Usage
+### Usage
 
 The below examples define a github workflow for testing pygeoapi.
 
@@ -201,3 +204,59 @@ This action's code can also be installed locally:
 
 There are additional commands and options which can be used when running locally, which allow controlling the output 
 format and how the inputs are supplied. Read the online
+
+
+## Test suites which are known to work
+
+<table>
+<thead>
+<tr>
+<th>test suite identifier</th>
+<th>arguments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+    <td>ogcapi-features-1.0</td>
+    <td>
+      <ul>
+        <li>iut</li>
+        <li>noofcollections</li>
+      </ul>
+    </td>
+</tr>
+<tr>
+    <td>ogcapi-processes-1.0</td>
+    <td>
+      <ul>
+        <li>iut</li>
+        <li>noofcollections</li>
+      </ul>
+    </td>
+</tr>
+<tr>
+    <td>ogcapi-edr10</td>
+    <td>
+      <ul>
+        <li>iut</li>
+        <li>apiDefinition</li>
+      </ul>
+    </td>
+</tr>
+<tr>
+    <td>ogcapi-tiles10</td>
+    <td>
+      <ul>
+        <li>iut</li>
+        <li>tilematrixsetdefnitionuri</li>
+        <li>urltemplatefortiles</li>
+        <li>tilematrix</li>
+        <li>mintilerow</li>
+        <li>maxtilerow</li>
+        <li>mintilecol</li>
+        <li>maxtilecol</li>
+      </ul>
+    </td>
+</tr>
+</tbody>
+</table>

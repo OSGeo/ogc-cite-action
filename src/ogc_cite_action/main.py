@@ -57,7 +57,7 @@ _teamengine_password_option = typing.Annotated[
 def base_callback(
     ctx: typer.Context,
     debug: bool = False,
-    network_timeout: int = 20
+    network_timeout: int = 120
 ) -> None:
     config.configure_logging(debug=debug)
     ctx.obj = config.get_context(

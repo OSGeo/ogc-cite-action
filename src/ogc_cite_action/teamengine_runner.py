@@ -85,7 +85,7 @@ def execute_test_suite(
         params=test_suite_arguments,
         auth=request_auth,
         headers={
-            "Accept": "application/xml",
+            "Accept": "application/rdf+xml",
         }
     )
     try:
